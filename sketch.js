@@ -33,14 +33,14 @@ Things to do:
 -levels
 -interface (lives)
 -menu
--IA
+-AI
 
 */
 
 
 function preload(){
-  boxTexture = loadImage("textures/wood-texture.jpg");
-  backgroundTexture = loadImage("textures/light-wood-texture.jpg");
+  boxTexture = loadImage("https://raw.githubusercontent.com/Jkutkut/JS-Wii_Play_Tanks/tree/master/textures/wood-texture.jpg");
+  backgroundTexture = loadImage("https://raw.githubusercontent.com/Jkutkut/JS-Wii_Play_Tanks/tree/master/textures/light-wood-texture.jpg");
 }
 
 function setup() {
