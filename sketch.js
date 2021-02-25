@@ -26,8 +26,10 @@ var enti;
 
 
 function preload(){
-  boxTexture = loadImage("https://raw.githubusercontent.com/Jkutkut/JS-Wii_Play_Tanks/tree/master/textures/wood-texture.jpg");
-  backgroundTexture = loadImage("https://raw.githubusercontent.com/Jkutkut/JS-Wii_Play_Tanks/tree/master/textures/light-wood-texture.jpg");
+  // boxTexture = loadImage("https://raw.githubusercontent.com/Jkutkut/JS-Wii_Play_Tanks/tree/master/textures/wood-texture.jpg");
+  boxTexture = loadImage("https://cdn.jsdelivr.net/gh/Jkutkut/JS-Wii_Play_Tanks@master/textures/wood-texture.jpg");
+  backgroundTexture = loadImage("https://cdn.jsdelivr.net/gh/Jkutkut/JS-Wii_Play_Tanks@master/textures/light-wood-texture.jpg");
+  // backgroundTexture = loadImage("textures/light-wood-texture.jpg");
 }
 
 function setup() {

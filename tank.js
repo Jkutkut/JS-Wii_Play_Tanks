@@ -74,7 +74,7 @@ class Tank{
     push();
     translate(mouse);
     fill(0);
-    sphere(10);
+    sphere(2);
     
     pop();
     
@@ -162,63 +162,5 @@ class Tank{
 class tankEnemy extends Tank{
   constructor(x, y, c) {
     super(x, y, c);
-  }
-}
-
-class Bullet{
-  constructor(pos, angle, v, impact){
-    this.pos = pos;
-    this.angle = angle;
-    this.v = v;
-    impact = (impact != undefined)? impact : 1;
-  }
-  show(){
-    // stroke(200, 200, 200);
-    // strokeWeight(2);
-    push();
-    translate(this.pos);
-    rotateZ(this.angle - Math.PI / 2);
-    fill(tankC[0].bullet);
-    cylinder(tankW / 16, tankW / 6);
-    translate(createVector(0, tankW / 12 + tankW / 32, 0));
-    cone(tankW / 16, tankW / 16);
-    pop();
-  }
-  
-  move(){
-    let dir = p5.Vector.fromAngle(this.angle).mult(tankW / 10);
-    this.pos.add(dir);
-  }
-  
-  validSpot(){
-    return Math.abs(this.pos.x) < width / 2 && Math.abs(this.pos.y) < height / 2;
-  }
-}
-
-
-class woodBox{
-  constructor(x, y, w, h){
-    this.x = x;
-    this.y = y;
-    this.w = w;
-    this.h = h;
-  }
-  
-  
-  show(){
-    translate(x, y, boxW);
-    //push();
-    stroke(0);
-    strokeWeight(2);
-    
-    texture(boxTexture);
-    
-    
-    // box(tankW, tankW * 3, Math.round(tankW / 3));
-    box(this.w, this.h, boxW);
-    
-    //pop();
-    
-    translate(-x, -y, -boxW);
   }
 }
