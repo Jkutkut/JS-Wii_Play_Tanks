@@ -8,9 +8,10 @@ var bullets = [];//bullets, to keep track of them
 
 
 //environment
-var angle = Math.PI * 3 / 18;
+var angle = Math.PI / 6; // 30º
+
 let groundLength = 900;//width of the plane, width of the surface
-let groundHeight = groundLength * 9 / (16 * Math.cos(angle));
+let groundHeight = 900;
 
 let backgroundTexture;
 var boxColor;
@@ -33,13 +34,14 @@ function preload(){
 }
 
 function setup() {
-  createCanvas(groundLength, groundLength * 9 / 16, WEBGL);
+  createCanvas(windowWidth, windowHeight, WEBGL);
   // frameRate(1);
-  frameRate(30);
-  // ortho(-width / 2, width / 2, height / 2, -height / 2, 0, width);
+  // frameRate(30);
+
   ortho(-width / 2, width / 2, height / 2, -height / 2);
   
   // noCursor();
+  textSize(32);
   
   // *******  var setup  *******
   //tank
@@ -62,13 +64,10 @@ function setup() {
   //box
   boxColor = color(255, 204, 0);
   
-  
-  
-  
-  /*for(let i = 0; i > -groundHeight; i -= groundHeight / 2){
-    border.push(new woodBox((boxW - groundLength) / 2 , i - groundHeight / 4, boxW, groundHeight / 2));
-    border.push(new woodBox((boxW - groundLength) / 2 , (groundHeight / 4) - i, boxW, groundHeight / 2));
-  }*/
+  // for(let i = 0; i > -groundHeight; i -= groundHeight / 2){
+  //   border.push(new woodBox((boxW - groundLength) / 2 , i - groundHeight / 4, boxW, groundHeight / 2));
+  //   border.push(new woodBox((boxW - groundLength) / 2 , (groundHeight / 4) - i, boxW, groundHeight / 2));
+  // }
   
   
   tank = new Tank(0, 0, 0);  
@@ -76,7 +75,7 @@ function setup() {
 
 function draw() {
   background(255);
-  rotateX(-angle);
+  // rotateX(-angle);
   
   
   keyD();
@@ -93,9 +92,9 @@ function draw() {
   tank.show();
   
   
-  /*for(let i = 0; i < border.length; i++){
-    border[i].show();  
-  }*/
+  // for(let i = 0; i < border.length; i++){
+  //   border[i].show();  
+  // }
   
   stroke(0);
   strokeWeight(2);
@@ -107,6 +106,7 @@ function draw() {
   if(debug-- == 0){
     noLoop();
   }
+  text(frameRate(), 0, 0, 0);
 }
 
 function mouseClicked() {
@@ -117,19 +117,23 @@ function mouseClicked() {
   }
 }
 function keyD(){
-  let k = 0;
-  if(keyIsDown(87)){//83 65 68
-    tank.keyP(87);
+  let k = false;
+  switch (true) {
+    case keyIsDown(87):
+      k = 87;
+      break;
+    case keyIsDown(83):
+      k = 83;
+      break;
+    case keyIsDown(65):
+      k = 65;
+      break;
+    case keyIsDown(68):
+      k = 68;
+      break;
   }
-  if(keyIsDown(83)){
-    tank.keyP(83);
-  }
-  if(keyIsDown(65)){
-    tank.keyP(65);
-
-  }
-  if(keyIsDown(68)){
-    tank.keyP(68);
+  if (k) {
+    tank.keyP(k);
   }
 }
 function keyPressed() {
