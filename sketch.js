@@ -23,19 +23,6 @@ var border = [];
 var debug = -1;
 var enti;
 
-/*
-Things to do:
--fix error of perspective
--Reticle
--Colisions
--Obstacles
--Border
--levels
--interface (lives)
--menu
--AI
-
-*/
 
 
 function preload(){
