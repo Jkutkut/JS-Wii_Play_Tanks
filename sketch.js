@@ -2,29 +2,21 @@
 var tank;
 var tankW = 40;
 var tankC;
-var shotDelay = 200;
+const shotDelay = 200;
 var lastBMilli = 0;
-var bullets = [];//bullets, to keep track of them
+var bullets = []; //bullets, to keep track of them
 
 
 //environment
-var angle = Math.PI / 6; // 30º
+var mainCanvasWidth;
+var mainCanvasHeight;
 
-let groundLength = 900;//width of the plane, width of the surface
-let groundHeight = 900;
-
-let backgroundTexture;
-var boxColor;
-var boxTexture;
-var boxW = 40;
-var boxH = 60;
 var border = [];
 
+
 //debug
-var debug = -1;
+var debug = 0;
 var enti;
-
-
 
 function preload(){
   // boxTexture = loadImage("https://raw.githubusercontent.com/Jkutkut/JS-Wii_Play_Tanks/tree/master/textures/wood-texture.jpg");
@@ -33,15 +25,17 @@ function preload(){
   // backgroundTexture = loadImage("textures/light-wood-texture.jpg");
 }
 
-function setup() {
-  createCanvas(windowWidth, windowHeight, WEBGL);
-  // frameRate(1);
-  // frameRate(30);
 
-  ortho(-width / 2, width / 2, height / 2, -height / 2);
+function setup() {
+  mainCanvasWidth = (mainCanvasWidth)? mainCanvasWidth : windowWidth;
+  mainCanvasHeight = (mainCanvasHeight)? mainCanvasHeight : mainCanvasWidth * 9 / 16;
+
+  createCanvas(mainCanvasWidth, mainCanvasHeight);
+  // frameRate(1);
+  frameRate(30);
   
   // noCursor();
-  textSize(32);
+  textSize(20);
   
   // *******  var setup  *******
   //tank
@@ -64,49 +58,41 @@ function setup() {
   //box
   boxColor = color(255, 204, 0);
   
-  // for(let i = 0; i > -groundHeight; i -= groundHeight / 2){
-  //   border.push(new woodBox((boxW - groundLength) / 2 , i - groundHeight / 4, boxW, groundHeight / 2));
-  //   border.push(new woodBox((boxW - groundLength) / 2 , (groundHeight / 4) - i, boxW, groundHeight / 2));
-  // }
-  
-  
-  tank = new Tank(0, 0, 0);  
+  tank = new Tank(mainCanvasWidth / 2, mainCanvasHeight / 2);  
 }
 
 function draw() {
-  background(255);
-  // rotateX(-angle);
-  
-  
-  keyD();
+  background(backgroundTexture);
     
-  for(let i = 0; i < bullets.length; i++){
-    bullets[i].move();
-    if(!bullets[i].validSpot()){
-      bullets[i].pos = createVector(0, 0, tankW);
-    }
-    bullets[i].show();
-  }
+  // for(let i = 0; i < bullets.length; i++){
+  //   bullets[i].move();
+  //   if(!bullets[i].validSpot()){
+  //     bullets[i].pos = createVector(0, 0, tankW);
+  //   }
+  //   bullets[i].show();
+  // }
   
-  tank.aim(mouseX, mouseY);
+  // tank.aim(mouseX, mouseY);
   tank.show();
   
   
   // for(let i = 0; i < border.length; i++){
   //   border[i].show();  
   // }
+  push();
+  fill(204, 101, 192, 127);
+  stroke(127, 63, 120);
+  rect(50,50, 20, 20);
+  pop();
   
-  stroke(0);
-  strokeWeight(2);
-  texture(backgroundTexture);
-  noStroke();
-  plane(groundLength - 2, groundHeight - 2);
   
-  
-  if(debug-- == 0){
+  if(debug == 0){
     noLoop();
   }
-  text(frameRate(), 0, 0, 0);
+  push()
+  translate(20, 20)
+  text(Math.round(frameRate()), 0, 0);
+  pop()
 }
 
 function mouseClicked() {
