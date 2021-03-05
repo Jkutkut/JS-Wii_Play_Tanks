@@ -12,15 +12,33 @@ class Tank{
         stroke(0); //black border
         strokeWeight(2); // border size
 
-        push();//tank
-        translate(this.pos);
+        push();
+            translate(this.pos);
 
-        //  ***  body  ***  //
+            //  ***  body  ***  //
+            push()
+                rotate(this.bodyAngle);
 
-        fill(this.tankColor.body);
-        rotate(this.bodyAngle);
+                fill(this.tankColor.body);
+                rect(...this.shape("box", 80, 60))
 
-        rect(...this.shape("box", 80, 60))
+                //  ***  tires  ***  //
+                fill(this.tankColor.tire);
+                for (let i = -1; i < 2; i += 2) {
+                    push();
+                        translate(0, i * 30);
+                        rect(...this.shape("box", 80, 10));
+                        rect(...this.shape("box", 82, 5));
+                    pop();
+                }
+            pop()
+
+            //  ***  head  ***  //
+            push()
+                rotate(this.headAngle);
+                fill(this.tankColor.gun);
+                rect(...this.shape("box", 40));
+            pop()
         pop();
     }
 
@@ -32,6 +50,7 @@ class Tank{
 
                 if (!h) {
                     hSize = wSize;
+                    h = w;
                 }
                 else {
                     hSize = (h / 2);
@@ -97,22 +116,23 @@ class Tank{
                 break;
         }
         if(posi.x != 0 || posi.y != 0){//if valid key pressed
-        let alpha = this.bodyD.angleBetween(posi);
-        let dir = this.bodyD.cross(posi).z;
-        if(alpha > Math.PI / 20){
-        alpha = (Math.PI / 20);
-        }
+            let alpha = this.bodyD.angleBetween(posi);
+            let dir = this.bodyD.cross(posi).z;
+            
+            if(alpha > Math.PI / 20){
+                alpha = (Math.PI / 20);
+            }
 
-        if(alpha < 0.03){
-        let velo = p5.Vector.fromAngle(this.bodyAngle).mult(tankW * 0.2);
-        this.pos.add(velo);
-        //this.move();
-        }
-        else{
-        this.bodyAngle += alpha * ((dir > 0)? 1: - 1);
-        this.bodyD = createVector(Math.cos(this.bodyAngle), Math.sin(this.bodyAngle));
-        }
-        //console.log(alpha);
+            if(alpha < 0.03){
+                let velo = p5.Vector.fromAngle(this.bodyAngle).mult(tankW * 0.2);
+                this.pos.add(velo);
+                //this.move();
+            }
+            else{
+                this.bodyAngle += alpha * ((dir > 0)? 1: - 1);
+                this.bodyD = createVector(Math.cos(this.bodyAngle), Math.sin(this.bodyAngle));
+            }
+            //console.log(alpha);
         }
     }
 
