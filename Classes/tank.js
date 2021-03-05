@@ -63,38 +63,23 @@ class Tank{
 
 
 
-    aim(mX, mY){//same as setHeadD but for player's tank
-    let mouse = this.setHeadD(mX, mY);
+    aim(mX, mY){ //same as setHeadD but for player's tank
+        let mouse = createVector(mX, mY);
+        let headDirection = this.pos.copy().sub(mouse); // vector from tank pos to mouse
+        this.headAngle = (Math.atan(headDirection.y / headDirection.x) + ((headDirection.x < 0)?  0 : Math.PI));
 
-    // mouse.y +=  ((height / 2) - mY) / 6;
-
-    // console.log("(" + mX + ", " + mY + ")");
-
-    // push();
-    // translate(mouse);
-    // fill(0);
-    // ellipse(2);
-
-    // pop();
-
-    }
-
-    setHeadD(mX, mY){
-    //aim the head to the vector (mX, mY);
-    let truePosi = this.pos.copy();
-    if(!mX || !mY){//if not mX or mY given -> aim to the right
-    let center = createVector(width / 2, height / 2, 0);
-    mX = center.x + truePosi.x + 1;
-    mY = center.y + truePosi.y;
-    }
-    let mouse = createVector(-width / 2, height / 2, 0).sub(createVector(-mX, mY, 0));    
-    mouse.y += (mY > height / 2)? ((height / 2) - mY) / 4 : 0;
-    let v = truePosi.sub(mouse);//vector from tank pos to mouse
-    this.headAngle = (Math.atan(v.y / v.x) + ((v.x < 0)?  0 : Math.PI));
-
-
-    mouse.y += (mY < height / 2)? Math.abs((height / 2) - mY) / 7 : (1 / 7 - (1 / 4)) * ((height / 2) - mY);//adjustment of perspective
-    return mouse;
+        push();
+            translate(mouse);
+            fill(0);
+            ellipse(0, 0, 4, 4);
+            for (let i = 0; i < 4; i++) {
+                push()
+                    rotate(Math.PI / 2 * i)
+                    translate(10, 0)
+                    rect(...this.shape("box", 5, 2))
+                pop()
+            }
+        pop();
     }
 
     keyP(keyP){

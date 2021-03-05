@@ -29,6 +29,7 @@ function setup() {
     mainCanvasHeight = (mainCanvasHeight)? mainCanvasHeight : mainCanvasWidth * 9 / 16;
 
     createCanvas(mainCanvasWidth, mainCanvasHeight);
+    noCursor();
     frameRate(30);
 
     // noCursor();
