@@ -15,7 +15,7 @@ var border = [];
 
 
 //debug
-var debug = 0;
+var debug = -1;
 var enti;
 
 function preload(){
@@ -51,14 +51,13 @@ function setup() {
       gun: color(137, 107, 52),
       gunTip: color(115, 89, 42),
     }
-    //
   ];
   
   
   //box
   boxColor = color(255, 204, 0);
   
-  tank = new Tank(mainCanvasWidth / 2, mainCanvasHeight / 2);  
+  tank = new Tank(mainCanvasWidth / 2, mainCanvasHeight / 2, 0);  
 }
 
 function draw() {
@@ -73,6 +72,7 @@ function draw() {
   // }
   
   // tank.aim(mouseX, mouseY);
+  keyD();
   tank.show();
   
   

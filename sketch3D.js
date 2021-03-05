@@ -50,12 +50,13 @@ function setup() {
       body: color(54, 137, 200),
       gun: color(47, 92, 120),
       gunTip: color(29, 66, 89),
-      tire: color(36, 36, 36),
-      bullet: color(255, 255, 255)
+      tire: color(36, 36, 36)
     },{
       body: color(141, 108, 59),
       gun: color(137, 107, 52),
       gunTip: color(115, 89, 42),
+    },{
+      bullet: color(255, 255, 255)
     }
     //
   ];
@@ -70,7 +71,7 @@ function setup() {
   // }
   
   
-  tank = new Tank(0, 0, 0);  
+  tank = new Tank(int(mainCanvasWidth / 2), int(mainCanvasHeight / 2), 0);  
 }
 
 function draw() {
