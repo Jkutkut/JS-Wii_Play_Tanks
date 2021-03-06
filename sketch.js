@@ -4,16 +4,16 @@ var AItanks = [];
 
 var objectProperties;
 var tankC;
-const shotDelay = 200;
-var lastBMilli = 0;
-var bullets = []; //bullets, to keep track of them
 
+var bullets = []; //bullets, to keep track of them
+var walls = [];
 
 //environment
 var mainCanvasWidth;
 var mainCanvasHeight;
 
-var border = [];
+var lastBMilli = 0;
+var shotDelay = 10;
 
 
 //debug
@@ -24,8 +24,8 @@ function preload(){
     let commit = "5341973efdfe66dee85adbe8439c11acd09cbb1a";
     fetch("https://cdn.jsdelivr.net/gh/Jkutkut/JS-Wii_Play_tanks@" + commit + "/tankProperties.json")
     .then(response => response.json()).then(json => objectProperties = json);
-    boxTexture = loadImage("https://cdn.jsdelivr.net/gh/Jkutkut/JS-Wii_Play_Tanks@master/textures/wood-texture.jpg");
-    backgroundTexture = loadImage("https://cdn.jsdelivr.net/gh/Jkutkut/JS-Wii_Play_Tanks@master/textures/light-wood-texture.jpg");
+    boxTexture = loadImage("https://cdn.jsdelivr.net/gh/Jkutkut/JS-Wii_Play_Tanks@" + commit + "/textures/wood-texture.jpg");
+    backgroundTexture = loadImage("https://cdn.jsdelivr.net/gh/Jkutkut/JS-Wii_Play_Tanks@" + commit + "/textures/light-wood-texture.jpg");
 }
 
 
@@ -56,16 +56,43 @@ function setup() {
         }
     ];
 
-
-    //box
-    boxColor = color(255, 204, 0);
-
     tank = new Tank(mainCanvasWidth / 2, mainCanvasHeight / 2, 0);  
     AItanks.push(new Tank(200, 200, 1, 0));
+
+
+
+    //box
+    boxColor = color(227, 118, 34);
+
+    let margin = 5;
+    let wallWidth = 15;
+
+    // Vertical
+    walls.push(new WoodBox(
+        margin, margin,
+        wallWidth, mainCanvasHeight - 2 * margin - wallWidth));
+    
+    walls.push(new WoodBox(
+        mainCanvasWidth - 4 * margin, margin + wallWidth,
+        wallWidth, mainCanvasHeight - 2 * margin - wallWidth));
+
+    //horizontal
+    walls.push(new WoodBox(
+        margin + wallWidth, margin,
+        mainCanvasWidth - margin * 2 - wallWidth, wallWidth));
+    walls.push(new WoodBox(
+            margin, mainCanvasHeight - (margin + wallWidth),
+            mainCanvasWidth - wallWidth - 2 * margin, wallWidth));
+
+
 }
 
 function draw() {
     background(backgroundTexture);
+
+    for(let i = 0; i < walls.length; i++) {
+        walls[i].show();
+    }
 
     for(let i = 0; i < bullets.length; i++){
       bullets[i].move();

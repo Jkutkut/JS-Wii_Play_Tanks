@@ -1,4 +1,4 @@
-class woodBox{
+class WoodBox{
     constructor(x, y, w, h){
       this.x = x;
       this.y = y;
@@ -8,19 +8,13 @@ class woodBox{
     
     
     show(){
-      translate(x, y, boxW);
-      //push();
-      stroke(0);
-      strokeWeight(2);
-      
-      texture(boxTexture);
-      
-      
-      // box(tankW, tankW * 3, Math.round(tankW / 3));
-      box(this.w, this.h, boxW);
-      
-      //pop();
-      
-      translate(-x, -y, -boxW);
+      push();
+        // stroke(0);
+        // strokeWeight(2);
+        fill(boxColor);
+
+        // translate(this.x, this.y);
+        rect(this.x, this.y, this.w, this.h);
+      pop();
     }
   }
