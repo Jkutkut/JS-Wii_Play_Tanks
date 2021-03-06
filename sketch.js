@@ -1,6 +1,18 @@
 //tank
 var tank;
-var tankW = 40;
+var AItanks = [];
+
+var tankSize = [
+    {
+        base: {
+            width: 80,
+            height: 60
+        },
+        p: {
+            v: 80
+        }
+    }
+];
 var tankC;
 const shotDelay = 200;
 var lastBMilli = 0;

@@ -1,11 +1,12 @@
 class Tank{
-    constructor(x, y, c){
+    constructor(x, y, colorId = 0, sizeId = 0){
         this.pos = createVector(x, y);
         this.bodyD = createVector(1, 0);
         this.bodyAngle = 0;
         this.headAngle = 0;
 
-        this.tankColor = tankC[c];
+        this.tankColor = tankC[colorId];
+        this.tankSize = tankSize[sizeId];
     }
 
     show(){
@@ -20,7 +21,7 @@ class Tank{
                 rotate(this.bodyAngle);
 
                 fill(this.tankColor.body);
-                rect(...this.shape("box", 80, 60))
+                rect(...this.shape("box", this.tankSize.base.width, this.tankSize.base.height))
 
                 //  ***  tires  ***  //
                 fill(this.tankColor.tire);
@@ -38,6 +39,10 @@ class Tank{
                 rotate(this.headAngle);
                 fill(this.tankColor.gun);
                 rect(...this.shape("box", 40));
+                translate(40, 0);
+                rect(...this.shape("box", 40, 10));
+                translate(20, 0)
+                rect(...this.shape("box", 8, 15));
             pop()
         pop();
     }
@@ -109,7 +114,7 @@ class Tank{
             }
 
             if(alpha < 0.03){
-                let velo = p5.Vector.fromAngle(this.bodyAngle).mult(tankW * 0.2);
+                let velo = p5.Vector.fromAngle(this.bodyAngle).mult(this.tankSize.p.v * 0.2);
                 this.pos.add(velo);
                 //this.move();
             }
@@ -122,8 +127,8 @@ class Tank{
     }
 
     shoot(){
-    let dir = p5.Vector.fromAngle(this.headAngle).mult(tankW);
-    dir.z = tankW / 3;
+    let dir = p5.Vector.fromAngle(this.headAngle).mult(this.tankSize.p.v);
+    dir.z = this.tankSize.p.v / 3;
     let bulletStart = this.pos.copy().add(dir);
     bullets.push(new Bullet(bulletStart, this.headAngle, 10));
     }
