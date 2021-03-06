@@ -1,16 +1,15 @@
 class Bullet{
     constructor(parent){
-        let parentPos = parent.pos.copy();
+        let parentPos = parent.pos.copy(); //center of the tank
         
-        this.direction = p5.Vector.fromAngle(parent.headAngle);
+        this.direction = p5.Vector.fromAngle(parent.headAngle); //Normal vector with direction of the head
 
         let bulletPosFromParent = this.direction.copy();
         let distCenterTankToTip = 
-            parent.tankSize.head.width / 2 +
-            parent.tankSize.head.gun.len + 
-            parent.tankSize.head.gunTip.len;
+            parent.tankSize.head.width * 0.5 +
+            parent.tankSize.head.gun.len;
 
-        bulletPosFromParent.add(distCenterTankToTip);
+        bulletPosFromParent.mult(distCenterTankToTip);
 
         this.pos = parentPos.add(bulletPosFromParent);
 
@@ -26,19 +25,19 @@ class Bullet{
         this.bulletC = this.parent.tankColor;
     }
     show(){
-        // stroke(200, 200, 200);
-        // strokeWeight(2);
         push();
             translate(this.pos);
             push(); 
                 rotate(this.angle);
-                
-                // rotate(this.angle - Math.PI / 2);
                 fill(this.bulletC.bullet);
-
-                rect(...this.parent.shape("box", this.bulletSize.len));
-                translate(this.bulletSize.len, 0);
-                ellipse(0, 0, this.bulletSize.len, this.bulletSize.width);
+                beginShape();
+                    vertex(0, 0);
+                    vertex(0, this.bulletSize.len);
+                    vertex(this.bulletSize.len, this.bulletSize.len);
+                    vertex(this.bulletSize.len * 1.3, this.bulletSize.len * 0.5);
+                    vertex(this.bulletSize.len, 0);
+                    vertex(0, 0);
+                endShape();
             pop();
         pop();
     }
