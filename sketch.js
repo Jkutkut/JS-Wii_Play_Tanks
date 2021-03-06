@@ -2,10 +2,7 @@
 var tank;
 var AItanks = [];
 
-// import tankSize from "tankProperties.json";
-// const tankSize = require('./tankProperties.json');
-// const tankSize = JSON.parse(require('fs').readFileSync('tankProperties.json', 'utf8'));
-var tankSize;
+var objectProperties;
 var tankC;
 const shotDelay = 200;
 var lastBMilli = 0;
@@ -24,9 +21,9 @@ var debug = -1;
 var enti;
 
 function preload(){
-    let commit = "c2ed1641e816734b60699f670f1ed86735343221"
+    let commit = "b972b717e5d8731d78d65e65f9d4a644e4a61d70";
     fetch("https://cdn.jsdelivr.net/gh/Jkutkut/JS-Wii_Play_tanks@" + commit + "/tankProperties.json")
-    .then(response => response.json()).then(json => tankSize = json);
+    .then(response => response.json()).then(json => objectProperties = json);
     boxTexture = loadImage("https://cdn.jsdelivr.net/gh/Jkutkut/JS-Wii_Play_Tanks@master/textures/wood-texture.jpg");
     backgroundTexture = loadImage("https://cdn.jsdelivr.net/gh/Jkutkut/JS-Wii_Play_Tanks@master/textures/light-wood-texture.jpg");
 }
@@ -39,8 +36,6 @@ function setup() {
     createCanvas(mainCanvasWidth, mainCanvasHeight);
     noCursor();
     frameRate(30);
-
-    // noCursor();
     textSize(20);
 
     // *******  var setup  *******
@@ -72,21 +67,26 @@ function setup() {
 function draw() {
     background(backgroundTexture);
 
-    // for(let i = 0; i < bullets.length; i++){
-    //   bullets[i].move();
-    //   if(!bullets[i].validSpot()){
-    //     bullets[i].pos = createVector(0, 0, tankW);
-    //   }
-    //   bullets[i].show();
-    // }
+    for(let i = 0; i < bullets.length; i++){
+      bullets[i].move();
+      if(!bullets[i].validSpot()){
+        // bullets[i].pos = createVector(0, 0, tankW);
+        bullets.splice(i, 1);
+        i--;
+        continue;
+      }
+      bullets[i].show();
+    }
+
+    for (let i = 0; i < AItanks.length; i++) {
+        AItanks[i].show();
+    }
 
     tank.aim(mouseX, mouseY);
     keyD();
     tank.show();
 
-    for (let i = 0; i < AItanks.length; i++) {
-        AItanks[i].show();
-    }
+    
 
     if(debug == 0){
         noLoop();

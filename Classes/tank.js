@@ -6,7 +6,7 @@ class Tank{
         this.headAngle = 0;
 
         this.tankColor = tankC[colorId];
-        this.tankSize = tankSize[sizeId];
+        this.tankSize = objectProperties[sizeId];
     }
 
     show(){
@@ -41,7 +41,7 @@ class Tank{
                 // head
                 rect(...this.shape("box", this.tankSize.head.width));
                 
-                translate(this.tankSize.head.width, 0);
+                translate((this.tankSize.head.width + this.tankSize.head.gun.len) / 2, 0);
                 // gun cylinder
                 rect(...this.shape("box", this.tankSize.head.gun.len, this.tankSize.head.gun.width));
                 
@@ -132,11 +132,7 @@ class Tank{
     }
 
     shoot(){
-        let dir = p5.Vector.fromAngle(this.headAngle).mult(this.tankSize.p.v);
-
-        let bulletStart = this.pos.copy().add(dir);
-
-        bullets.push(new Bullet(bulletStart, this.headAngle, 10));
+        bullets.push(new Bullet(this));
     }
 }
 
