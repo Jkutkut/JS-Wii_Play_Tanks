@@ -134,25 +134,25 @@ function mouseClicked() {
 function keyD(){
     let keys = [];
 
-    switch (true) {
-        case keyIsDown(87):
-            keys.push(87);
-            break;
-        case keyIsDown(83):
-            keys.push(83);
-            break;
-        case keyIsDown(65):
-            keys.push(65);
-            break;
-        case keyIsDown(68):
-            keys.push(68);
-            break;
+    if (keyIsDown(87)) {
+        keys.push(87);
     }
+    if (keyIsDown(83)) {
+        keys.push(83);
+    }
+    if (keyIsDown(65)) {
+        keys.push(65);
+    }
+    if (keyIsDown(68)) {
+        keys.push(68);
+    }
+
+
     if (keys.length != 0) {
         tank.keyPress(keys);
     }
 }
 function keyPressed() {
     //console.log(keyCode);
-    tank.keyPress(keyCode);
+    tank.keyPress([keyCode]);
 }
