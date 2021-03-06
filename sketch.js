@@ -97,9 +97,7 @@ function draw() {
     for(let i = 0; i < bullets.length; i++){
       bullets[i].move();
       if(!bullets[i].validSpot()){
-        // bullets[i].pos = createVector(0, 0, tankW);
-        bullets.splice(i, 1);
-        i--;
+        bullets.splice(i--, 1);
         continue;
       }
       bullets[i].show();
@@ -134,27 +132,27 @@ function mouseClicked() {
 }
 
 function keyD(){
-    let k = false;
+    let keys = [];
 
     switch (true) {
         case keyIsDown(87):
-            k = 87;
+            keys.push(87);
             break;
         case keyIsDown(83):
-            k = 83;
+            keys.push(83);
             break;
         case keyIsDown(65):
-            k = 65;
+            keys.push(65);
             break;
         case keyIsDown(68):
-            k = 68;
+            keys.push(68);
             break;
     }
-    if (k) {
-        tank.keyP(k);
+    if (keys.length != 0) {
+        tank.keyPress(keys);
     }
 }
 function keyPressed() {
     //console.log(keyCode);
-    tank.keyP(keyCode);
+    tank.keyPress(keyCode);
 }

@@ -92,42 +92,44 @@ class Tank{
         pop();
     }
 
-    keyP(keyP){
+    keyPress(keys){
         //rotate and move the tank
         let posi = createVector(0,0);
+        for(let k in keys) {
+            let keyP = keys[k];
         
-        switch(keyP){//key pressed?
-            case 87://"w":
-                posi.y = -1;
-                break;
-            case 83://"s":
-                posi.y = 1;
-                break;
-            case 65://"a":
-                posi.x = -1;
-                break;
-            case 68://"d":
-                posi.x = 1;
-                break;
-        }
-        if(posi.x != 0 || posi.y != 0){//if valid key pressed
-            let alpha = this.bodyD.angleBetween(posi);
-            let dir = this.bodyD.cross(posi).z;
-            
-            if(alpha > Math.PI / 20){
-                alpha = (Math.PI / 20);
+            switch(keyP){//key pressed?
+                case 87://"w":
+                    posi.y = -1;
+                    break;
+                case 83://"s":
+                    posi.y = 1;
+                    break;
+                case 65://"a":
+                    posi.x = -1;
+                    break;
+                case 68://"d":
+                    posi.x = 1;
+                    break;
             }
+            if(posi.x != 0 || posi.y != 0){//if valid key pressed
+                let alpha = this.bodyD.angleBetween(posi); //angle between when the body aims and the desired direction
+                let dir = this.bodyD.cross(posi).z; // if the movement needed is clockwise or not
+                
+                if(alpha > Math.PI / 20) { // If the angle is really big
+                    alpha = (Math.PI / 20); // on this iteration we will only rotate this amount max
+                }
 
-            if(alpha < 0.03){
-                let velo = p5.Vector.fromAngle(this.bodyAngle).mult(this.tankSize.p.v);
-                this.pos.add(velo);
-                //this.move();
+                if(alpha < 0.03){ // if angle small => ready to start moving
+                    let deltaD = p5.Vector.fromAngle(this.bodyAngle).mult(this.tankSize.p.v);
+                    this.pos.add(deltaD);
+                }
+                else { // If angle big, rotate the tank
+                    this.bodyAngle += alpha * ((dir > 0)? 1: - 1);
+                    this.bodyD = createVector(Math.cos(this.bodyAngle), Math.sin(this.bodyAngle));
+                }
+                //console.log(alpha);
             }
-            else{
-                this.bodyAngle += alpha * ((dir > 0)? 1: - 1);
-                this.bodyD = createVector(Math.cos(this.bodyAngle), Math.sin(this.bodyAngle));
-            }
-            //console.log(alpha);
         }
     }
 
