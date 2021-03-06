@@ -1,0 +1,12 @@
+[
+    {
+        "details": "Properties of the tank controlled by the player",
+        "base": {
+            "width": 80,
+            "height": 60
+        },
+        "p": {
+            "v": 80
+        }
+    }
+]
