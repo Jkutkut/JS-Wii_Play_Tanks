@@ -2,17 +2,10 @@
 var tank;
 var AItanks = [];
 
-var tankSize = [
-    {
-        base: {
-            width: 80,
-            height: 60
-        },
-        p: {
-            v: 80
-        }
-    }
-];
+// import tankSize from "tankProperties.json";
+// const tankSize = require('./tankProperties.json');
+// const tankSize = JSON.parse(require('fs').readFileSync('tankProperties.json', 'utf8'));
+var tankSize;
 var tankC;
 const shotDelay = 200;
 var lastBMilli = 0;
@@ -31,6 +24,8 @@ var debug = -1;
 var enti;
 
 function preload(){
+    fetch("https://cdn.jsdelivr.net/gh/Jkutkut/JS-Wii_Play_tanks@3fb7cbfe4952ae2a1fc3d6fa3bb2d39f814c644f/tankProperties.json")
+    .then(response => response.json()).then(json => tankSize = json);
     boxTexture = loadImage("https://cdn.jsdelivr.net/gh/Jkutkut/JS-Wii_Play_Tanks@master/textures/wood-texture.jpg");
     backgroundTexture = loadImage("https://cdn.jsdelivr.net/gh/Jkutkut/JS-Wii_Play_Tanks@master/textures/light-wood-texture.jpg");
 }
