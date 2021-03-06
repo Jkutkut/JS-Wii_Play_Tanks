@@ -24,7 +24,8 @@ var debug = -1;
 var enti;
 
 function preload(){
-    fetch("https://cdn.jsdelivr.net/gh/Jkutkut/JS-Wii_Play_tanks@3fb7cbfe4952ae2a1fc3d6fa3bb2d39f814c644f/tankProperties.json")
+    let commit = "c2ed1641e816734b60699f670f1ed86735343221"
+    fetch("https://cdn.jsdelivr.net/gh/Jkutkut/JS-Wii_Play_tanks@" + commit + "/tankProperties.json")
     .then(response => response.json()).then(json => tankSize = json);
     boxTexture = loadImage("https://cdn.jsdelivr.net/gh/Jkutkut/JS-Wii_Play_Tanks@master/textures/wood-texture.jpg");
     backgroundTexture = loadImage("https://cdn.jsdelivr.net/gh/Jkutkut/JS-Wii_Play_Tanks@master/textures/light-wood-texture.jpg");
@@ -55,6 +56,8 @@ function setup() {
             body: color(141, 108, 59),
             gun: color(137, 107, 52),
             gunTip: color(115, 89, 42),
+            tire: color(36, 36, 36),
+            bullet: color(255, 255, 255)
         }
     ];
 
@@ -63,6 +66,7 @@ function setup() {
     boxColor = color(255, 204, 0);
 
     tank = new Tank(mainCanvasWidth / 2, mainCanvasHeight / 2, 0);  
+    AItanks.push(new Tank(200, 200, 1, 0));
 }
 
 function draw() {
@@ -80,6 +84,9 @@ function draw() {
     keyD();
     tank.show();
 
+    for (let i = 0; i < AItanks.length; i++) {
+        AItanks[i].show();
+    }
 
     if(debug == 0){
         noLoop();
