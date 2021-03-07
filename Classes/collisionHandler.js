@@ -57,10 +57,13 @@ class CollisionHandler {
         }
     }
 
-    collide(obj1, obj2, multiplier=1) {
-        return (obj1.pos.x < obj2.pos.x + obj2.size.w * multiplier &&
-                obj2.pos.x < obj1.pos.x + obj1.size.w * multiplier &&
-                obj1.pos.y < obj2.pos.y + obj2.size.h * multiplier &&
-                obj2.pos.y < obj1.pos.y + obj1.size.h * multiplier);
+    collide(obj1, obj2) {
+        let response = new SAT.Response();
+        let collide = SAT.testPolygonPolygon(obj1.getSATdata(), obj2.getSATdata());
+        return collide;
+        // return (obj1.pos.x < obj2.pos.x + obj2.size.w * multiplier &&
+        //         obj2.pos.x < obj1.pos.x + obj1.size.w * multiplier &&
+        //         obj1.pos.y < obj2.pos.y + obj2.size.h * multiplier &&
+        //         obj2.pos.y < obj1.pos.y + obj1.size.h * multiplier);
     }
 }

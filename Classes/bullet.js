@@ -62,6 +62,24 @@ class Bullet{
         this.bounces--;
     }
 
+    getSATdata() {
+        let len2 = this.bulletSize.len * 0.5;
+
+        let obj = new SAT.Polygon(
+            new SAT.Vector(this.pos.x, this.pos.y),
+            [
+                new SAT.Vector(-len2, -len2),
+                new SAT.Vector(-len2, len2),
+                new SAT.Vector(len2, len2),
+                new SAT.Vector(this.bulletSize.len * 0.8, 0),
+                new SAT.Vector(len2, -len2),
+                new SAT.Vector(-len2, -len2)
+            ]
+        );
+        obj.rotate(this.angle);
+        return obj;
+    }
+
     validSpot(){
         return  this.pos.x > 0               && this.pos.y > 0 && 
                 this.pos.x < mainCanvasWidth && this.pos.y < mainCanvasHeight;

@@ -8,7 +8,10 @@ class Tank{
         this.tankColor = tankC[colorId];
         this.tankSize = objectProperties[sizeId];
 
-        this.size = {w: this.tankSize.base.width, h: this.tankSize.base.height + this.tankSize.tires.small.width};
+        this.size = {
+            w: this.tankSize.base.width,
+            h: this.tankSize.base.height + this.tankSize.tires.small.width
+        };
     }
 
     show(){
@@ -70,6 +73,24 @@ class Tank{
                 // return [0, 0, wSize, hSize];
                 return [- wSize, - hSize, w, h];
         }
+    }
+
+    getSATdata() {
+        let size2 = {
+            w: this.size.w / 2,
+            h: this.size.h / 2
+        }
+        let obj = new SAT.Polygon(
+            new SAT.Vector(this.pos.x, this.pos.y),
+            [
+                new SAT.Vector(-size2.w, -size2.h),
+                new SAT.Vector(-size2.w, size2.h),
+                new SAT.Vector(size2.w, size2.h),
+                new SAT.Vector(size2.w, -size2.h),
+            ]
+        );
+        obj.rotate(this.bodyAngle);
+        return obj;
     }
 
 
