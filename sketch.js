@@ -30,8 +30,13 @@ function preload(){
 
 
 function setup() {
-    mainCanvasWidth = (mainCanvasWidth)? mainCanvasWidth : windowWidth;
-    mainCanvasHeight = (mainCanvasHeight)? mainCanvasHeight : mainCanvasWidth * 9 / 16;
+    mainCanvasWidth = windowWidth;
+    mainCanvasHeight = windowWidth * 9 / 16;
+    
+    if (mainCanvasHeight > windowHeight) {
+        mainCanvasWidth = windowHeight * 16 / 9;
+        mainCanvasHeight = windowHeight;
+    }
 
     createCanvas(mainCanvasWidth, mainCanvasHeight);
     noCursor();

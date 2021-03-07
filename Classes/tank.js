@@ -141,13 +141,7 @@ class Tank{
 
         if(desiredAngle != null){//if valid key pressed
             desiredAngle *= Math.PI; // Now this is true radians
-
-            // console.log("***********");
-            // console.log(desiredPosi);
-            // console.log(desiredAngle);
-            // console.log(keys);
-            // console.log("***********");
-
+            
             let alpha = desiredAngle - this.bodyAngle; //angle between when the body aims and the desired direction
 
             let dir = 1; // if the movement needed is clockwise or not
