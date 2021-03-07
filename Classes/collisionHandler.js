@@ -10,21 +10,16 @@ class CollisionHandler {
 
 
 
-    collidingBulletBorderWall(bullet) {
-        let verti = bullet.pos.x - (this.walls[0].pos.x + this.walls[0].size.w) < this.delta && bullet.direction.x < 0 ||
-                    this.walls[1].pos.x - bullet.pos.x < this.delta && bullet.direction.x > 0;
-
-        if (verti) {
-            return 1;
+    collidingBulletWall(bullet) {
+        let response = new SAT.Response();
+        for (let j = 0; j < this.walls.length; j++) {
+            let wall = this.walls[j];
+            
+            if (this.collide(wall, bullet, response)) {
+                bullet.bounce(response.overlapN);
+            }
+            response.clear();
         }
-
-        let hori = bullet.pos.y - (this.walls[2].pos.y + this.walls[2].size.h) < this.delta && bullet.direction.y < 0 ||
-        this.walls[3].pos.y - bullet.pos.y < this.delta && bullet.direction.y > 0;
-        
-        if (hori) {
-            return -1;
-        }
-        return 0;
     }
 
     bulletAniquilation (bullets) {
@@ -33,7 +28,7 @@ class CollisionHandler {
             let primaryBullet = bullets[i];
             for (let j = i + 1; j < bullets.length; j++){
                 let secondaryBullet = bullets[j];
-                if (this.collide(primaryBullet, secondaryBullet, 2)) {
+                if (this.collide(primaryBullet, secondaryBullet)) {
                     bullets.splice(j, 1);
                     bullets.splice(i, 1);
                     i--;
@@ -43,27 +38,21 @@ class CollisionHandler {
         }
     }
 
-    aiTankAniquilation(tanks, bullets) {
-        for (let i = 0; i < tanks.length; i++) {
-            let tank = tanks[i];
-            for (let j = 0; j < bullets.length; j++){
-                let bullet = bullets[j];
-                if (this.collide(tank, bullet)) {
-                    bullets.splice(j, 1);
-                    tanks.splice(i--, 1);
-                    break;
-                }
-            }
-        }
+    tankAniquilation(tanks, bullets) {
+        // for (let i = 0; i < tanks.length; i++) {
+        //     let tank = tanks[i];
+        //     for (let j = 0; j < bullets.length; j++){
+        //         let bullet = bullets[j];
+        //         if (this.collide(tank, bullet)) {
+        //             bullets.splice(j, 1);
+        //             tanks.splice(i--, 1);
+        //             break;
+        //         }
+        //     }
+        // }
     }
 
-    collide(obj1, obj2) {
-        let response = new SAT.Response();
-        let collide = SAT.testPolygonPolygon(obj1.getSATdata(), obj2.getSATdata());
-        return collide;
-        // return (obj1.pos.x < obj2.pos.x + obj2.size.w * multiplier &&
-        //         obj2.pos.x < obj1.pos.x + obj1.size.w * multiplier &&
-        //         obj1.pos.y < obj2.pos.y + obj2.size.h * multiplier &&
-        //         obj2.pos.y < obj1.pos.y + obj1.size.h * multiplier);
+    collide(obj1, obj2, response=null) {
+        return SAT.testPolygonPolygon(obj1.getSATdata(), obj2.getSATdata(), response);
     }
 }

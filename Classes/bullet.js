@@ -51,8 +51,8 @@ class Bullet{
         this.pos.add(this.direction);
     }
 
-    bounce(collisionType) {
-        if (collisionType == 1) {
+    bounce(collisionV) {
+        if (collisionV.y == 0) { // vertical wall
             this.direction.x *= -1;
         }
         else {
@@ -64,6 +64,7 @@ class Bullet{
 
     getSATdata() {
         let len2 = this.bulletSize.len * 0.5;
+        let multiplier = 2;
 
         let obj = new SAT.Polygon(
             new SAT.Vector(this.pos.x, this.pos.y),
@@ -74,8 +75,9 @@ class Bullet{
                 new SAT.Vector(this.bulletSize.len * 0.8, 0),
                 new SAT.Vector(len2, -len2),
                 new SAT.Vector(-len2, -len2)
-            ]
+            ].map(x => x.scale(multiplier))
         );
+        obj
         obj.rotate(this.angle);
         return obj;
     }

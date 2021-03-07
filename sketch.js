@@ -74,25 +74,30 @@ function setup() {
 
     let margin = 5;
     let wallWidth = 15;
+    let doubleMargin = 2 * margin;
+    let wallW2 = wallWidth        * 0.5;
+    let mainW2 = mainCanvasWidth  * 0.5;
+    let mainH2 = mainCanvasHeight * 0.5;
 
-    // Vertical
-    walls.push(new WoodBox(
-        margin, margin,
-        wallWidth, mainCanvasHeight - 2 * margin - wallWidth));
-    
-    walls.push(new WoodBox(
-        mainCanvasWidth - 4 * margin, margin + wallWidth,
-        wallWidth, mainCanvasHeight - 2 * margin - wallWidth));
-
+    //vertical
+    walls.push( new Wall(
+        margin + wallW2, mainH2 - wallW2,
+        wallWidth, mainCanvasHeight - doubleMargin - wallWidth
+    ));
+    walls.push( new Wall(
+        mainCanvasWidth - (margin + wallW2), mainH2 + wallW2,
+        wallWidth, mainCanvasHeight - doubleMargin - wallWidth
+    ));
     //horizontal
-    walls.push(new WoodBox(
-        margin + wallWidth, margin,
-        mainCanvasWidth - margin * 2 - wallWidth, wallWidth));
-    walls.push(new WoodBox(
-            margin, mainCanvasHeight - (margin + wallWidth),
-            mainCanvasWidth - wallWidth - 2 * margin, wallWidth));
+    walls.push( new Wall(
+        mainW2 + wallW2 - wallWidth, mainCanvasHeight - margin - wallW2,
+        mainCanvasWidth - doubleMargin - wallWidth, wallWidth
+    ));
+    walls.push( new Wall(
+        mainW2 + wallW2, margin + wallW2,
+        mainCanvasWidth - doubleMargin - wallWidth, wallWidth
+    ));
 
-    
     collisionHandler = new CollisionHandler(tank, walls);
 }
 
@@ -112,18 +117,16 @@ function draw() {
         continue;
       }
       else {
-          let collision = collisionHandler.collidingBulletBorderWall(bullets[i]);
-          if (collision != 0) {
-              bullets[i].bounce(collision);
-              if (bullets[i].bounces == 0) { // If no remaing bounces
+            collisionHandler.collidingBulletWall(bullets[i]);
+            
+            if (bullets[i].bounces == 0) { // If no remaing bounces
                 bullets.splice(i--, 1);
                 continue
-              }
-          }
+            }
       }
     }
     collisionHandler.bulletAniquilation(bullets);
-    collisionHandler.aiTankAniquilation(AItanks, bullets);
+    collisionHandler.tankAniquilation(AItanks, bullets);
 
     for (let i = 0; i < bullets.length; i++) {
         bullets[i].show();
