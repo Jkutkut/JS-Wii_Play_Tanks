@@ -186,7 +186,8 @@ class TankPlayer extends Tank {
 class TankEnemy extends Tank{
     constructor(x, y, colorId = 1, sizeId = 0) {
         super(x, y, colorId, sizeId);
-        
+        this.headAngle = Math.PI;
         this.playerFound = false;
+        this.playerLastPos = createVector(0, 0);
     }
 }

@@ -124,7 +124,7 @@ function draw() {
     }
 
     push()
-        translate(20, 20)
+        translate(40, 50)
         text(Math.round(frameRate()), 0, 0);
     pop()
 }

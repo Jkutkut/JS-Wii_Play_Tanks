@@ -1,15 +1,27 @@
 # Things to do:
 
-## UI:
-- [ ] fix error of perspective
-- [ ] Reticle
-- [ ] interface (lives)
-- [ ] menu
+## Ideas:
+- Weapons:
+    - [ ] PEM
+    - [ ] Mines
+    - [ ] Explosive ammo
+    - [ ] 
+    - [ ] 
 
-## Logic:
-- [ ] Colisions
-- [ ] Obstacles
-- [ ] Border
-- [ ] levels
-- [ ] AI
-- [ ] 
+
+- DOM:
+    - [ ] mill wall
+    - [ ] void floor
+    - [ ] mobile floor
+    - [ ] 
+    - [ ] 
+    - [ ] 
+
+- Tanks:
+    - [ ] invisible tank
+    - [ ] fast fire tank
+    - [ ] kamikaze
+    - [ ] multiple shot
+    - [ ] 
+    - [ ] 
+    - [ ] 
