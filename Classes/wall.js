@@ -1,20 +1,14 @@
 class WoodBox{
     constructor(x, y, w, h){
-      this.x = x;
-      this.y = y;
-      this.w = w;
-      this.h = h;
+      this.pos = createVector(x, y);
+      this.size = {w: w, h: h};
     }
     
     
     show(){
       push();
-        // stroke(0);
-        // strokeWeight(2);
         fill(boxColor);
-
-        // translate(this.x, this.y);
-        rect(this.x, this.y, this.w, this.h);
+        rect(this.pos.x, this.pos.y, this.size.w, this.size.h);
       pop();
     }
   }

@@ -4,6 +4,7 @@ var AItanks = [];
 
 var objectProperties;
 var tankC;
+var collisionHandler;
 
 var bullets = []; //bullets, to keep track of them
 var walls = [];
@@ -89,7 +90,8 @@ function setup() {
             margin, mainCanvasHeight - (margin + wallWidth),
             mainCanvasWidth - wallWidth - 2 * margin, wallWidth));
 
-
+    
+    collisionHandler = CollisionHandler(tank, walls)
 }
 
 function draw() {
@@ -104,6 +106,11 @@ function draw() {
       if(!bullets[i].validSpot()){
         bullets.splice(i--, 1);
         continue;
+      }
+      else {
+          if (collisionHandler.collidingBullet(bullets[i])) {
+              bullets[i].bounce();
+          }
       }
       bullets[i].show();
     }
