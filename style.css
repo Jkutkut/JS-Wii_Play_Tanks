@@ -1,8 +1,12 @@
 html, body {
-  margin: 0;
-  padding: 0;
-  background: black;
+    margin: 0;
+    padding: 0;
+    background: black;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 canvas {
-  display: block;
+    display: block;
 }
