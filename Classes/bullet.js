@@ -40,14 +40,6 @@ class Bullet{
                     vertex(this.bulletSize.len * 1.3, 0);
                     vertex(this.bulletSize.len, -len2);
                     vertex(0, -len2);
-                    
-
-                    // vertex(0, 0);
-                    // vertex(0, this.bulletSize.len);
-                    // vertex(this.bulletSize.len, this.bulletSize.len);
-                    // vertex(this.bulletSize.len * 1.3, this.bulletSize.len * 0.5);
-                    // vertex(this.bulletSize.len, 0);
-                    // vertex(0, 0);
                 endShape();
             pop();
         pop();
