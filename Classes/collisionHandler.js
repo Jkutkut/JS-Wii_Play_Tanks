@@ -3,7 +3,7 @@ class CollisionHandler {
         this.walls = walls;
         this.tanks = [playerTank];
 
-        this.delta = 0.001;
+        this.delta = 0.1;
     }
 
 
@@ -11,7 +11,7 @@ class CollisionHandler {
 
 
     collidingBullet(bullet) {
-        let wall = walls[0];
-        return Math.abs(wall.pos.x + wall.size.w - bullet.pos.x < delta);
+        let wall = this.walls[0];
+        return Math.abs(wall.pos.x + wall.size.w - bullet.pos.x) < this.delta;
     }
 }

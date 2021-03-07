@@ -91,16 +91,18 @@ function setup() {
             mainCanvasWidth - wallWidth - 2 * margin, wallWidth));
 
     
-    collisionHandler = CollisionHandler(tank, walls)
+    collisionHandler = new CollisionHandler(tank, walls);
 }
 
 function draw() {
     background(backgroundTexture);
 
+    // Draw walls
     for(let i = 0; i < walls.length; i++) {
         walls[i].show();
     }
 
+    // Bullets
     for(let i = 0; i < bullets.length; i++){
       bullets[i].move();
       if(!bullets[i].validSpot()){
@@ -108,6 +110,7 @@ function draw() {
         continue;
       }
       else {
+          console.log("checking bullet")
           if (collisionHandler.collidingBullet(bullets[i])) {
               bullets[i].bounce();
           }
@@ -115,6 +118,8 @@ function draw() {
       bullets[i].show();
     }
 
+
+    // AItanks
     for (let i = 0; i < AItanks.length; i++) {
         AItanks[i].show();
     }
@@ -124,7 +129,7 @@ function draw() {
     tank.show();
 
     
-
+    // Debug
     if(debug == 0){
         noLoop();
     }

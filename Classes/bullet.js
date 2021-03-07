@@ -46,8 +46,14 @@ class Bullet{
         this.pos.add(this.direction);
     }
 
+    bounce() {
+        this.angle = (this.angle + Math.PI) % (2 * Math.PI);
+        
+        this.direction.x *= -1;
+    }
+
     validSpot(){
-        // return Math.abs(this.pos.x) < width / 2 && Math.abs(this.pos.y) < height / 2;
-        return true;
+        return  this.pos.x > 0               && this.pos.y > 0 && 
+                this.pos.x < mainCanvasWidth && this.pos.y < mainCanvasHeight;
     }
 }
