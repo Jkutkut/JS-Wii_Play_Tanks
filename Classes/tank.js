@@ -75,13 +75,28 @@ class Tank{
         return obj;
     }
 
-
-
-
-    aim(mX, mY){ //same as setHeadD but for player's tank
+    aim(mX, mY){
         let mouse = createVector(mX, mY);
         let headDirection = this.pos.copy().sub(mouse); // vector from tank pos to mouse
         this.headAngle = (Math.atan(headDirection.y / headDirection.x) + ((headDirection.x < 0)?  0 : Math.PI));
+    }
+
+    advance(deltaD) {
+        this.pos.add(deltaD);
+        if (collisionHandler.canGoHere(this) != true) {
+            deltaD.mult(-1);
+            this.pos.add(deltaD);
+        }
+    }
+
+    shoot(){
+        bullets.push(new Bullet(this));
+    }
+}
+
+class TankPlayer extends Tank {
+    constructor (x, y, colorId = 0, sizeId = 0) {
+        super(x, y, colorId, sizeId);
     }
 
     keyPress(keys){
@@ -166,22 +181,12 @@ class Tank{
             }
         }
     }
-
-    advance(deltaD) {
-        this.pos.add(deltaD);
-        if (collisionHandler.canGoHere(this) != true) {
-            deltaD.mult(-1);
-            this.pos.add(deltaD);
-        }
-    }
-
-    shoot(){
-        bullets.push(new Bullet(this));
-    }
 }
 
 class TankEnemy extends Tank{
     constructor(x, y, colorId = 1, sizeId = 0) {
         super(x, y, colorId, sizeId);
+        
+        this.playerFound = false;
     }
 }
