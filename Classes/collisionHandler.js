@@ -1,19 +1,34 @@
 class CollisionHandler {
-    constructor (playerTank, walls) {
+    constructor (playerTank, tanks, walls, bullets) {
         this.walls = walls;
-        this.tanks = [playerTank];
-
+        this.tanks = [playerTank, ...tanks];
+        this.bullets = bullets;
         this.delta = 5.0001;
     }
 
 
+    handleCollisions() {
+        // Bullets bouncing on walls
+        for(let i = 0; i < bullets.length; i++){            
+            collisionHandler.collidingBulletWall(bullets[i]);
+            if (bullets[i].bounces == 0) { // If no remaing bounces
+                bullets.splice(i--, 1);
+                continue
+            }
+        }
 
+        // Bullets killing each other
+        collisionHandler.bulletAniquilation(bullets);
+        
+        // bullets killing tanks
+        collisionHandler.tankAniquilation(AItanks, bullets);
+    }
 
 
     collidingBulletWall(bullet) {
         let response = new SAT.Response();
-        for (let j = 0; j < this.walls.length; j++) {
-            let wall = this.walls[j];
+        for (let i = 0; i < this.walls.length; i++) {
+            let wall = this.walls[i];
             
             if (this.collide(wall, bullet, response)) {
                 bullet.bounce(response.overlapN);

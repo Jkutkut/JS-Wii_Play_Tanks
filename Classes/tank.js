@@ -26,15 +26,15 @@ class Tank{
                 rotate(this.bodyAngle);
 
                 fill(this.tankColor.body);
-                rect(...this.shape("box", this.tankSize.base.width, this.tankSize.base.height))
+                rect(...shape("box", this.tankSize.base.width, this.tankSize.base.height))
 
                 //  ***  tires  ***  //
                 fill(this.tankColor.tire);
                 for (let i = -1; i < 2; i += 2) {
                     push();
                         translate(0, i * this.tankSize.base.height / 2);
-                        rect(...this.shape("box", this.tankSize.tires.small.len, this.tankSize.tires.small.width));
-                        rect(...this.shape("box", this.tankSize.tires.big.len, this.tankSize.tires.big.width));
+                        rect(...shape("box", this.tankSize.tires.small.len, this.tankSize.tires.small.width));
+                        rect(...shape("box", this.tankSize.tires.big.len, this.tankSize.tires.big.width));
                     pop();
                 }
             pop()
@@ -44,35 +44,17 @@ class Tank{
                 rotate(this.headAngle);
                 fill(this.tankColor.gun);
                 // head
-                rect(...this.shape("box", this.tankSize.head.width));
+                rect(...shape("box", this.tankSize.head.width));
                 
                 translate((this.tankSize.head.width + this.tankSize.head.gun.len) / 2, 0);
                 // gun cylinder
-                rect(...this.shape("box", this.tankSize.head.gun.len, this.tankSize.head.gun.width));
+                rect(...shape("box", this.tankSize.head.gun.len, this.tankSize.head.gun.width));
                 
                 translate(this.tankSize.head.gun.len * 0.5, 0);
                 //tip
-                rect(...this.shape("box", this.tankSize.head.gunTip.len, this.tankSize.head.gunTip.width));
+                rect(...shape("box", this.tankSize.head.gunTip.len, this.tankSize.head.gunTip.width));
             pop()
         pop();
-    }
-
-    shape(type, w, h) {
-        switch(type) {
-            case "box":
-                let wSize = (w / 2);
-                let hSize;
-
-                if (!h) {
-                    hSize = wSize;
-                    h = w;
-                }
-                else {
-                    hSize = (h / 2);
-                }
-                // return [0, 0, wSize, hSize];
-                return [- wSize, - hSize, w, h];
-        }
     }
 
     getSATdata() {
@@ -100,19 +82,6 @@ class Tank{
         let mouse = createVector(mX, mY);
         let headDirection = this.pos.copy().sub(mouse); // vector from tank pos to mouse
         this.headAngle = (Math.atan(headDirection.y / headDirection.x) + ((headDirection.x < 0)?  0 : Math.PI));
-
-        push();
-            translate(mouse);
-            fill(0);
-            ellipse(0, 0, 4, 4);
-            for (let i = 0; i < 4; i++) {
-                push()
-                    rotate(Math.PI / 2 * i)
-                    translate(10, 0)
-                    rect(...this.shape("box", 5, 2))
-                pop()
-            }
-        pop();
     }
 
     keyPress(keys){

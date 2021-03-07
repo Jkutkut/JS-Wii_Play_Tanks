@@ -98,7 +98,7 @@ function setup() {
         mainCanvasWidth - doubleMargin - wallWidth, wallWidth
     ));
 
-    collisionHandler = new CollisionHandler(tank, walls);
+    collisionHandler = new CollisionHandler(tank, AItanks, walls, bullets);
 }
 
 function draw() {
@@ -111,36 +111,39 @@ function draw() {
 
     // Bullets
     for(let i = 0; i < bullets.length; i++){
-      bullets[i].move();
-      if(!bullets[i].validSpot()){
-        bullets.splice(i--, 1);
-        continue;
-      }
-      else {
-            collisionHandler.collidingBulletWall(bullets[i]);
-            
-            if (bullets[i].bounces == 0) { // If no remaing bounces
-                bullets.splice(i--, 1);
-                continue
-            }
-      }
+        bullets[i].move();
     }
-    collisionHandler.bulletAniquilation(bullets);
-    collisionHandler.tankAniquilation(AItanks, bullets);
+    tank.aim(mouseX, mouseY);
+    keyD();
 
+    collisionHandler.handleCollisions();
+
+
+    // ++++ Drawing ++++
+    // Bullets
     for (let i = 0; i < bullets.length; i++) {
         bullets[i].show();
     }
-
-
     // AItanks
     for (let i = 0; i < AItanks.length; i++) {
         AItanks[i].show();
-    }
-
-    tank.aim(mouseX, mouseY);
-    keyD();
+    }  
     tank.show();
+
+    // Mouse cursor:
+    let mouse = createVector(mouseX, mouseY);
+    push();
+        translate(mouse);
+        fill(0);
+        ellipse(0, 0, 4, 4);
+        for (let i = 0; i < 4; i++) {
+            push()
+                rotate(Math.PI / 2 * i)
+                translate(10, 0)
+                rect(...shape("box", 5, 2))
+            pop()
+        }
+    pop();
 
     
     // Debug

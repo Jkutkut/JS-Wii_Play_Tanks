@@ -21,7 +21,7 @@ class Wall {
         this.size = {w: w, h: h};
         this.angle = angle;
 
-        this.shape = new Tank().shape("box", w, h);
+        this.shape = shape("box", w, h);
 
         this.SATdata = new SAT.Polygon(
             new SAT.Vector(x, y),
