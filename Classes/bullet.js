@@ -20,11 +20,13 @@ class Bullet{
         this.angle = parent.headAngle;
         this.v = this.bulletSize.p.v;
 
-        this.direction.mult(this.v)
+        this.direction.mult(this.v);
 
         this.bulletC = this.parent.tankColor;
 
         this.size = {w: this.bulletSize.len * 1.3, h: this.bulletSize.len};
+
+        this.bounces = 3 + 1;
     }
     show(){
         push();
@@ -57,6 +59,7 @@ class Bullet{
             this.direction.y *= -1;
         }
         this.angle = this.direction.heading();
+        this.bounces--;
     }
 
     validSpot(){

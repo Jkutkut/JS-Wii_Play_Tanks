@@ -113,6 +113,10 @@ function draw() {
           let collision = collisionHandler.collidingBulletBorderWall(bullets[i]);
           if (collision != 0) {
               bullets[i].bounce(collision);
+              if (bullets[i].bounces == 0) { // If no remaing bounces
+                bullets.splice(i--, 1);
+                continue
+              }
           }
       }
       bullets[i].show();
