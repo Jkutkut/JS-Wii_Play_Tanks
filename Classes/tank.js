@@ -155,7 +155,7 @@ class Tank{
 
             if(alpha < 0.03){ // if angle small => ready to start moving
                 let deltaD = p5.Vector.fromAngle(this.bodyAngle).mult(this.tankSize.p.v * dir);
-                this.pos.add(deltaD);
+                this.advance(deltaD);
             }
             else { // If angle big, rotate the tank
                 this.bodyAngle += alpha * ((dir > 0)? 1: - 1);
@@ -164,6 +164,14 @@ class Tank{
                 }
                 this.bodyD = createVector(Math.cos(this.bodyAngle), Math.sin(this.bodyAngle));
             }
+        }
+    }
+
+    advance(deltaD) {
+        this.pos.add(deltaD);
+        if (collisionHandler.canGoHere(this) != true) {
+            deltaD.mult(-1);
+            this.pos.add(deltaD);
         }
     }
 

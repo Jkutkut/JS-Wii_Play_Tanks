@@ -54,17 +54,38 @@ class CollisionHandler {
     }
 
     tankAniquilation(tanks, bullets) {
-        // for (let i = 0; i < tanks.length; i++) {
-        //     let tank = tanks[i];
-        //     for (let j = 0; j < bullets.length; j++){
-        //         let bullet = bullets[j];
-        //         if (this.collide(tank, bullet)) {
-        //             bullets.splice(j, 1);
-        //             tanks.splice(i--, 1);
-        //             break;
-        //         }
-        //     }
-        // }
+        for (let i = 0; i < tanks.length; i++) {
+            let tank = tanks[i];
+            for (let j = 0; j < bullets.length; j++){
+                let bullet = bullets[j];
+                if (this.collide(tank, bullet)) {
+                    bullets.splice(j, 1);
+                    tanks.splice(i--, 1);
+                    break;
+                }
+            }
+        }
+    }
+
+    canGoHere(obj) {
+        let response = new SAT.Response();
+        for (let i = 0; i < this.walls.length; i++) {
+            response.clear();
+            if (this.collide(walls[i], obj, response)) {
+                return response;
+            }
+        }
+        for (let i = 0; i < this.tanks.length; i++){
+            response.clear();
+            if (this.tanks[i] == obj) {
+                continue;
+            }
+
+            if (this.collide(this.tanks[i], obj, response)){
+                return response;
+            }
+        }
+        return true;
     }
 
     collide(obj1, obj2, response=null) {

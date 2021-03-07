@@ -66,7 +66,7 @@ function setup() {
     boxColor = color(227, 118, 34);
 
     initLevel();
-    loadLevel(2)
+    loadLevel(1);
 
     collisionHandler = new CollisionHandler(tank, AItanks, walls, bullets);
 }
