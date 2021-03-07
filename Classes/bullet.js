@@ -64,7 +64,7 @@ class Bullet{
 
     getSATdata() {
         let len2 = this.bulletSize.len * 0.5;
-        let multiplier = 2;
+        let multiplier = 1.5;
 
         let obj = new SAT.Polygon(
             new SAT.Vector(this.pos.x, this.pos.y),
