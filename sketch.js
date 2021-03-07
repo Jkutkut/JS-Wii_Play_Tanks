@@ -62,8 +62,10 @@ function setup() {
         }
     ];
 
-    tank = new Tank(mainCanvasWidth / 2, mainCanvasHeight / 2, 0);  
-    AItanks.push(new Tank(200, 200, 1, 0));
+    tank = new Tank(100, mainCanvasHeight / 2, 0);  
+    for (let i = 0; i < 8; i++){
+        AItanks.push(new Tank(mainCanvasWidth * 0.8, 90 * (i + 1), 1, 0));
+    }
 
 
 
@@ -119,9 +121,13 @@ function draw() {
               }
           }
       }
-      bullets[i].show();
     }
     collisionHandler.bulletAniquilation(bullets);
+    collisionHandler.aiTankAniquilation(AItanks, bullets);
+
+    for (let i = 0; i < bullets.length; i++) {
+        bullets[i].show();
+    }
 
 
     // AItanks

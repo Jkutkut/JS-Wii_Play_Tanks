@@ -7,6 +7,8 @@ class Tank{
 
         this.tankColor = tankC[colorId];
         this.tankSize = objectProperties[sizeId];
+
+        this.size = {w: this.tankSize.base.width, h: this.tankSize.base.height + this.tankSize.tires.small.width};
     }
 
     show(){

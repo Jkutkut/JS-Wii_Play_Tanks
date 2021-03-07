@@ -33,7 +33,7 @@ class CollisionHandler {
             let primaryBullet = bullets[i];
             for (let j = i + 1; j < bullets.length; j++){
                 let secondaryBullet = bullets[j];
-                if (this.collide(primaryBullet, secondaryBullet)) {
+                if (this.collide(primaryBullet, secondaryBullet, 2)) {
                     bullets.splice(j, 1);
                     bullets.splice(i, 1);
                     i--;
@@ -43,13 +43,24 @@ class CollisionHandler {
         }
     }
 
-    collide(obj1, obj2) {
-        let multiplier = 2;
+    aiTankAniquilation(tanks, bullets) {
+        for (let i = 0; i < tanks.length; i++) {
+            let tank = tanks[i];
+            for (let j = 0; j < bullets.length; j++){
+                let bullet = bullets[j];
+                if (this.collide(tank, bullet)) {
+                    bullets.splice(j, 1);
+                    tanks.splice(i--, 1);
+                    break;
+                }
+            }
+        }
+    }
+
+    collide(obj1, obj2, multiplier=1) {
         return (obj1.pos.x < obj2.pos.x + obj2.size.w * multiplier &&
                 obj2.pos.x < obj1.pos.x + obj1.size.w * multiplier &&
                 obj1.pos.y < obj2.pos.y + obj2.size.h * multiplier &&
                 obj2.pos.y < obj1.pos.y + obj1.size.h * multiplier);
-
-        return 
     }
 }
