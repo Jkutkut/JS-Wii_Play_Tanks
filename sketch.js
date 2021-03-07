@@ -104,19 +104,20 @@ function draw() {
 
     // Bullets
     for(let i = 0; i < bullets.length; i++){
-      bullets[i].move();
+    //   bullets[i].move();
       if(!bullets[i].validSpot()){
         bullets.splice(i--, 1);
         continue;
       }
       else {
-          let collision = collisionHandler.collidingBullet(bullets[i]);
+          let collision = collisionHandler.collidingBulletBorderWall(bullets[i]);
           if (collision != 0) {
               bullets[i].bounce(collision);
           }
       }
       bullets[i].show();
     }
+    collisionHandler.bulletAniquilation(bullets);
 
 
     // AItanks
