@@ -34,12 +34,12 @@ class Bullet{
                 fill(this.bulletC.bullet);
                 beginShape();
                     let len2 = this.bulletSize.len * 0.5;
-                    vertex(0, -len2);
-                    vertex(0, len2);
-                    vertex(this.bulletSize.len, len2);
-                    vertex(this.bulletSize.len * 1.3, 0);
-                    vertex(this.bulletSize.len, -len2);
-                    vertex(0, -len2);
+                    vertex(-len2, -len2);
+                    vertex(-len2, len2);
+                    vertex(len2, len2);
+                    vertex(this.bulletSize.len * 0.8, 0);
+                    vertex(len2, -len2);
+                    vertex(-len2, -len2);
                 endShape();
             pop();
         pop();

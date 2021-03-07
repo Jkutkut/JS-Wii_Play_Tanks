@@ -44,10 +44,21 @@ class CollisionHandler {
     }
 
     collide(obj1, obj2) {
-        let delta = 1 * this.delta;
-        return  delta < obj2.pos.x + obj2.size.w - obj1.pos.x &&
-                obj1.pos.x + obj1.size.w - obj2.pos.x > delta &&
-                delta < obj2.pos.y + obj2.size.h - obj1.pos.y &&
-                obj1.pos.y + obj1.size.h - obj2.pos.y > delta
+        let delta =  this.delta * 0.5;
+        let multiplier = 2;
+        return (obj1.pos.x < obj2.pos.x + obj2.size.w * multiplier &&
+                obj2.pos.x < obj1.pos.x + obj1.size.w * multiplier &&
+                obj1.pos.y < obj2.pos.y + obj2.size.h * multiplier &&
+                obj2.pos.y < obj1.pos.y + obj1.size.h * multiplier)
+        // return  (obj1.pos.x < obj2.pos.x + obj2.size.w &&
+        //         obj2.pos.x < obj1.pos.x + obj1.size.w &&
+        //         obj1.pos.y < obj2.pos.y + obj2.size.h &&
+        //         obj2.pos.y < obj1.pos.y + obj1.size.h) ||
+        //         (obj2.pos.x < obj1.pos.x + obj1.size.w &&
+        //         obj1.pos.x < obj2.pos.x + obj2.size.w &&
+        //         obj2.pos.y < obj1.pos.y + obj1.size.h &&
+        //         obj1.pos.y < obj2.pos.y + obj2.size.h)
+
+        return 
     }
 }

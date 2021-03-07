@@ -104,7 +104,7 @@ function draw() {
 
     // Bullets
     for(let i = 0; i < bullets.length; i++){
-    //   bullets[i].move();
+      bullets[i].move();
       if(!bullets[i].validSpot()){
         bullets.splice(i--, 1);
         continue;
