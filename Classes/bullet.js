@@ -46,10 +46,14 @@ class Bullet{
         this.pos.add(this.direction);
     }
 
-    bounce() {
-        this.angle = (this.angle + Math.PI) % (2 * Math.PI);
-        
-        this.direction.x *= -1;
+    bounce(collisionType) {
+        if (collisionType == 1) {
+            this.direction.x *= -1;
+        }
+        else {
+            this.direction.y *= -1;
+        }
+        this.angle = this.direction.heading();
     }
 
     validSpot(){

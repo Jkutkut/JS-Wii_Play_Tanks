@@ -110,9 +110,9 @@ function draw() {
         continue;
       }
       else {
-          console.log("checking bullet")
-          if (collisionHandler.collidingBullet(bullets[i])) {
-              bullets[i].bounce();
+          let collision = collisionHandler.collidingBullet(bullets[i]);
+          if (collision != 0) {
+              bullets[i].bounce(collision);
           }
       }
       bullets[i].show();
