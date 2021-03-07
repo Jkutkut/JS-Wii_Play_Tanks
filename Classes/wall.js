@@ -1,17 +1,3 @@
-class WoodBox{
-    constructor(x, y, w, h){
-        this.pos = createVector(x, y);
-        this.size = {w: w, h: h};
-    }
-
-    show(){
-        push();
-        fill(boxColor);
-        rect(this.pos.x, this.pos.y, this.size.w, this.size.h);
-        pop();
-    }
-}
-
 class Wall {
     constructor (x, y, w, h, angle=0) {
         let w2 = w / 2;

@@ -62,41 +62,11 @@ function setup() {
         }
     ];
 
-    tank = new Tank(100, mainCanvasHeight / 2, 0);  
-    for (let i = 0; i < 8; i++){
-        AItanks.push(new Tank(mainCanvasWidth * 0.8, 90 * (i + 1), 1, 0));
-    }
-
-
-
     //box
     boxColor = color(227, 118, 34);
 
-    let margin = 5;
-    let wallWidth = 15;
-    let doubleMargin = 2 * margin;
-    let wallW2 = wallWidth        * 0.5;
-    let mainW2 = mainCanvasWidth  * 0.5;
-    let mainH2 = mainCanvasHeight * 0.5;
-
-    //vertical
-    walls.push( new Wall(
-        margin + wallW2, mainH2 - wallW2,
-        wallWidth, mainCanvasHeight - doubleMargin - wallWidth
-    ));
-    walls.push( new Wall(
-        mainCanvasWidth - (margin + wallW2), mainH2 + wallW2,
-        wallWidth, mainCanvasHeight - doubleMargin - wallWidth
-    ));
-    //horizontal
-    walls.push( new Wall(
-        mainW2 + wallW2 - wallWidth, mainCanvasHeight - margin - wallW2,
-        mainCanvasWidth - doubleMargin - wallWidth, wallWidth
-    ));
-    walls.push( new Wall(
-        mainW2 + wallW2, margin + wallW2,
-        mainCanvasWidth - doubleMargin - wallWidth, wallWidth
-    ));
+    initLevel();
+    loadLevel(2)
 
     collisionHandler = new CollisionHandler(tank, AItanks, walls, bullets);
 }
@@ -127,8 +97,10 @@ function draw() {
     // AItanks
     for (let i = 0; i < AItanks.length; i++) {
         AItanks[i].show();
-    }  
-    tank.show();
+    }
+    if (tank) {
+        tank.show();
+    }
 
     // Mouse cursor:
     let mouse = createVector(mouseX, mouseY);

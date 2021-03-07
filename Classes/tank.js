@@ -172,8 +172,8 @@ class Tank{
     }
 }
 
-class tankEnemy extends Tank{
-    constructor(x, y, c) {
-        super(x, y, c);
+class TankEnemy extends Tank{
+    constructor(x, y, colorId = 1, sizeId = 0) {
+        super(x, y, colorId, sizeId);
     }
 }

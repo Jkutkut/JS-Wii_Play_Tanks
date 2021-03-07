@@ -1,20 +1,26 @@
 <!DOCTYPE html><html>
     <head>
+        <!-- libraries -->
         <script src='https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.8.0/p5.min.js'></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.8.0/addons/p5.dom.min.js"></script>
         <script src="lib/SAT.js"></script>
         <script src="lib/extraFunctions.js"></script>
-        <link rel="stylesheet" type="text/css" href="style.css">
-        <meta charset="utf-8">
-    </head>
-    <body>
-        <script type="application/json" src="https://cdn.jsdelivr.net/gh/Jkutkut/JS-Wii_Play_tanks@3fb7cbfe4952ae2a1fc3d6fa3bb2d39f814c644f/tankProperties.json"></script>
-        <script src="sketch.js"></script>
+
         <!-- CLASSES -->
         <script src="Classes/tank.js"></script>
         <script src="Classes/bullet.js"></script>
         <script src="Classes/wall.js"></script>
         <script src="Classes/collisionHandler.js"></script>
+
+        <!-- CSS -->
+        <link rel="stylesheet" type="text/css" href="style.css">
+        <meta charset="utf-8">
+    </head>
+    <body>
+        <!-- Specific info -->
+        <script type="application/json" src="https://cdn.jsdelivr.net/gh/Jkutkut/JS-Wii_Play_tanks@3fb7cbfe4952ae2a1fc3d6fa3bb2d39f814c644f/tankProperties.json"></script>
+        <script src="lib/levelLoader.js"></script>
         
+        <script src="sketch.js"></script>        
     </body>
 </html>
