@@ -15,12 +15,17 @@ class Ray {
         this.dir.y = y - this.pos.y;
         this.dir.normalize();
     }
+
+    rotate(angle) {
+
+        this.dir.rotate(radians(angle))
+    }
   
     show() {
         push();
-        stroke(255);
+        stroke(255, 255, 255, 20);
         translate(this.pos.x, this.pos.y);
-        line(0, 0, this.dir.x * 10, this.dir.y * 10);
+        line(0, 0, this.dir.x * 50, this.dir.y * 50);
         pop();
     }
   

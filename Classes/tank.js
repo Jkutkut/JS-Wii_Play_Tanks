@@ -187,12 +187,13 @@ class TankEnemy extends Tank{
     constructor(x, y, colorId = 1, sizeId = 0) {
         super(x, y, colorId, sizeId);
         this.headAngle = Math.PI;
+        
         this.playerFound = false;
         this.playerLastPos = createVector(0, 0);
     
         this.rays = [];
-        // for (let a = 0; a < 1; a++) {
-        for (let a = -45; a < 45; a++) {
+        this.rayAperture = 45; //Degrees
+        for (let a = -this.rayAperture; a < this.rayAperture; a++) {
             this.rays.push(new Ray(this.pos, radians(a) + this.headAngle));
         }
     }
@@ -220,8 +221,17 @@ class TankEnemy extends Tank{
                 }
             }
             if (closest != null) { // If this ray has found something
-                if (elements[index] instanceof TankPlayer) {
+                if (elements[index] instanceof TankPlayer) { // if player found
                     line(this.pos.x, this.pos.y, closest.x, closest.y);
+
+                    this.playerFound = true;
+                    this.playerLastPos = elements[index].pos;
+
+                    // let angle = p5.Vector.fromAngle(this.angle).add(this.pos).angleBetween(this.playerLastPos);
+                    
+                    this.aim(this.playerLastPos.x, this.playerLastPos.y)
+
+
                 }
                 else {
                     push()
@@ -230,6 +240,22 @@ class TankEnemy extends Tank{
                     pop()
                 }
             }
+        }
+    }
+
+    aim(mX, mY) {
+        Tank.prototype.aim.call(this, mX, mY);
+        for(let i = 0; i < this.rayAperture * 2; i++){
+            this.rays[i].lookAt(mX, mY);
+            this.rays[i].rotate(i - 45);
+        }
+    }
+
+    show() {
+        Tank.prototype.show.call(this);
+
+        for (let i = 0; i < this.rays.length; i++){
+            this.rays[i].show();
         }
     }
 }
