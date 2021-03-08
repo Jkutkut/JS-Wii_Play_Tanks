@@ -232,6 +232,12 @@ class TankEnemy extends Tank{
                     this.playerLastPos = elements[index].pos;
                     this.aim(this.playerLastPos.x, this.playerLastPos.y)
                 }
+                else {
+                    push();
+                    stroke(220, 30, 10, 100);
+                    line(this.pos.x, this.pos.y, closest.x, closest.y);
+                    pop();
+                }
             }
         }
     }
@@ -240,7 +246,7 @@ class TankEnemy extends Tank{
         Tank.prototype.aim.call(this, mX, mY);
         for(let i = 0; i < this.rayAperture * 2; i++){
             this.rays[i].lookAt(mX, mY);
-            this.rays[i].rotate(i - 45);
+            this.rays[i].rotate(i - this.rayAperture);
         }
     }
 
