@@ -37,15 +37,14 @@ class Ray {
         let pointsFound = [];
 
         for (let line = 0; line < 4; line++) { // For each edge on the hitbox
-            const x1 = objSAT.edges[line].x + objSAT.pos.x;
-            const y1 = objSAT.edges[line].y + objSAT.pos.y;
-            const x2 = objSAT.edges[(line + 1) % 4].x + objSAT.pos.x;
-            const y2 = objSAT.edges[(line + 1) % 4].y + objSAT.pos.y;
+            const x1 = objSAT.points[line].x + objSAT.pos.x;
+            const y1 = objSAT.points[line].y + objSAT.pos.y;
+            const x2 = objSAT.points[(line + 1) % 4].x + objSAT.pos.x;
+            const y2 = objSAT.points[(line + 1) % 4].y + objSAT.pos.y;
         
             const den = (x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4);
             
             if (den == 0) {
-                console.log("Infinite");
                 continue;
             }
         

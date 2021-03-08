@@ -213,23 +213,21 @@ class TankEnemy extends Tank{
                 if (pt) { // if intersection found
                     const d = p5.Vector.dist(this.pos, pt);
                     if (d < record) {
-                        // console.log("new record")
                         record = d;
                         closest = pt.copy();
                         index = j;
                     }
-
-                    // console.log("hey");
-                    // line(this.pos.x, this.pos.y, pt.x, pt.y)
                 }
             }
             if (closest != null) { // If this ray has found something
                 if (elements[index] instanceof TankPlayer) {
-                    // console.log(elements[index])
-                    // console.log("Got yah:")
-                    // console.log(closest)
-                    // console.log(this.pos.x + ", " + this.pos.y + ", " + closest.x + ", " + closest.y)
                     line(this.pos.x, this.pos.y, closest.x, closest.y);
+                }
+                else {
+                    push()
+                    stroke(255, 100, 0)
+                    line(this.pos.x, this.pos.y, closest.x, closest.y);
+                    pop()
                 }
             }
         }
