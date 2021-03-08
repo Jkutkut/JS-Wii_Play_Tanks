@@ -96,6 +96,7 @@ function draw() {
     }
     // AItanks
     for (let i = 0; i < AItanks.length; i++) {
+        AItanks[i].look(tank, walls);
         AItanks[i].show();
     }
     if (tank) {

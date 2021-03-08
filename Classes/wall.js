@@ -30,7 +30,7 @@ class Wall {
         pop()
     }
 
-    getSATdata () {
+    getSATdata() {
         return this.SATdata;
     }
 }

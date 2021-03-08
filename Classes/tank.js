@@ -189,5 +189,49 @@ class TankEnemy extends Tank{
         this.headAngle = Math.PI;
         this.playerFound = false;
         this.playerLastPos = createVector(0, 0);
+    
+        this.rays = [];
+        // for (let a = 0; a < 1; a++) {
+        for (let a = -45; a < 45; a++) {
+            this.rays.push(new Ray(this.pos, radians(a) + this.headAngle));
+        }
+    }
+
+    look(tank, wallsToCheck) {
+        let elements = [tank];
+        for (let i = 4; i < wallsToCheck.length; i++){
+            elements.push(wallsToCheck[i]);
+        }
+
+        for (let i = 0; i < this.rays.length; i++) {
+            const ray = this.rays[i];
+            let closest = null;
+            let record = Infinity;
+            let index = null;
+            for (let j = 0; j < elements.length; j++) {
+                const pt = ray.cast(elements[j]);
+                if (pt) { // if intersection found
+                    const d = p5.Vector.dist(this.pos, pt);
+                    if (d < record) {
+                        // console.log("new record")
+                        record = d;
+                        closest = pt.copy();
+                        index = j;
+                    }
+
+                    // console.log("hey");
+                    // line(this.pos.x, this.pos.y, pt.x, pt.y)
+                }
+            }
+            if (closest != null) { // If this ray has found something
+                if (elements[index] instanceof TankPlayer) {
+                    // console.log(elements[index])
+                    // console.log("Got yah:")
+                    // console.log(closest)
+                    // console.log(this.pos.x + ", " + this.pos.y + ", " + closest.x + ", " + closest.y)
+                    line(this.pos.x, this.pos.y, closest.x, closest.y);
+                }
+            }
+        }
     }
 }
