@@ -199,6 +199,8 @@ class TankEnemy extends Tank{
     }
 
     look(tank, wallsToCheck) {
+        this.playerFound = false;
+
         let elements = [tank];
         for (let i = 4; i < wallsToCheck.length; i++){
             elements.push(wallsToCheck[i]);
@@ -222,22 +224,13 @@ class TankEnemy extends Tank{
             }
             if (closest != null) { // If this ray has found something
                 if (elements[index] instanceof TankPlayer) { // if player found
+                    push();
+                    stroke(0, 0, 0, 30);
                     line(this.pos.x, this.pos.y, closest.x, closest.y);
-
+                    pop();
                     this.playerFound = true;
                     this.playerLastPos = elements[index].pos;
-
-                    // let angle = p5.Vector.fromAngle(this.angle).add(this.pos).angleBetween(this.playerLastPos);
-                    
                     this.aim(this.playerLastPos.x, this.playerLastPos.y)
-
-
-                }
-                else {
-                    push()
-                    stroke(255, 100, 0)
-                    line(this.pos.x, this.pos.y, closest.x, closest.y);
-                    pop()
                 }
             }
         }
