@@ -8,6 +8,9 @@ class Tank{
         this.tankColor = tankC[colorId];
         this.tankSize = objectProperties[sizeId];
 
+        this.shootDelay = 30;
+        this.shootCooldown = 0;
+
         this.size = {
             w: this.tankSize.base.width,
             h: this.tankSize.base.height + this.tankSize.tires.small.width
@@ -15,6 +18,8 @@ class Tank{
     }
 
     show(){
+        this.shootCooldown--;
+
         stroke(0); //black border
         strokeWeight(2); // border size
 
@@ -90,7 +95,10 @@ class Tank{
     }
 
     shoot(){
-        bullets.push(new Bullet(this));
+        if (this.shootCooldown < 0) {
+            bullets.push(new Bullet(this));
+            this.shootCooldown = this.shootDelay;
+        }
     }
 }
 
@@ -246,7 +254,7 @@ class TankEnemy extends Tank{
         Tank.prototype.aim.call(this, mX, mY);
         for(let i = 0; i < this.rayAperture * 2; i++){
             this.rays[i].lookAt(mX, mY);
-            this.rays[i].rotate(i - this.rayAperture);
+            this.rays[i].rotateDeg(i - this.rayAperture);
         }
     }
 
@@ -255,6 +263,26 @@ class TankEnemy extends Tank{
 
         for (let i = 0; i < this.rays.length; i++){
             this.rays[i].show();
+        }
+    }
+
+    rotate (angle) {
+        this.headAngle += angle;
+        this.headAngle %= 2 * Math.PI;
+
+        for (let i = 0; i < this.rays.length; i++) {
+            this.rays[i].rotateRad(angle);
+        }
+    }
+
+    behave() {
+        this.look(tank, walls);
+
+        if (this.playerFound) {
+            this.shoot();
+        }
+        else {
+            this.rotate(0.02);
         }
     }
 }

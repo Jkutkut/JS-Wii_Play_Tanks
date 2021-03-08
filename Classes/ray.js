@@ -16,9 +16,11 @@ class Ray {
         this.dir.normalize();
     }
 
-    rotate(angle) {
-
-        this.dir.rotate(radians(angle))
+    rotateDeg(angle) {
+        this.rotateRad(radians(angle));
+    }
+    rotateRad(angle) {
+        this.dir.rotate(angle);
     }
   
     show() {

@@ -37,7 +37,8 @@
         },
         "p": {
             "details": "abstract properties",
-            "v": 5
+            "v": 5,
+            "shootDelay": 30
         }
     }
 ]
