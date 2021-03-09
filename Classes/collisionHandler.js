@@ -45,6 +45,8 @@ class CollisionHandler {
             for (let j = i + 1; j < bullets.length; j++){
                 let secondaryBullet = bullets[j];
                 if (this.collide(primaryBullet, secondaryBullet)) {
+                    bullets[i].destroy();
+                    bullets[j].destroy();
                     bullets.splice(j, 1);
                     bullets.splice(i, 1);
                     i--;

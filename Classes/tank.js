@@ -13,7 +13,7 @@ class Tank{
 
         this.size = {
             w: this.tankSize.base.width,
-            h: this.tankSize.base.height + this.tankSize.tires.small.width
+            h: this.tankSize.base.height + this.tankSize.tires.outer.width
         };
     }
 
@@ -21,7 +21,7 @@ class Tank{
         this.shootCooldown--;
 
         stroke(0); //black border
-        strokeWeight(2); // border size
+        strokeWeight(1); // border size
 
         push();
             translate(this.pos);
@@ -35,11 +35,12 @@ class Tank{
                 //  ***  tires  ***  //
                 for (let i = -1; i < 2; i += 2) {
                     push();
-                        translate(0, i * this.tankSize.base.height / 2);
+                        translate(0, i * (this.tankSize.base.height / 2 + 1));
                         fill(this.tankColor.tireInner);
-                        rect(...shape("box", this.tankSize.tires.small.len, this.tankSize.tires.small.width));
+                        rect(...shape("box", this.tankSize.tires.inner.len, this.tankSize.tires.inner.width));
+                        translate(0, -i);
                         fill(this.tankColor.tireOuter);
-                        rect(...shape("box", this.tankSize.tires.big.len, this.tankSize.tires.big.width));
+                        rect(...shape("box", this.tankSize.tires.outer.len, this.tankSize.tires.outer.width));
                     pop();
                 }
             pop()

@@ -23,7 +23,7 @@ var fps = 30;
 var enti;
 
 function preload(){
-    let commit = "3b8a23f23b8be6e4636012762a07bcab0ede5951";
+    let commit = "1f08b4ed82b4b87bc56921b806ce4635e8b1326f";
     fetch("https://cdn.jsdelivr.net/gh/Jkutkut/JS-Wii_Play_tanks@" + commit + "/config.json")
     .then(response => response.json()).then(json => objectProperties = json);
     boxTexture = loadImage("https://cdn.jsdelivr.net/gh/Jkutkut/JS-Wii_Play_Tanks@" + commit + "/textures/wood-texture.jpg");
