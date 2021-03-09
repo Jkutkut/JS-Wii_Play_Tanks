@@ -91,6 +91,7 @@ function draw() {
         bullets[i].move();
     }
     tank.aim(mouseX, mouseY);
+    
     keyD();
 
     collisionHandler.handleCollisions();

@@ -77,6 +77,10 @@ class Bullet{
         return  this.pos.x > 0               && this.pos.y > 0 && 
                 this.pos.x < mainCanvasWidth && this.pos.y < mainCanvasHeight;
     }
+
+    destroy() {
+        this.parent.bulletDestroyed();
+    }
 }
 
 class NormalBullet extends Bullet {

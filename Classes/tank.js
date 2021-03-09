@@ -8,7 +8,8 @@ class Tank{
         
         this.tankSize = objectProperties.tank.dimensions;
 
-        this.shootCooldown = 0;
+        this.shootCooldown = 0; // time remaining to be able to shoot again
+        this.bullets = 0; // amount of bullets shot currently on screen
 
         this.size = {
             w: this.tankSize.base.width,
@@ -128,10 +129,15 @@ class Tank{
     }
 
     shoot(){
-        if (this.shootCooldown < 0) {
+        if (this.shootCooldown < 0 && this.bullets < this.MAXBULLETS) {
+            this.bullets++;
             bullets.push(new NormalBullet(this));
             this.shootCooldown = this.shootDelay;
         }
+    }
+
+    bulletDestroyed() {
+        this.bullets--;
     }
 }
 
@@ -141,6 +147,7 @@ class TankPlayer extends Tank {
         this.tankColor = COLORS.tank.player;
         this.properties = objectProperties.tank.player;
 
+        this.MAXBULLETS = 6;
         this.shootDelay = 1;
     }
 
@@ -203,6 +210,7 @@ class TankEnemy extends Tank{
         this.tankColor = COLORS.tank.brown_tank;
         this.properties = objectProperties.tank.enemy[0];
 
+        this.MAXBULLETS = 3;
         this.shootDelay = 30;
 
         this.headAngle = Math.PI;

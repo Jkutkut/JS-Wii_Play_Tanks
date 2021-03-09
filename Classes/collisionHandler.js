@@ -12,6 +12,7 @@ class CollisionHandler {
         for(let i = 0; i < bullets.length; i++){            
             collisionHandler.collidingBulletWall(bullets[i]);
             if (bullets[i].bounces == 0) { // If no remaing bounces
+                bullets[i].destroy(); // Do what needs to be done to end this object
                 bullets.splice(i--, 1);
                 continue
             }
