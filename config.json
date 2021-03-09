@@ -159,10 +159,17 @@
                 "tireOuter": [70, 48, 18]
             }
         ],
+        "bulletPrototype": [
+            "color",
+            "flameStart",
+            "flameEnd"
+        ],
         "bullet": [
             {
                 "id": "normal",
-                "color": [255, 255, 255]
+                "color": [255, 255, 255],
+                "flameStart": null,
+                "flameEnd": null
             },
             {
                 "id": "fast",
