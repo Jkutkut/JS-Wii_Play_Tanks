@@ -3,7 +3,7 @@ var tank;
 var AItanks = [];
 
 var objectProperties;
-var tankC;
+var COLORS = {};
 var collisionHandler;
 
 var bullets = []; //bullets, to keep track of them
@@ -22,8 +22,8 @@ var debug = -1;
 var enti;
 
 function preload(){
-    let commit = "5341973efdfe66dee85adbe8439c11acd09cbb1a";
-    fetch("https://cdn.jsdelivr.net/gh/Jkutkut/JS-Wii_Play_tanks@" + commit + "/tankProperties.json")
+    let commit = "702bfb7c56b1a97902a5876f3542f22ced9e49c7";
+    fetch("https://cdn.jsdelivr.net/gh/Jkutkut/JS-Wii_Play_tanks@" + commit + "/config.json")
     .then(response => response.json()).then(json => objectProperties = json);
     boxTexture = loadImage("https://cdn.jsdelivr.net/gh/Jkutkut/JS-Wii_Play_Tanks@" + commit + "/textures/wood-texture.jpg");
     backgroundTexture = loadImage("https://cdn.jsdelivr.net/gh/Jkutkut/JS-Wii_Play_Tanks@" + commit + "/textures/light-wood-texture.jpg");
@@ -45,19 +45,27 @@ function setup() {
     textSize(20);
 
     // *******  var setup  *******
-    //tank
-    tankC = [
-        {
-            body: color(54, 137, 200),
-            gun: color(47, 92, 120),
-            gunTip: color(29, 66, 89),
-            tire: color(36, 36, 36),
-            bullet: color(255, 255, 255)
-        },{
-            
-            bullet: color(255, 255, 255)
+    // Update COLORS variable (see config.json to undestand the format)
+    COLORS["tank"] = {};
+    for (let tankColorObj of objectProperties.colors.tank) {
+        COLORS["tank"][tankColorObj.id] = {};
+        for (let part of objectProperties.colors.tankPrototype) {
+            COLORS["tank"][tankColorObj.id][part] = color(...tankColorObj[part]);
         }
-    ];
+    }
+    COLORS["bullet"] = {};
+    for (let bulletColorObj of objectProperties.colors.bullet) {
+        COLORS["bullet"][bulletColorObj.id] = {};
+        for (let part of objectProperties.colors.bulletPrototype) {
+            if (bulletColorObj[part] == null) {
+                continue;
+            }
+            COLORS["bullet"][bulletColorObj.id][part] = color(...bulletColorObj[part]);
+        }
+    }
+
+
+
 
     //box
     boxColor = color(227, 118, 34);
