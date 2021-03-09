@@ -22,7 +22,7 @@ var debug = -1;
 var enti;
 
 function preload(){
-    let commit = "702bfb7c56b1a97902a5876f3542f22ced9e49c7";
+    let commit = "3b8a23f23b8be6e4636012762a07bcab0ede5951";
     fetch("https://cdn.jsdelivr.net/gh/Jkutkut/JS-Wii_Play_tanks@" + commit + "/config.json")
     .then(response => response.json()).then(json => objectProperties = json);
     boxTexture = loadImage("https://cdn.jsdelivr.net/gh/Jkutkut/JS-Wii_Play_Tanks@" + commit + "/textures/wood-texture.jpg");

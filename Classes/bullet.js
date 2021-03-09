@@ -1,7 +1,7 @@
 class Bullet{
     constructor(parent){
-        let parentPos = parent.pos.copy(); //center of the tank
-        
+        this.parent = parent;
+        this.angle = parent.headAngle;
         this.direction = p5.Vector.fromAngle(parent.headAngle); //Normal vector with direction of the head
 
         let bulletPosFromParent = this.direction.copy();
@@ -10,38 +10,29 @@ class Bullet{
             parent.tankSize.head.gun.len;
 
         bulletPosFromParent.mult(distCenterTankToTip);
-
-        this.pos = parentPos.add(bulletPosFromParent);
-
-        this.parent = parent;
-        this.bulletSize = parent.tankSize.bullet;
-
-        
-        this.angle = parent.headAngle;
-        this.v = this.bulletSize.p.v;
-
-        this.direction.mult(this.v);
-
-        this.bulletC = this.parent.tankColor;
-
-        this.size = {w: this.bulletSize.len * 1.3, h: this.bulletSize.len};
-
-        this.bounces = 3 + 1;
+        this.pos = bulletPosFromParent.add(parent.pos); // Position
     }
+
+    init() {
+        this.direction.mult(this.properties.v); // now this vector represents the increment of distance per time (v)
+
+        this.size = {w: this.properties.len, h: this.properties.width};
+    }
+
     show(){
         push();
             translate(this.pos);
             push(); 
                 rotate(this.angle);
-                fill(this.bulletC.bullet);
+                fill(this.bulletC.color);
                 beginShape();
-                    let len2 = this.bulletSize.len * 0.5;
-                    vertex(-len2, -len2);
-                    vertex(-len2, len2);
-                    vertex(len2, len2);
-                    vertex(this.bulletSize.len * 0.8, 0);
-                    vertex(len2, -len2);
-                    vertex(-len2, -len2);
+                    let wid2 = this.properties.width * 0.5;
+                    vertex(-wid2, -wid2);
+                    vertex(-wid2, wid2);
+                    vertex(wid2, wid2);
+                    vertex(this.properties.len * 0.8, 0);
+                    vertex(wid2, -wid2);
+                    vertex(-wid2, -wid2);
                 endShape();
             pop();
         pop();
@@ -63,18 +54,18 @@ class Bullet{
     }
 
     getSATdata() {
-        let len2 = this.bulletSize.len * 0.5;
+        let wid2 = this.properties.len * 0.5;
         let multiplier = 1.5;
 
         let obj = new SAT.Polygon(
             new SAT.Vector(this.pos.x, this.pos.y),
             [
-                new SAT.Vector(-len2, -len2),
-                new SAT.Vector(-len2, len2),
-                new SAT.Vector(len2, len2),
-                new SAT.Vector(this.bulletSize.len * 0.8, 0),
-                new SAT.Vector(len2, -len2),
-                new SAT.Vector(-len2, -len2)
+                new SAT.Vector(-wid2, -wid2),
+                new SAT.Vector(-wid2, wid2),
+                new SAT.Vector(wid2, wid2),
+                new SAT.Vector(this.properties.len, 0),
+                new SAT.Vector(wid2, -wid2),
+                new SAT.Vector(-wid2, -wid2)
             ].map(x => x.scale(multiplier))
         );
         obj
@@ -85,5 +76,30 @@ class Bullet{
     validSpot(){
         return  this.pos.x > 0               && this.pos.y > 0 && 
                 this.pos.x < mainCanvasWidth && this.pos.y < mainCanvasHeight;
+    }
+}
+
+class NormalBullet extends Bullet {
+    constructor(parent) {
+        super(parent);
+
+        this.properties = objectProperties.bullet.normal;
+        this.bulletC = COLORS.bullet.normal;
+
+        this.init();
+        
+        this.bounces = 3 + 1;
+    }
+}
+class FastBullet extends Bullet {
+    constructor(parent) {
+        super(parent);
+
+        this.properties = objectProperties.bullet.fast;
+        this.bulletC = COLORS.bullet.fast;
+
+        this.init();
+
+        this.bounces = 5 + 1;
     }
 }

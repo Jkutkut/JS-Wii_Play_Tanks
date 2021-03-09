@@ -98,7 +98,7 @@ class Tank{
 
     shoot(){
         if (this.shootCooldown < 0) {
-            bullets.push(new Bullet(this));
+            bullets.push(new NormalBullet(this));
             this.shootCooldown = this.shootDelay;
         }
     }
