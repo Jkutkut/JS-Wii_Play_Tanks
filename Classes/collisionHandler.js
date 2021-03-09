@@ -31,12 +31,69 @@ class CollisionHandler {
         for (let i = 0; i < this.walls.length; i++) {
             let wall = this.walls[i];
             
-            if (this.collide(wall, bullet, response)) {
-                bullet.bounce(response.overlapN);
+            if (this.collide(bullet, wall, response)) {
+                bullet.bounce(response);
             }
             response.clear();
         }
     }
+    // collidingBulletWall(bullet) {
+    //     let response = new SAT.Response();
+        
+    //     let dist = function(p, q, i){
+    //         let pp = new SAT.Vector(0, 0).copy(p);
+    //         let qq = new SAT.Vector(0, 0).copy(q.pos).add(q.points[i])
+    //         let d = pp.sub(qq);
+    //         return Math.sqrt(d.x * d.x + d.y + d.y);
+    //     }
+
+    //     for (let i = 0; i < this.walls.length; i++) {
+    //         let wall = this.walls[i];
+            
+    //         if (this.collide(bullet, wall, response)) {
+    //             let minD = Infinity;
+    //             let index;
+
+    //             for (let i = 0; i < 4; i++) {
+    //                 let d = dist(response.a.pos, response.b, i);
+    //                 if (d < minD) {
+    //                     minD = d;
+    //                     index = i;
+    //                 }
+    //             }
+                
+    //             push()
+    //                 stroke(0);
+    //                 ellipse(response.a.pos.x, response.a.pos.y, 15)
+    //             pop()
+                
+    //             let po = new SAT.Vector(0, 0).copy(response.b.pos).add(response.b.points[index]);
+    //             push()
+    //                 stroke(0);
+    //                 ellipse(po.x, po.y, 10)
+    //             pop()
+            
+    //             console.log("---------------")
+    //             if (minD < bullet.properties.v) {
+    //                 // let perpen = new SAT.Vector(0, 0).copy(response.overlapN).perp();
+    //                 // let result = perpen.add(response.overlapN).normalize();
+    //                 console.log("EDGE");
+    //                 // console.log(result)
+    //                 // bullet.bounce(result);
+    //                 let vect = wall.pos.copy().sub(bullet.pos);
+    //                 if (Math.abs(vect.y) < wall.size.h && vect.x > 0 && vect.y < 0) {
+    //                     response.overlapV.y *= -1;
+    //                     console.log("pling!")
+    //                 }
+    //             }
+    //             console.log(response)
+    //             bullet.bounce(response.overlapV.normalize());
+    //             // bullet.bounce(response.overlapV.reverse());
+    //             console.log("---------------")
+    //         }
+    //         response.clear();
+    //     }
+    // }
 
     bulletAniquilation (bullets) {
         // if 2 bullets colide, eliminate them

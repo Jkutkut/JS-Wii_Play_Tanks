@@ -43,19 +43,37 @@ class Bullet{
     }
 
     bounce(collisionV) {
-        if (collisionV.y == 0) { // vertical wall
-            this.direction.x *= -1;
+        let normalVector = collisionV.overlapV.reverse();
+        if (normalVector.x != 0) {
+            this.direction.x *= normalVector.x;
         }
-        else {
-            this.direction.y *= -1;
+        if (normalVector.y != 0) {
+            this.direction.y *= normalVector.y;
         }
+
+        this.direction.normalize();
+        this.direction.mult(this.properties.v);
+
+        // let vec = createVector(this.pos.x - collisionV.b.pos.x, this.pos.y - collisionV.b.pos.y);
+        // let ang = vec.angleBetween(this.direction);
+
+        // if (ang > Math.PI * 0.5) {
+        //     this.direction
+        // }
+
+        // console.log(ang * 180 / Math.PI);
+        // console.log(vec);
+        // console.log(collisionV.b.pos);
+
+
+
+
         this.angle = this.direction.heading();
         this.bounces--;
     }
 
-    getSATdata() {
+    getSATdata(multiplier=1) {
         let wid2 = this.properties.len * 0.5;
-        let multiplier = 1.5;
 
         let obj = new SAT.Polygon(
             new SAT.Vector(this.pos.x, this.pos.y),
