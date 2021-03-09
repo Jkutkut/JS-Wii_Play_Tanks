@@ -1,6 +1,6 @@
 {
     "tank": {
-        "basic": {
+        "dimensions": {
             "details": "Shape of the tank",
             "base": {
                 "width": 40,
