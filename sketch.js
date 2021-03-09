@@ -19,6 +19,7 @@ var shotDelay = 10;
 
 //debug
 var debug = -1;
+var fps = 30;
 var enti;
 
 function preload(){
@@ -41,7 +42,8 @@ function setup() {
 
     createCanvas(mainCanvasWidth, mainCanvasHeight);
     noCursor();
-    frameRate(30);
+    frameRate(fps);
+    // frameRate(30);
     textSize(20);
 
     // *******  var setup  *******

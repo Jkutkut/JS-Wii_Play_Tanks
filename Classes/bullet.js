@@ -88,7 +88,7 @@ class NormalBullet extends Bullet {
 
         this.init();
         
-        this.bounces = 3 + 1;
+        this.bounces = 1 + 1;
     }
 }
 class FastBullet extends Bullet {
@@ -100,6 +100,6 @@ class FastBullet extends Bullet {
 
         this.init();
 
-        this.bounces = 5 + 1;
+        this.bounces = 3 + 1;
     }
 }
