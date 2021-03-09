@@ -48,22 +48,14 @@
     },
     "bullet": {
         "normal": {
-            "len": 7,
+            "len": 9.1,
             "width": 7,
-
-            "p": {
-                "details": "Properties of the bullet",
-                "v": 10
-            }
+            "v": 10
         },
         "fast": {
-            "len": 7,
+            "len": 9.1,
             "width": 7,
-
-            "p": {
-                "details": "Properties of the bullet",
-                "v": 10
-            }
+            "v": 20
         }
     },
     "colors": {
