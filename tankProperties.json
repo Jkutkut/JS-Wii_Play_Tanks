@@ -1,32 +1,52 @@
-[
-    {
-        "details": "Properties of the tank controlled by the player",
-        "base": {
-            "width": 40,
-            "height": 30
-        },
-        "tires": {
-            "small": {
-                "len": 40,
-                "width": 5
+{
+    "tank": {
+        "basic": {
+            "details": "Shape of the tank",
+            "base": {
+                "width": 40,
+                "height": 30
             },
-            "big": {
-                "len": 41,
-                "width": 2.5
+            "tires": {
+                "small": {
+                    "len": 40,
+                    "width": 5
+                },
+                "big": {
+                    "len": 41,
+                    "width": 2.5
+                }
+            },
+            "head": {
+                "width": 18,
+                "gun": {
+                    "len": 20,
+                    "width": 5 
+                },
+                "gunTip": {
+                    "len": 4,
+                    "width": 7
+                }
             }
         },
-        "head": {
-            "width": 18,
-            "gun": {
-                "len": 20,
-                "width": 5 
-            },
-            "gunTip": {
-                "len": 4,
-                "width": 7
-            }
+        "player": {
+            "details": "abstract properties of the tank",
+            "v": 5,
+            "headRotation": 0.2,
+            "bodyRotation": 0.2,
+            "shootDelay": 30
         },
-        "bullet": {
+        "enemy": [
+            {
+                "details": "abstract properties of brown tank",
+                "v": 5,
+                "headRotation": 0.2,
+                "bodyRotation": 0.2,
+                "shootDelay": 30
+            }
+        ]
+    },
+    "bullet": {
+        "normal": {
             "len": 7,
             "width": 7,
 
@@ -35,10 +55,14 @@
                 "v": 10
             }
         },
-        "p": {
-            "details": "abstract properties",
-            "v": 5,
-            "shootDelay": 30
+        "fast": {
+            "len": 7,
+            "width": 7,
+
+            "p": {
+                "details": "Properties of the bullet",
+                "v": 10
+            }
         }
     }
-]
+}
