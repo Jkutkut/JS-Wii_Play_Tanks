@@ -73,7 +73,7 @@
                 "gun": [47, 92, 120],
                 "gunTip": [29, 66, 89],
                 "tireInner": [36, 36, 36],
-                "tireOuter": [36, 36, 36]
+                "tireOuter": [10, 10, 10]
             },
             {
                 "id": "brown_tank",
