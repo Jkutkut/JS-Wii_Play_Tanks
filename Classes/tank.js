@@ -117,43 +117,6 @@ class Tank{
             let deltaD = p5.Vector.fromAngle(this.bodyAngle).mult(this.properties.v);
             this.advance(deltaD);
         }
-        
-
-        // -------------------
-        // desiredAngle *= Math.PI; // Now this is true radians
-        
-        // let alpha = desiredAngle - this.bodyAngle; //angle between when the body aims and the desired direction
-
-        // let dir = 1; // if the movement needed is clockwise or not
-        // if (alpha < 0) {
-        //     dir = -1;
-        //     alpha *= -1;
-        // }
-
-        // if (alpha >= Math.PI * 0.5) { // If we want to rotate more than half a turn
-        //     alpha = (alpha + Math.PI) % (Math.PI * 2); // Equivalent to ((alpha - π) + 2π) % 2π
-        //     this.bodyAngle = (this.bodyAngle + Math.PI) % (2 * Math.PI);
-        //     dir *= -1;
-        // }
-
-
-        // if(alpha > Math.PI / 20) { // If the angle is really big
-        //     alpha = (Math.PI / 20); // on this iteration we will only rotate this amount max
-        // }
-
-        // if(alpha < 0.03){ // if angle small => ready to start moving
-        //     // let deltaD = p5.Vector.fromAngle(this.bodyAngle).mult(this.properties.v * dir);
-        //     // this.advance(deltaD);
-        // }
-        // else { // If angle big, rotate the tank
-        //     this.bodyAngle += alpha * ((dir > 0)? 1: - 1);
-        //     if (this.bodyAngle < 0) {
-        //         this.bodyAngle *= 2 * PI; // Always keep it positive
-        //     }
-        //     this.bodyD = createVector(Math.cos(this.bodyAngle), Math.sin(this.bodyAngle));
-        // }
-        // let deltaD = p5.Vector.fromAngle(this.bodyAngle).mult(this.properties.v * dir);
-        // this.advance(deltaD);
     }
 
     advance(deltaD) {
