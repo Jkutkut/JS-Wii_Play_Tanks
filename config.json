@@ -7,11 +7,11 @@
                 "height": 30
             },
             "tires": {
-                "small": {
+                "outer": {
                     "len": 40,
                     "width": 5
                 },
-                "big": {
+                "inner": {
                     "len": 41,
                     "width": 2.5
                 }
