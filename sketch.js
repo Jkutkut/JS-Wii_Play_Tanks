@@ -54,10 +54,7 @@ function setup() {
             tire: color(36, 36, 36),
             bullet: color(255, 255, 255)
         },{
-            body: color(141, 108, 59),
-            gun: color(137, 107, 52),
-            gunTip: color(115, 89, 42),
-            tire: color(36, 36, 36),
+            
             bullet: color(255, 255, 255)
         }
     ];

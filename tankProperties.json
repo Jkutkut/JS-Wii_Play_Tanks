@@ -44,93 +44,7 @@
                 "bodyRotation": 0.2,
                 "shootDelay": 30
             }
-        ],
-        "colors": {
-            "tank": [
-                {
-                    "id": "player",
-                    "body": [54, 137, 200],
-                    "gun": [47, 92, 120],
-                    "gunTip": [29, 66, 89],
-                    "tireInner": [36, 36, 36],
-                    "tireOuter": [36, 36, 36]
-                },
-                {
-                    "id": "brown_tank",
-                    "body": [141, 108, 59],
-                    "gun": [137, 107, 52],
-                    "gunTip": [115, 89, 42],
-                    "tireInner": [201, 162, 111],
-                    "tireOuter": [63, 41, 19]
-
-                },
-                {
-                    "id": "grey_tank",
-                    "body": [96, 85, 72],
-                    "gun": [160, 123, 72],
-                    "gunTip": [119, 92, 52],
-                    "tire": [197, 165, 123]
-                },
-                {
-                    "id": "teal_tank",
-                    "body": [70, 127, 120],
-                    "gun": [146, 116, 80],
-                    "gunTip": [153, 117, 69],
-                    "tire": [218, 167, 99]
-                },
-                {
-                    "id": "yellow_tank",
-                    "body": [, , ],
-                    "gun": [, , ],
-                    "gunTip": [, , ],
-                    "tire": [, , ]
-                },
-                {
-                    "id": "pink_tank",
-                    "body": [, , ],
-                    "gun": [, , ],
-                    "gunTip": [, , ],
-                    "tire": [, , ]
-                },
-                {
-                    "id": "green_tank",
-                    "body": [, , ],
-                    "gun": [, , ],
-                    "gunTip": [, , ],
-                    "tire": [, , ]
-                },
-                {
-                    "id": "purple_tank",
-                    "body": [, , ],
-                    "gun": [, , ],
-                    "gunTip": [, , ],
-                    "tire": [, , ]
-                },
-                {
-                    "id": "white_tank",
-                    "body": [, , ],
-                    "gun": [, , ],
-                    "gunTip": [, , ],
-                    "tire": [, , ]
-                },
-                {
-                    "id": "black_tank",
-                    "body": [, , ],
-                    "gun": [, , ],
-                    "gunTip": [, , ],
-                    "tire": [, , ]
-                },
-
-
-            ],
-            "bullet": [
-                {
-                    "id": "normal",
-                    "color": [255, 255, 255]
-                }
-
-            ]
-        }
+        ]
     },
     "bullet": {
         "normal": {
@@ -151,5 +65,107 @@
                 "v": 10
             }
         }
+    },
+    "colors": {
+        "tank": [
+            {
+                "id": "player",
+                "body": [54, 137, 200],
+                "gun": [47, 92, 120],
+                "gunTip": [29, 66, 89],
+                "tireInner": [36, 36, 36],
+                "tireOuter": [36, 36, 36]
+            },
+            {
+                "id": "brown_tank",
+                "body": [141, 108, 59],
+                "gun": [137, 107, 52],
+                "gunTip": [115, 89, 42],
+                "tireInner": [201, 162, 111],
+                "tireOuter": [63, 41, 19]
+
+            },
+            {
+                "id": "grey_tank",
+                "body": [96, 85, 72],
+                "gun": [160, 123, 72],
+                "gunTip": [119, 92, 52],
+                "tireInner": [197, 165, 123],
+                "tireOuter": [63, 51, 31]
+
+            },
+            {
+                "id": "teal_tank",
+                "body": [70, 127, 120],
+                "gun": [146, 116, 80],
+                "gunTip": [153, 117, 69],
+                "tireInner": [218, 167, 99],
+                "tireOuter": [60, 45, 21]
+
+            },
+            {
+                "id": "yellow_tank",
+                "body": [224, 198, 53],
+                "gun": [162, 133, 80],
+                "gunTip": [144, 123, 92],
+                "tireInner": [169, 132, 74],
+                "tireOuter": [67, 46, 16]
+            },
+            {
+                "id": "pink_tank",
+                "body": [208, 94, 109],
+                "gun": [154, 123, 79],
+                "gunTip": [124, 94, 41],
+                "tireInner": [193, 151, 103],
+                "tireOuter": [64, 48, 31]
+            },
+            {
+                "id": "green_tank",
+                "body": [83, 139, 73],
+                "gun": [166, 142, 96],
+                "gunTip": [86, 73, 32],
+                "tireInner": [187, 156, 96],
+                "tireOuter": [67, 50, 36]
+            },
+            {
+                "id": "purple_tank",
+                "body": [124, 92, 122],
+                "gun": [191, 158, 104],
+                "gunTip": [160, 129, 69],
+                "tireInner": [192, 161, 127],
+                "tireOuter": [95, 71, 44]
+            },
+            {
+                "id": "white_tank",
+                "body": [236, 222, 181],
+                "gun": [149, 120, 78],
+                "gunTip": [148, 115, 62],
+                "tireInner": [213, 163, 102],
+                "tireOuter": [62, 45, 26]
+            },
+            {
+                "id": "black_tank",
+                "body": [57, 55, 48],
+                "gun": [169, 140, 103],
+                "gunTip": [118, 84, 37],
+                "tireInner": [185, 174, 155],
+                "tireOuter": [70, 48, 18]
+            }
+
+
+        ],
+        "bullet": [
+            {
+                "id": "normal",
+                "color": [255, 255, 255]
+            },
+            {
+                "id": "fast",
+                "color": [255, 255, 255],
+                "flameStart": [],
+                "flameEnd": []
+            }
+
+        ]
     }
 }
