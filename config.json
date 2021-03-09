@@ -67,7 +67,7 @@
         }
     },
     "colors": {
-        "tankPrototipe": [
+        "tankPrototype": [
             "body",
             "gun",
             "gunTip",
