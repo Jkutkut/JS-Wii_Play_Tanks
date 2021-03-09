@@ -67,6 +67,14 @@
         }
     },
     "colors": {
+        "tankPrototipe": [
+            "id",
+            "body",
+            "gun",
+            "gunTip",
+            "tireInner",
+            "tireOuter"
+        ],
         "tank": [
             {
                 "id": "player",
@@ -151,8 +159,6 @@
                 "tireInner": [185, 174, 155],
                 "tireOuter": [70, 48, 18]
             }
-
-
         ],
         "bullet": [
             {
