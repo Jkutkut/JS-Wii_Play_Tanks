@@ -37,13 +37,97 @@
         },
         "enemy": [
             {
+                "id": "brown_tank",
                 "details": "abstract properties of brown tank",
                 "v": 5,
                 "headRotation": 0.2,
                 "bodyRotation": 0.2,
                 "shootDelay": 30
             }
-        ]
+        ],
+        "colors": {
+            "tank": [
+                {
+                    "id": "player",
+                    "body": [54, 137, 200],
+                    "gun": [47, 92, 120],
+                    "gunTip": [29, 66, 89],
+                    "tire": [36, 36, 36]
+                },
+                {
+                    "id": "brown_tank",
+                    "body": [141, 108, 59],
+                    "gun": [137, 107, 52],
+                    "gunTip": [115, 89, 42],
+                    "tire": [36, 36, 36]
+                },
+                {
+                    "id": "grey_tank",
+                    "body": [96, 85, 72],
+                    "gun": [160, 123, 72],
+                    "gunTip": [119, 92, 52],
+                    "tire": [197, 165, 123]
+                },
+                {
+                    "id": "teal_tank",
+                    "body": [, , ],
+                    "gun": [, , ],
+                    "gunTip": [, , ],
+                    "tire": [, , ]
+                },
+                {
+                    "id": "yellow_tank",
+                    "body": [, , ],
+                    "gun": [, , ],
+                    "gunTip": [, , ],
+                    "tire": [, , ]
+                },
+                {
+                    "id": "pink_tank",
+                    "body": [, , ],
+                    "gun": [, , ],
+                    "gunTip": [, , ],
+                    "tire": [, , ]
+                },
+                {
+                    "id": "green_tank",
+                    "body": [, , ],
+                    "gun": [, , ],
+                    "gunTip": [, , ],
+                    "tire": [, , ]
+                },
+                {
+                    "id": "purple_tank",
+                    "body": [, , ],
+                    "gun": [, , ],
+                    "gunTip": [, , ],
+                    "tire": [, , ]
+                },
+                {
+                    "id": "white_tank",
+                    "body": [, , ],
+                    "gun": [, , ],
+                    "gunTip": [, , ],
+                    "tire": [, , ]
+                },
+                {
+                    "id": "black_tank",
+                    "body": [, , ],
+                    "gun": [, , ],
+                    "gunTip": [, , ],
+                    "tire": [, , ]
+                },
+
+
+            ],
+            "bullet": [
+                {
+                    "id": "normal",
+                    "color": [255, 255, 255]
+                }
+
+            ]
+        }
     },
     "bullet": {
         "normal": {

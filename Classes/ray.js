@@ -1,4 +1,4 @@
-// Daniel Shiffman
+// Code based on Daniel's Shiffman code
 // https://thecodingtrain.com/CodingChallenges/145-2d-ray-casting.html
 // https://youtu.be/TOEi6T2mtHo
 
