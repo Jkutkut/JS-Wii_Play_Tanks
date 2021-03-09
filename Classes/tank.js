@@ -1,12 +1,12 @@
 class Tank{
-    constructor(x, y, colorId = 0, sizeId = 0){
+    constructor(x, y, sizeId = 0){
         this.pos = createVector(x, y);
         this.bodyD = createVector(1, 0);
         this.bodyAngle = 0;
         this.headAngle = 0;
 
-        this.tankColor = tankC[colorId];
-        this.tankSize = objectProperties[sizeId];
+        
+        this.tankSize = objectProperties.tank.dimensions;
 
         this.shootDelay = 30;
         this.shootCooldown = 0;
@@ -25,20 +25,20 @@ class Tank{
 
         push();
             translate(this.pos);
+            fill(this.tankColor.body);
 
             //  ***  body  ***  //
             push()
                 rotate(this.bodyAngle);
-
-                fill(this.tankColor.body);
                 rect(...shape("box", this.tankSize.base.width, this.tankSize.base.height))
 
                 //  ***  tires  ***  //
-                fill(this.tankColor.tire);
                 for (let i = -1; i < 2; i += 2) {
                     push();
                         translate(0, i * this.tankSize.base.height / 2);
+                        fill(this.tankColor.tireInner);
                         rect(...shape("box", this.tankSize.tires.small.len, this.tankSize.tires.small.width));
+                        fill(this.tankColor.tireOuter);
                         rect(...shape("box", this.tankSize.tires.big.len, this.tankSize.tires.big.width));
                     pop();
                 }
@@ -47,16 +47,18 @@ class Tank{
             //  ***  head  ***  //
             push()
                 rotate(this.headAngle);
-                fill(this.tankColor.gun);
                 // head
+                // fill(this.tankColor.body);
                 rect(...shape("box", this.tankSize.head.width));
                 
                 translate((this.tankSize.head.width + this.tankSize.head.gun.len) / 2, 0);
                 // gun cylinder
+                fill(this.tankColor.gun);
                 rect(...shape("box", this.tankSize.head.gun.len, this.tankSize.head.gun.width));
                 
                 translate(this.tankSize.head.gun.len * 0.5, 0);
                 //tip
+                fill(this.tankColor.gunTip);
                 rect(...shape("box", this.tankSize.head.gunTip.len, this.tankSize.head.gunTip.width));
             pop()
         pop();
@@ -105,6 +107,8 @@ class Tank{
 class TankPlayer extends Tank {
     constructor (x, y, colorId = 0, sizeId = 0) {
         super(x, y, colorId, sizeId);
+        this.tankColor = COLORS.tank.player;
+        this.properties = objectProperties.tank.player;
     }
 
     keyPress(keys){
@@ -194,6 +198,11 @@ class TankPlayer extends Tank {
 class TankEnemy extends Tank{
     constructor(x, y, colorId = 1, sizeId = 0) {
         super(x, y, colorId, sizeId);
+
+        this.tankColor = COLORS.tank.brown_tank;
+        this.properties = objectProperties.tank.enemy[0];
+
+
         this.headAngle = Math.PI;
         
         this.playerFound = false;
