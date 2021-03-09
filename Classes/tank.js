@@ -1,5 +1,5 @@
 class Tank{
-    constructor(x, y, sizeId = 0){
+    constructor(x, y){
         this.pos = createVector(x, y);
         this.bodyD = createVector(1, 0);
         this.bodyAngle = 0;
@@ -8,7 +8,6 @@ class Tank{
         
         this.tankSize = objectProperties.tank.dimensions;
 
-        this.shootDelay = 30;
         this.shootCooldown = 0;
 
         this.size = {
@@ -88,6 +87,43 @@ class Tank{
         this.headAngle = (Math.atan(headDirection.y / headDirection.x) + ((headDirection.x < 0)?  0 : Math.PI));
     }
 
+    move(desiredAngle) {
+        desiredAngle *= Math.PI; // Now this is true radians
+        
+        let alpha = desiredAngle - this.bodyAngle; //angle between when the body aims and the desired direction
+
+        let dir = 1; // if the movement needed is clockwise or not
+        if (alpha < 0) {
+            dir = -1;
+            alpha *= -1;
+        }
+
+        if (alpha >= Math.PI * 0.5) { // If we want to rotate more than half a turn
+            alpha = (alpha + Math.PI) % (Math.PI * 2); // Equivalent to ((alpha - π) + 2π) % 2π
+            this.bodyAngle = (this.bodyAngle + Math.PI) % (2 * Math.PI);
+            dir *= -1;
+        }
+
+
+        if(alpha > Math.PI / 20) { // If the angle is really big
+            alpha = (Math.PI / 20); // on this iteration we will only rotate this amount max
+        }
+
+        if(alpha < 0.03){ // if angle small => ready to start moving
+            // let deltaD = p5.Vector.fromAngle(this.bodyAngle).mult(this.properties.v * dir);
+            // this.advance(deltaD);
+        }
+        else { // If angle big, rotate the tank
+            this.bodyAngle += alpha * ((dir > 0)? 1: - 1);
+            if (this.bodyAngle < 0) {
+                this.bodyAngle *= 2 * PI; // Always keep it positive
+            }
+            this.bodyD = createVector(Math.cos(this.bodyAngle), Math.sin(this.bodyAngle));
+        }
+        let deltaD = p5.Vector.fromAngle(this.bodyAngle).mult(this.properties.v * dir);
+        this.advance(deltaD);
+    }
+
     advance(deltaD) {
         this.pos.add(deltaD);
         if (collisionHandler.canGoHere(this) != true) {
@@ -105,10 +141,12 @@ class Tank{
 }
 
 class TankPlayer extends Tank {
-    constructor (x, y, colorId = 0, sizeId = 0) {
-        super(x, y, colorId, sizeId);
+    constructor (x, y) {
+        super(x, y);
         this.tankColor = COLORS.tank.player;
         this.properties = objectProperties.tank.player;
+
+        this.shootDelay = 1;
     }
 
     keyPress(keys){
@@ -157,51 +195,20 @@ class TankPlayer extends Tank {
                 desiredAngle = 0.5;
             }
         }
-
         if(desiredAngle != null){//if valid key pressed
-            desiredAngle *= Math.PI; // Now this is true radians
-            
-            let alpha = desiredAngle - this.bodyAngle; //angle between when the body aims and the desired direction
-
-            let dir = 1; // if the movement needed is clockwise or not
-            if (alpha < 0) {
-                dir = -1;
-                alpha *= -1;
-            }
-
-            if (alpha >= Math.PI * 0.5) { // If we want to rotate more than half a turn
-                alpha = (alpha + Math.PI) % (Math.PI * 2); // Equivalent to ((alpha - π) + 2π) % 2π
-                this.bodyAngle = (this.bodyAngle + Math.PI) % (2 * Math.PI);
-                dir *= -1;
-            }
-
-
-            if(alpha > Math.PI / 20) { // If the angle is really big
-                alpha = (Math.PI / 20); // on this iteration we will only rotate this amount max
-            }
-
-            if(alpha < 0.03){ // if angle small => ready to start moving
-                let deltaD = p5.Vector.fromAngle(this.bodyAngle).mult(this.properties.v * dir);
-                this.advance(deltaD);
-            }
-            else { // If angle big, rotate the tank
-                this.bodyAngle += alpha * ((dir > 0)? 1: - 1);
-                if (this.bodyAngle < 0) {
-                    this.bodyAngle *= 2 * PI; // Always keep it positive
-                }
-                this.bodyD = createVector(Math.cos(this.bodyAngle), Math.sin(this.bodyAngle));
-            }
+            this.move(desiredAngle);
         }
     }
 }
 
 class TankEnemy extends Tank{
-    constructor(x, y, colorId = 1, sizeId = 0) {
-        super(x, y, colorId, sizeId);
+    constructor(x, y) {
+        super(x, y);
 
         this.tankColor = COLORS.tank.brown_tank;
         this.properties = objectProperties.tank.enemy[0];
 
+        this.shootDelay = 30;
 
         this.headAngle = Math.PI;
         
