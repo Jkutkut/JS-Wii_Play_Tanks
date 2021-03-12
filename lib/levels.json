@@ -1,0 +1,41 @@
+{
+    "description": "All the handMade levels are stored here",
+    "properties": {
+        "grid" : {
+            "description": "Having in mind the following atributes, the indexing of the position of objects should follow:\n\tHorizontal Position: from 0 to \"w\"\n\tVertical Position: from 0 to \"h\"\n",
+            "w": 32,
+            "h": 18
+        }
+    },
+    "levels": [
+        {
+            "id": "prototype_lvl",
+            "player": {
+                "param": [
+                    "x",
+                    "y"
+                ],
+                "validValues": [
+                    "int",
+                    "CENTER"
+                ]
+            },
+            "tanks": [
+                {
+                    "pos": "same as player",
+                    "type": "str"
+                }
+            ]
+        },
+        {
+            "id": "lvl 1",
+            "player": {"x": 3, "y": "CENTER"},
+            "tanks": [
+                {
+                    "pos": {"x": 29, "y": "CENTER"},
+                    "type": "brown_tank"
+                }
+            ]
+        }
+    ]
+}
