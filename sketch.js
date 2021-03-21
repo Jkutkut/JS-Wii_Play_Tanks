@@ -13,8 +13,7 @@ var walls = [];
 var mainCanvasWidth;
 var mainCanvasHeight;
 
-var lastBMilli = 0;
-var shotDelay = 10;
+var levelsJSON;
 
 
 //debug
@@ -23,11 +22,15 @@ var fps = 30;
 var enti;
 
 function preload(){
-    let commit = "1f08b4ed82b4b87bc56921b806ce4635e8b1326f";
+    let commit = "fcb06fcd121ea8a927563e9688dc13d94437d098";
     fetch("https://cdn.jsdelivr.net/gh/Jkutkut/JS-Wii_Play_tanks@" + commit + "/config.json")
     .then(response => response.json()).then(json => objectProperties = json);
-    boxTexture = loadImage("https://cdn.jsdelivr.net/gh/Jkutkut/JS-Wii_Play_Tanks@" + commit + "/textures/wood-texture.jpg");
-    backgroundTexture = loadImage("https://cdn.jsdelivr.net/gh/Jkutkut/JS-Wii_Play_Tanks@" + commit + "/textures/light-wood-texture.jpg");
+
+    fetch("https://cdn.jsdelivr.net/gh/Jkutkut/JS-Wii_Play_tanks@" + commit + "/lib/levels.json")
+    .then(response => response.json()).then(json => levelsJSON = json);
+
+    boxTexture = loadImage("https://cdn.jsdelivr.net/gh/Jkutkut/JS-Wii_Play_Tanks@" + commit + "/Resources/wood-texture.jpg");
+    backgroundTexture = loadImage("https://cdn.jsdelivr.net/gh/Jkutkut/JS-Wii_Play_Tanks@" + commit + "/Resources/light-wood-texture.jpg");
 }
 
 
@@ -72,8 +75,7 @@ function setup() {
     //box
     boxColor = color(227, 118, 34);
 
-    initLevel();
-    loadLevel(1);
+    loadLevelmk2(1);
 
     collisionHandler = new CollisionHandler(tank, AItanks, walls, bullets);
 }
@@ -139,11 +141,7 @@ function draw() {
 }
 
 function mouseClicked() {
-    if(millis() - lastBMilli > shotDelay){
     tank.shoot();
-    // console.log("new bullet: " + bullets.length);
-    lastBMilli = millis();
-    }
 }
 
 function keyD(){

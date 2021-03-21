@@ -25,7 +25,15 @@
                     "pos": "same as player",
                     "type": "str"
                 }
-            ]
+            ],
+            "environment": {
+                "walls": [
+                    {"x": "int", "y": "int"},
+                    {"x": "int", "y": "int", "w": "int"},
+                    {"x": "int", "y": "int", "h": "int"},
+                    {"x": "int", "y": "int", "w": "int", "h": "int"}
+                ]
+            }
         },
         {
             "id": "lvl 1",
@@ -35,7 +43,12 @@
                     "pos": {"x": 29, "y": "CENTER"},
                     "type": "brown_tank"
                 }
-            ]
+            ],
+            "environment": {
+                "walls": [
+                    {"x": "CENTER", "y": "CENTER", "w": 2, "h": 10}
+                ]
+            }
         }
     ]
 }
