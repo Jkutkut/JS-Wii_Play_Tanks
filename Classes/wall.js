@@ -34,3 +34,11 @@ class Wall {
         return this.SATdata;
     }
 }
+
+class WallByIndex extends Wall {
+    constructor(x, y, w, h, angle=0) {
+        let trueX = x + w / 2;
+        let trueY = y + h / 2;
+        super(trueX, trueY, w, h, angle);
+    }
+}
