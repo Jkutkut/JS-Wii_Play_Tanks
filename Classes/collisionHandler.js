@@ -1,7 +1,8 @@
 class CollisionHandler {
     constructor (playerTank, tanks, walls, bullets) {
         this.walls = walls;
-        this.tanks = [playerTank, ...tanks];
+        this.player = playerTank;
+        this.tanks = tanks;
         this.bullets = bullets;
         this.delta = 5.0001;
     }
@@ -19,10 +20,10 @@ class CollisionHandler {
         }
 
         // Bullets killing each other
-        collisionHandler.bulletAniquilation(bullets);
+        collisionHandler.bulletAniquilation(this.bullets);
         
         // bullets killing tanks
-        collisionHandler.tankAniquilation(AItanks, bullets);
+        collisionHandler.tankAniquilation(this.tanks, this.bullets);
     }
 
 

@@ -65,9 +65,6 @@ class Bullet{
         // console.log(vec);
         // console.log(collisionV.b.pos);
 
-
-
-
         this.angle = this.direction.heading();
         this.bounces--;
     }
