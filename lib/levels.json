@@ -28,9 +28,6 @@
             ],
             "environment": {
                 "walls": [
-                    {"x": "int", "y": "int"},
-                    {"x": "int", "y": "int", "w": "int"},
-                    {"x": "int", "y": "int", "h": "int"},
                     {"x": "int", "y": "int", "w": "int", "h": "int"}
                 ]
             }
