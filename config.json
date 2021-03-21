@@ -44,6 +44,17 @@
                 "bodyRotation": 0.2,
                 "shootDelay": 30
             }
+        ],
+        "enemyTypes": [
+            "brown_tank",
+            "grey_tank",
+            "teal_tank",
+            "yellow_tank",
+            "pink_tank",
+            "green_tank",
+            "purple_tank",
+            "white_tank",
+            "black_tank"
         ]
     },
     "bullet": {
