@@ -40,7 +40,7 @@
             "player": {"x": 3, "y": "CENTER"},
             "tanks": [
                 {
-                    "pos": {"x": 29, "y": "CENTER"},
+                    "pos": {"x": 28, "y": "CENTER"},
                     "type": "brown_tank"
                 }
             ],

@@ -22,7 +22,7 @@ var fps = 30;
 var enti;
 
 function preload(){
-    let commit = "c88d6b903a2a8dda59890bababe1ae639fa14042";
+    let commit = "4b63bd106fb1a3d1242935a7fd2da9f2d0200972";
     fetch("https://cdn.jsdelivr.net/gh/Jkutkut/JS-Wii_Play_tanks@" + commit + "/config.json")
     .then(response => response.json()).then(json => objectProperties = json);
 
