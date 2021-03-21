@@ -1,5 +1,8 @@
 # Things to do:
 
+## BUGS: 
+    - Collision handler does not update when a tank is removed
+
 ## Ideas:
 - Weapons:
     - [ ] PEM
