@@ -49,6 +49,23 @@
                     {"x": "CENTER", "y": "CENTER", "w": 2, "h": 10}
                 ]
             }
+        },
+        {
+            "id": "lvl 2",
+            "player": {"x": 3, "y": "CENTER"},
+            "tanks": [
+                {
+                    "pos": {"x": 29, "y": "CENTER"},
+                    "type": "brown_tank"
+                }
+            ],
+            "environment": {
+                "walls": [
+                    {"x": "CENTER", "y": "CENTER", "w": 2, "h": 10},
+                    {"x": 4, "y": 4, "w": 11, "h": 2},
+                    {"x": 6, "y": 12, "w": 11, "h": 2}
+                ]
+            }
         }
     ]
 }
