@@ -43,7 +43,7 @@
             ],
             "environment": {
                 "walls": [
-                    {"x": "CENTER", "y": "CENTER", "w": 2, "h": 10}
+                    {"x": "CENTER", "y": "CENTER", "w": 1.5, "h": 10}
                 ]
             }
         },
