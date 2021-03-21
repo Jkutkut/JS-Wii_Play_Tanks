@@ -129,6 +129,14 @@ class Tank{
         }
     }
 
+    tp(newPos) {
+        this.pos = newPos.clone();
+    }
+
+    tpRelative(deltaV) {
+        this.pos.add(deltaV);
+    }
+
     shoot(){
         if (this.shootCooldown < 0 && this.bullets < this.MAXBULLETS) {
             this.bullets++;
