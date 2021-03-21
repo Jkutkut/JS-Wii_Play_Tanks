@@ -63,6 +63,23 @@
                     {"x": 16.5, "y": 13, "w": 11, "h": 1}
                 ]
             }
+        },
+        {
+            "id": "lvl 3",
+            "player": {"x": 4, "y": "CENTER"},
+            "tanks": [
+                {
+                    "pos": {"x": 27, "y": "CENTER"},
+                    "type": "grey_tank"
+                }
+            ],
+            "environment": {
+                "walls": [
+                    {"x": "CENTER", "y": 3, "w": 26, "h": 1},
+                    {"x": 16.5, "y": 14, "w": 26, "h": 1}
+                ]
+            }
         }
+
     ]
 }
