@@ -34,12 +34,14 @@
         "prototype":{
             "details": "abstract properties of the tank",
             "v": "velocity -> number",
+            "bulletType": "string",
             "shotDelay": "number",
             "maxBullets": "number",
             "visionAperture": "degrees (half) -> number"
         },
         "player": {  
             "v": 5,
+            "bulletType": "NORMAL",
             "shotDelay": 1,
             "maxBullets": 6,
             "visionAperture": 30
@@ -48,10 +50,26 @@
         "enemy": [
             {
                 "id": "brown_tank",
-                "details": "abstract properties of brown tank",
+                "v": 0,
+                "bulletType": "NORMAL",
+                "shotDelay": 60,
+                "maxBullets": 4,
+                "visionAperture": 30
+            },
+            {
+                "id": "grey_tank",
                 "v": 5,
+                "bulletType": "NORMAL",
                 "shotDelay": 30,
-                "maxBullets": 6,
+                "maxBullets": 3,
+                "visionAperture": 30
+            },
+            {
+                "id": "teal_tank",
+                "v": 0,
+                "bulletType": "FAST",
+                "shotDelay": 90,
+                "maxBullets": 3,
                 "visionAperture": 30
             }
         ],
