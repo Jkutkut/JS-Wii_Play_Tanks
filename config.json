@@ -35,12 +35,14 @@
             "details": "abstract properties of the tank",
             "v": "velocity -> number",
             "shotDelay": "number",
-            "maxBullets": "number"
+            "maxBullets": "number",
+            "visionAperture": "degrees (half) -> number"
         },
         "player": {  
             "v": 5,
             "shotDelay": 1,
-            "maxBullets": 6
+            "maxBullets": 6,
+            "visionAperture": 30
 
         },
         "enemy": [
@@ -49,7 +51,8 @@
                 "details": "abstract properties of brown tank",
                 "v": 5,
                 "shotDelay": 30,
-                "maxBullets": 6
+                "maxBullets": 6,
+                "visionAperture": 30
             }
         ],
         "enemyTypes": [
