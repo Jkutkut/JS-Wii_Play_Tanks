@@ -271,12 +271,11 @@ class TankEnemy extends Tank{
         
         this.playerFound = false;
         this.playerLastPos = createVector(0, 0);
-
-        // Specific data of the tank
-        this.tankColor = COLORS.tank.brown_tank;
-        this.properties = objectProperties.tank.enemy[0];
     
         this.rays = [];
+    }
+
+    initRays () {
         for (let a = -this.properties.visionAperture; a < this.properties.visionAperture; a++) {
             this.rays.push(new Ray(this.pos, radians(a) + this.headAngle));
         }
@@ -357,5 +356,30 @@ class TankEnemy extends Tank{
         else {
             this.rotate(0.02);
         }
+    }
+}
+
+class Brown_tank extends TankEnemy {
+    constructor(x, y) {
+        super(x, y);
+
+        // Specific data of the tank
+        this.tankColor = COLORS.tank.brown_tank;
+        this.properties = objectProperties.tank.enemy[0];
+
+        this.initRays();
+    }
+}
+
+
+class Teal_tank extends TankEnemy {
+    constructor(x, y) {
+        super(x, y);
+
+        // Specific data of the tank
+        this.tankColor = COLORS.tank.teal_tank;
+        this.properties = objectProperties.tank.enemy[2];
+
+        this.initRays();
     }
 }
