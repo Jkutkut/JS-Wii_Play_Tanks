@@ -1,41 +1,52 @@
+/**
+ * Class that defines the basic behaviour of Tanks
+ */
 class Tank{
     constructor(x, y){
-        this.pos = createVector(x, y);
-        this.bodyD = createVector(1, 0);
-        this.bodyAngle = 0;
-        this.headAngle = 0;
+        this.pos = createVector(x, y); // Position of the center of the tank
+        this.bodyD = createVector(1, 0); // Direction of the head
+        this.bodyAngle = 0; // angle of the tank body respect Vector(1, 0)
+        this.headAngle = 0; // angle of the tank head
 
-        
-        this.tankSize = objectProperties.tank.dimensions;
+        this.tankSize = objectProperties.tank.dimensions; // Here all the dimensions of the tank is stored
+        this.tankColor; // Colors of the tank
+        this.properties; // Properties of the tank (velocity...)
 
         this.shootCooldown = 0; // time remaining to be able to shoot again
         this.bullets = 0; // amount of bullets shot currently on screen
 
-        this.size = {
+        this.MAXBULLETS; // Max amount of bullets on air at the same time
+        this.shotDelay; // Delay between each shot
+
+        this.size = { // Basic size of the tank's body.
             w: this.tankSize.base.width,
             h: this.tankSize.base.height + this.tankSize.tires.outer.width
         };
     }
 
+    /**
+     * Represents the tank on the screen.
+     * Note that the shotDelay is based on the amount of times this method is executed.
+     */
     show(){
-        this.shootCooldown--;
+        this.shootCooldown--; // Reduce the cooldown
 
         stroke(0); //black border
         strokeWeight(1); // border size
 
-        push();
-            translate(this.pos);
-            fill(this.tankColor.body);
+        push(); // All tranksformations end on the pop at the same level.
+            translate(this.pos); // Translate to the tankPos
+            fill(this.tankColor.body); // Fill with the tankBody color
 
             //  ***  body  ***  //
-            push()
-                rotate(this.bodyAngle);
-                rect(...shape("box", this.tankSize.base.width, this.tankSize.base.height))
+            push(); // Create body
+                rotate(this.bodyAngle); // Rotate the body
+                rect(...shape("box", this.tankSize.base.width, this.tankSize.base.height)); // Base
 
                 //  ***  tires  ***  //
-                for (let i = -1; i < 2; i += 2) {
-                    push();
-                        translate(0, i * (this.tankSize.base.height / 2 + 1));
+                for (let i = -1; i < 2; i += 2) { // For each tire
+                    push(); // Show the tire
+                        translate(0, i * (this.tankSize.base.height / 2 + 1)); 
                         fill(this.tankColor.tireInner);
                         rect(...shape("box", this.tankSize.tires.inner.len, this.tankSize.tires.inner.width));
                         translate(0, -i);
@@ -43,16 +54,15 @@ class Tank{
                         rect(...shape("box", this.tankSize.tires.outer.len, this.tankSize.tires.outer.width));
                     pop();
                 }
-            pop()
+            pop();
 
             //  ***  head  ***  //
-            push()
-                rotate(this.headAngle);
+            push();
+                rotate(this.headAngle); // angle of the head
                 // head
-                // fill(this.tankColor.body);
-                rect(...shape("box", this.tankSize.head.width));
+                rect(...shape("box", this.tankSize.head.width)); // Connector gun-body
                 
-                translate((this.tankSize.head.width + this.tankSize.head.gun.len) / 2, 0);
+                translate((this.tankSize.head.width + this.tankSize.head.gun.len) / 2, 0); // Go to the position of the tip of the gun
                 // gun cylinder
                 fill(this.tankColor.gun);
                 rect(...shape("box", this.tankSize.head.gun.len, this.tankSize.head.gun.width));
@@ -61,16 +71,20 @@ class Tank{
                 //tip
                 fill(this.tankColor.gunTip);
                 rect(...shape("box", this.tankSize.head.gunTip.len, this.tankSize.head.gunTip.width));
-            pop()
+            pop();
         pop();
     }
 
+    /**
+     * Get's the shape of the body tank in SAT format.
+     * @returns SAT Polygon object
+     */
     getSATdata() {
-        let size2 = {
-            w: this.size.w / 2,
-            h: this.size.h / 2
+        let size2 = { // half of the size
+            w: this.size.w * 0.5,
+            h: this.size.h * 0.5
         }
-        let obj = new SAT.Polygon(
+        let obj = new SAT.Polygon( // The object to return (not rotated)
             new SAT.Vector(this.pos.x, this.pos.y),
             [
                 new SAT.Vector(-size2.w, -size2.h),
@@ -79,21 +93,33 @@ class Tank{
                 new SAT.Vector(size2.w, -size2.h),
             ]
         );
-        obj.rotate(this.bodyAngle);
+        obj.rotate(this.bodyAngle); // Rotate it to get the correct position
         return obj;
     }
 
+    /**
+     * Aim the head to the selected coordinates
+     * @param {int} mX position to aim on the horizontal axis
+     * @param {int} mY position to aim on the vertical axis
+     */
     aim(mX, mY){
         let mouse = createVector(mX, mY);
         let headDirection = this.pos.copy().sub(mouse); // vector from tank pos to mouse
-        this.headAngle = (Math.atan(headDirection.y / headDirection.x) + ((headDirection.x < 0)?  0 : Math.PI));
+        this.headAngle = Math.atan(headDirection.y / headDirection.x);
+        if (headDirection.x >= 0) {
+            this.headAngle += Math.PI; // Add it to handle the atan definition
+        }
     }
 
+    /**
+     * Having in mind the input, either it moves in the direction given (if oriented) or rotates to align to the angle.
+     * @param {number} desiredAngle angle with the desired direction wanted to move to.
+     */
     move(desiredAngle) { 
         let alpha = desiredAngle * Math.PI - this.bodyAngle; //angle between when the body aims and the desired direction
 
         let dir = 1; // if the movement needed is clockwise or not
-        if (alpha < 0) {
+        if (alpha < 0) { // If angle negative, reverse direction
             dir = -1;
             alpha *= -1;
         }
@@ -115,57 +141,84 @@ class Tank{
             }
             this.bodyD = createVector(Math.cos(this.bodyAngle), Math.sin(this.bodyAngle));
         }
-        if (alpha < Math.PI / 6) {
+        if (alpha < Math.PI / 6) { // If angle small => move
             let deltaD = p5.Vector.fromAngle(this.bodyAngle).mult(this.properties.v);
             this.advance(deltaD);
         }
     }
 
+    /**
+     * Moves the tank the input increment vector
+     * @param {Vector} deltaD P5 Vector with the increment of the position
+     */
     advance(deltaD) {
         this.pos.add(deltaD);
-        if (collisionHandler.canGoHere(this) != true) {
+        if (collisionHandler.canGoHere(this) != true) { // If I can not go there
             deltaD.mult(-1);
-            this.pos.add(deltaD);
+            this.pos.add(deltaD); // Reverse move
         }
     }
 
+    /**
+     * Teleports the tank to the new position
+     * @param {Vector} newPos P5 Vector with the position
+     */
     tp(newPos) {
         this.pos = newPos.clone();
     }
 
+    /**
+     * Moves the tank the input vector from the current position
+     * @param {Vector} deltaV Increment vector
+     */
     tpRelative(deltaV) {
         this.pos.add(deltaV);
     }
 
+    /**
+     * Attemps to shoot a bullet.
+     * If the condition to shoot is not acomplish, this method does nothing
+     */
     shoot(){
+        // If the cooldown has ended and the maximum bullets is not reached
         if (this.shootCooldown < 0 && this.bullets < this.MAXBULLETS) {
-            this.bullets++;
-            bullets.push(new NormalBullet(this));
-            this.shootCooldown = this.shootDelay;
+            this.bullets++; // Add a bullet
+            bullets.push(new NormalBullet(this)); // Create the bullet
+            this.shootCooldown = this.shotDelay; // Reset the cooldown
         }
     }
 
+    /**
+     * If bullet is destroyed, this method is executed to notify the tank
+     */
     bulletDestroyed() {
         this.bullets--;
     }
 }
 
+/**
+ * Tank for the player, with logic to control it usign the user's input.
+ */
 class TankPlayer extends Tank {
     constructor (x, y) {
         super(x, y);
-        this.tankColor = COLORS.tank.player;
-        this.properties = objectProperties.tank.player;
+
+        // Specific values of the player
+        this.tankColor = COLORS.tank.player; 
+        this.properties = objectProperties.tank.player; 
 
         this.MAXBULLETS = 6;
-        this.shootDelay = 1;
+        this.shotDelay = 1;
     }
 
-    keyPress(keys){
-        //rotate and move the tank
-        
+    /**
+     * Analyces the keys of the user to control the tank rotation and movement of the body.
+     * @param {number[]} keys ASCII values of the keys pressed by the user
+     */
+    keyPress(keys){        
         let desiredPosi = {x: 0, y: 0};
-        for(let i = 0; i < keys.length; i++) {
-            switch(keys[i]) {
+        for(let i = 0; i < keys.length; i++) { // for each key
+            switch(keys[i]) { // Analyce each key
                 case 87://"w":
                     desiredPosi.y += 1; // should be -, but works
                     continue;
@@ -182,6 +235,7 @@ class TankPlayer extends Tank {
         }
         let desiredAngle = null; // (radians)
 
+        // Calc desiredAngle
         if(desiredPosi.x != 0) { // If horizontal movement
             if (desiredPosi.y == 0) { // if no vertical movement
                 desiredAngle = (desiredPosi.x == 1)? 0 : 1;
@@ -207,25 +261,29 @@ class TankPlayer extends Tank {
             }
         }
         if(desiredAngle != null){//if valid key pressed
-            this.move(desiredAngle);
+            this.move(desiredAngle); // move the tank
         }
     }
 }
 
+/**
+ * This class extends the tank class to generalize the AItank class. Following classes will be based on this logic
+ */
 class TankEnemy extends Tank{
     constructor(x, y) {
         super(x, y);
-
-        this.tankColor = COLORS.tank.brown_tank;
-        this.properties = objectProperties.tank.enemy[0];
-
-        this.MAXBULLETS = 3;
-        this.shootDelay = 30;
 
         this.headAngle = Math.PI;
         
         this.playerFound = false;
         this.playerLastPos = createVector(0, 0);
+
+        // Specific data of the tank
+        this.tankColor = COLORS.tank.brown_tank;
+        this.properties = objectProperties.tank.enemy[0];
+
+        this.MAXBULLETS = 3;
+        this.shotDelay = 30;
     
         this.rays = [];
         this.rayAperture = 30; //Degrees
