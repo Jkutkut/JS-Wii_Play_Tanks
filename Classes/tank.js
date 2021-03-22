@@ -10,13 +10,10 @@ class Tank{
 
         this.tankSize = objectProperties.tank.dimensions; // Here all the dimensions of the tank is stored
         this.tankColor; // Colors of the tank
-        this.properties; // Properties of the tank (velocity...)
+        this.properties; // Properties of the tank (velocity, shootDelay, maxbullets...)
 
         this.shootCooldown = 0; // time remaining to be able to shoot again
         this.bullets = 0; // amount of bullets shot currently on screen
-
-        this.MAXBULLETS; // Max amount of bullets on air at the same time
-        this.shotDelay; // Delay between each shot
 
         this.size = { // Basic size of the tank's body.
             w: this.tankSize.base.width,
@@ -181,10 +178,10 @@ class Tank{
      */
     shoot(){
         // If the cooldown has ended and the maximum bullets is not reached
-        if (this.shootCooldown < 0 && this.bullets < this.MAXBULLETS) {
+        if (this.shootCooldown < 0 && this.bullets < this.properties.maxBullets) {
             this.bullets++; // Add a bullet
             bullets.push(new NormalBullet(this)); // Create the bullet
-            this.shootCooldown = this.shotDelay; // Reset the cooldown
+            this.shootCooldown = this.properties.shotDelay; // Reset the cooldown
         }
     }
 
@@ -205,10 +202,7 @@ class TankPlayer extends Tank {
 
         // Specific values of the player
         this.tankColor = COLORS.tank.player; 
-        this.properties = objectProperties.tank.player; 
-
-        this.MAXBULLETS = 6;
-        this.shotDelay = 1;
+        this.properties = objectProperties.tank.player;
     }
 
     /**
@@ -281,13 +275,9 @@ class TankEnemy extends Tank{
         // Specific data of the tank
         this.tankColor = COLORS.tank.brown_tank;
         this.properties = objectProperties.tank.enemy[0];
-
-        this.MAXBULLETS = 3;
-        this.shotDelay = 30;
     
         this.rays = [];
-        this.rayAperture = 30; //Degrees
-        for (let a = -this.rayAperture; a < this.rayAperture; a++) {
+        for (let a = -this.properties.visionAperture; a < this.properties.visionAperture; a++) {
             this.rays.push(new Ray(this.pos, radians(a) + this.headAngle));
         }
     }
@@ -335,9 +325,9 @@ class TankEnemy extends Tank{
 
     aim(mX, mY) {
         Tank.prototype.aim.call(this, mX, mY);
-        for(let i = 0; i < this.rayAperture * 2; i++){
+        for(let i = 0; i < this.properties.visionAperture * 2; i++){
             this.rays[i].lookAt(mX, mY);
-            this.rays[i].rotateDeg(i - this.rayAperture);
+            this.rays[i].rotateDeg(i - this.properties.visionAperture);
         }
     }
 
