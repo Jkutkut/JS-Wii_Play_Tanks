@@ -43,27 +43,8 @@ class Bullet{
     }
 
     bounce(collisionV) {
-        let normalVector = collisionV.overlapV.reverse();
-        if (normalVector.x != 0) {
-            this.direction.x *= normalVector.x;
-        }
-        if (normalVector.y != 0) {
-            this.direction.y *= normalVector.y;
-        }
-
-        this.direction.normalize();
-        this.direction.mult(this.properties.v);
-
-        // let vec = createVector(this.pos.x - collisionV.b.pos.x, this.pos.y - collisionV.b.pos.y);
-        // let ang = vec.angleBetween(this.direction);
-
-        // if (ang > Math.PI * 0.5) {
-        //     this.direction
-        // }
-
-        // console.log(ang * 180 / Math.PI);
-        // console.log(vec);
-        // console.log(collisionV.b.pos);
+        let normalV = createVector(collisionV.overlapN.x, collisionV.overlapN.y);
+        this.direction = this.direction.reflect(normalV);
 
         this.angle = this.direction.heading();
         this.bounces--;
@@ -75,15 +56,15 @@ class Bullet{
         let obj = new SAT.Polygon(
             new SAT.Vector(this.pos.x, this.pos.y),
             [
-                new SAT.Vector(-wid2, -wid2),
-                new SAT.Vector(-wid2, wid2),
                 new SAT.Vector(wid2, wid2),
                 new SAT.Vector(this.properties.len, 0),
                 new SAT.Vector(wid2, -wid2),
-                new SAT.Vector(-wid2, -wid2)
+                new SAT.Vector(-wid2, -wid2),
+                new SAT.Vector(-wid2, wid2),
+                new SAT.Vector(wid2, wid2)
+                
             ].map(x => x.scale(multiplier))
         );
-        obj
         obj.rotate(this.angle);
         return obj;
     }
