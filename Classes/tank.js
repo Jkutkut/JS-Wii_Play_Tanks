@@ -12,6 +12,7 @@ class Tank{
         this.tankColor; // Colors of the tank
         this.properties; // Properties of the tank (velocity, shootDelay, maxbullets...)
 
+        this.bulletConstructor;
         this.shootCooldown = 0; // time remaining to be able to shoot again
         this.bullets = 0; // amount of bullets shot currently on screen
 
@@ -19,6 +20,16 @@ class Tank{
             w: this.tankSize.base.width,
             h: this.tankSize.base.height + this.tankSize.tires.outer.width
         };
+    }
+
+    /**
+     * Update class variables based on the specific properties gotten on the child classes
+     */
+    initClass() {
+        this.bulletConstructor = NormalBullet;
+        if (this.properties.bulletType == "FAST") {
+            this.bulletConstructor = FastBullet;
+        }
     }
 
     /**
@@ -180,7 +191,7 @@ class Tank{
         // If the cooldown has ended and the maximum bullets is not reached
         if (this.shootCooldown < 0 && this.bullets < this.properties.maxBullets) {
             this.bullets++; // Add a bullet
-            bullets.push(new NormalBullet(this)); // Create the bullet
+            bullets.push(new this.bulletConstructor(this)); // Create the bullet
             this.shootCooldown = this.properties.shotDelay; // Reset the cooldown
         }
     }
@@ -203,6 +214,8 @@ class TankPlayer extends Tank {
         // Specific values of the player
         this.tankColor = COLORS.tank.player; 
         this.properties = objectProperties.tank.player;
+
+        this.initClass();
     }
 
     /**
@@ -275,7 +288,8 @@ class TankEnemy extends Tank{
         this.rays = [];
     }
 
-    initRays () {
+    initClass() {
+        Tank.prototype.initClass.call(this);
         for (let a = -this.properties.visionAperture; a < this.properties.visionAperture; a++) {
             this.rays.push(new Ray(this.pos, radians(a) + this.headAngle));
         }
@@ -367,7 +381,7 @@ class Brown_tank extends TankEnemy {
         this.tankColor = COLORS.tank.brown_tank;
         this.properties = objectProperties.tank.enemy[0];
 
-        this.initRays();
+        this.initClass();
     }
 }
 
@@ -380,6 +394,6 @@ class Teal_tank extends TankEnemy {
         this.tankColor = COLORS.tank.teal_tank;
         this.properties = objectProperties.tank.enemy[2];
 
-        this.initRays();
+        this.initClass();
     }
 }
