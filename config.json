@@ -26,23 +26,30 @@
                     "len": 4,
                     "width": 7
                 }
+            },
+            "extra": {
+                "strokeWeight": 1
             }
         },
-        "player": {
+        "prototype":{
             "details": "abstract properties of the tank",
+            "v": "velocity -> number",
+            "shotDelay": "number",
+            "maxBullets": "number"
+        },
+        "player": {  
             "v": 5,
-            "headRotation": 0.2,
-            "bodyRotation": 0.2,
-            "shootDelay": 30
+            "shotDelay": 1,
+            "maxBullets": 6
+
         },
         "enemy": [
             {
                 "id": "brown_tank",
                 "details": "abstract properties of brown tank",
                 "v": 5,
-                "headRotation": 0.2,
-                "bodyRotation": 0.2,
-                "shootDelay": 30
+                "shotDelay": 30,
+                "maxBullets": 6
             }
         ],
         "enemyTypes": [
