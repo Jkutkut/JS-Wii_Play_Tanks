@@ -222,10 +222,13 @@
             "normal",
             "explosion"
         ],
-        "mine":{
-            "normal": [221, 218, 175],
-            "explosion": [223, 69, 22]
-        }
+        "mine":[
+            {
+                "id": "mine",
+                "normal": [221, 218, 175],
+                "explosion": [223, 69, 22]
+            }
+        ]
 
     }
 }
