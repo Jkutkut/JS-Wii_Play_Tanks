@@ -97,6 +97,15 @@
             "v": 20
         }
     },
+    "mine": {
+        "normal":{
+            "naturalSize": 15,
+            "detonationTime": 300,
+            "maxSize": 100,
+            "deltaGrow": 4,
+            "maxExplosionTime": 15
+        }
+    },
     "colors": {
         "tankPrototype": [
             "body",
@@ -208,7 +217,11 @@
                 "flameStart": [240, 197, 8],
                 "flameEnd": [214, 61, 0]
             }
+        ],
+        "mine":{
+            "normal": [221, 218, 175],
+            "explosion": [223, 69, 22]
+        }
 
-        ]
     }
 }
