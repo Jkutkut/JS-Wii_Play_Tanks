@@ -1,60 +1,87 @@
-class Mine{
+class Mine {
     constructor(parent){
         this.parent = parent;
         this.pos = parent.pos.copy(); // Position
 
 
-        // this.phases = {
-        //     ticking:   0,
-        //     expanding: 1,
-        //     maxsize:   2,
-        //     reduction: 3,
-        //     destroyed: 4
-        // }
+        this.PHASES = {
+            TICKING:   0,
+            EXPANDING: 1,
+            MAXSIZE:   2,
+            REDUCTION: 3,
+            DESTROYED: 4
+        }
+        this.phase = 0;
 
-        this.minSize = 15
-        this.maxSize = 100;
+        this.properties = {
+            naturalSize: 15,
+            detonationTime: 300,
 
-        this.time2Detonation = 300;
-        this.explosion = this.minSize;
-        this.explosionTime = 15;
+            maxSize: 100,
+            deltaGrow: 4,
+            maxExplosionTime: 15
+        };
+        this.mineC = {
+            normal: 255,
+            explosion: 150
+        };
+
+        this.time = this.properties.detonationTime;
+        this.size = this.properties.naturalSize;
         this.destroyed = false;
     }
 
     show() {
-        if (this.destroyed) {
-            return;
+        if (this.phase == this.PHASES.DESTROYED) { // if Object pending of disapearing
+            return; // Do not show
         }
         push();
+            if (this.phase == this.PHASES.TICKING) {
+                fill(this.mineC.normal);
+            }
+            else { // If 0 < phase < 4 
+                fill(this.mineC.explosion);
+            }
             translate(this.pos);
-            
-            if (this.time2Detonation > 0) {
-                fill(255);
-            }
-            else {
-                fill(150);
-                if (this.explosion < this.maxSize) {
-                    this.explosion += 4;
-                }
-            }
-            ellipse (0, 0, this.explosion);
+            ellipse (0, 0, this.size);
 
         pop();
     }
 
     tick () {
-        this.time2Detonation--;
+        switch(this.phase) {
+            case this.PHASES.TICKING:
+                this.time--;
+                if (this.time == 0) {
+                    this.phase = this.PHASES.EXPANDING;
+                }
+            break;
+            case this.PHASES.EXPANDING:
+                this.size += this.properties.deltaGrow;
+                if (this.size >= this.properties.maxSize) {
+                    this.phase = this.PHASES.MAXSIZE;
+                    this.time = this.properties.maxExplosionTime;
+                }
+            break;
+            case this.PHASES.MAXSIZE:
+                this.time--;
+                if (this.time == 0) {
+                    this.phase = this.PHASES.REDUCTION;
+                }
 
-        if (this.explosion > this.maxSize) {
-            this.explosionTime--;
-            if (this.explosionTime == 0) {
-                this.destroy();
-            }
+            break;
+            case this.PHASES.REDUCTION:
+                this.size -= this.properties.deltaGrow;
+                if (this.size <= 0) {
+                    this.phase = this.PHASES.DESTROYED;
+                    this.parent.abilityDestroyed();
+                }
+            break;
+            // case this.PHASES.DESTROYED: do nothing
         }
     }
 
-    destroy () {
-        this.destroyed = true;
-        this.parent.abilityDestroyed();
+    hasBeenDestroyed () {
+        return this.phase == this.PHASES.DESTROYED;
     }
 }

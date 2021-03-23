@@ -93,7 +93,7 @@ function draw() {
     // Mines
     for (let i = 0; i < mines.length; i++) {
         mines[i].tick();
-        if (mines[i].destroyed) {
+        if (mines[i].hasBeenDestroyed()) {
             mines.splice(i--, 1);
         }
     }
