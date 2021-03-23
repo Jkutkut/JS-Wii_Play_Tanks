@@ -2,15 +2,15 @@
  * Class that defines the basic behaviour of Tanks
  */
 class Tank{
-    constructor(x, y){
+    constructor(x, y, properties, colors){
         this.pos = createVector(x, y); // Position of the center of the tank
         this.bodyD = createVector(1, 0); // Direction of the head
         this.bodyAngle = 0; // angle of the tank body respect Vector(1, 0)
         this.headAngle = 0; // angle of the tank head
 
         this.tankSize = objectProperties.tank.dimensions; // Here all the dimensions of the tank is stored
-        this.tankColor; // Colors of the tank
-        this.properties; // Properties of the tank (velocity, shootDelay, maxbullets...)
+        this.properties = properties; // Properties of the tank (velocity, shootDelay, maxbullets...)
+        this.tankColor = colors; // Colors of the tank
 
         this.bulletConstructor;
         this.shootCooldown = 0; // time remaining to be able to shoot again
@@ -20,16 +20,8 @@ class Tank{
             w: this.tankSize.base.width,
             h: this.tankSize.base.height + this.tankSize.tires.outer.width
         };
-    }
 
-    /**
-     * Update class variables based on the specific properties gotten on the child classes
-     */
-    initClass() {
-        this.bulletConstructor = NormalBullet;
-        if (this.properties.bulletType == "FAST") {
-            this.bulletConstructor = FastBullet;
-        }
+        this.bulletConstructor = (this.properties.bulletType == "NORMAL")? NormalBullet : FastBullet;
     }
 
     /**
@@ -217,13 +209,7 @@ class Tank{
  */
 class TankPlayer extends Tank {
     constructor (x, y) {
-        super(x, y);
-
-        // Specific values of the player
-        this.tankColor = COLORS.tank.player; 
-        this.properties = objectProperties.tank.player;
-
-        this.initClass();
+        super(x, y, objectProperties.tank.player, COLORS.tank.player);
     }
 
     hability() {
@@ -293,8 +279,8 @@ class TankPlayer extends Tank {
  * This class extends the tank class to generalize the AItank class. Following classes will be based on this logic
  */
 class TankEnemy extends Tank{
-    constructor(x, y) {
-        super(x, y);
+    constructor(x, y, enemyIndex, colors) {
+        super(x, y, objectProperties.tank.enemy[enemyIndex], colors);
 
         this.headAngle = Math.PI;
         
@@ -302,10 +288,7 @@ class TankEnemy extends Tank{
         this.playerLastPos = createVector(0, 0);
     
         this.rays = [];
-    }
 
-    initClass() {
-        Tank.prototype.initClass.call(this);
         for (let a = -this.properties.visionAperture; a < this.properties.visionAperture; a++) {
             this.rays.push(new Ray(this.pos, radians(a) + this.headAngle));
         }
@@ -391,25 +374,13 @@ class TankEnemy extends Tank{
 
 class Brown_tank extends TankEnemy {
     constructor(x, y) {
-        super(x, y);
-
-        // Specific data of the tank
-        this.tankColor = COLORS.tank.brown_tank;
-        this.properties = objectProperties.tank.enemy[0];
-
-        this.initClass();
+        super(x, y, 0, COLORS.tank.brown_tank);
     }
 }
 
 
 class Teal_tank extends TankEnemy {
     constructor(x, y) {
-        super(x, y);
-
-        // Specific data of the tank
-        this.tankColor = COLORS.tank.teal_tank;
-        this.properties = objectProperties.tank.enemy[2];
-
-        this.initClass();
+        super(x, y, 1, COLORS.tank.teal_tank);
     }
 }
