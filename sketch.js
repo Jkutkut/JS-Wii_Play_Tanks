@@ -22,6 +22,7 @@ var fps = 30;
 var enti;
 
 function preload(){
+    document.addEventListener('contextmenu', event => event.preventDefault());
     let commit = "ad850ace29e8132293627dabf78c248980a72611";
     fetch("https://cdn.jsdelivr.net/gh/Jkutkut/JS-Wii_Play_tanks@" + commit + "/config.json")
     .then(response => response.json()).then(json => objectProperties = json);
@@ -113,6 +114,13 @@ function draw() {
         tank.show();
     }
 
+
+    // User control
+    if (mouseButton == "right") {
+        tank.hability();
+        mouseButton = "left";
+    }
+
     // Mouse cursor:
     let mouse = createVector(mouseX, mouseY);
     push();
@@ -140,8 +148,15 @@ function draw() {
     pop()
 }
 
-function mouseClicked() {
-    tank.shoot();
+function mouseClicked(event) {
+    console.log(event);
+    console.log()
+    if (event.button == 2) {
+        tank.hability();
+    }
+    else {
+        tank.shoot();
+    }
 }
 
 function keyD(){

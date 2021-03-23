@@ -106,20 +106,6 @@ class Tank{
     }
 
     /**
-     * Aim the head to the selected coordinates
-     * @param {int} mX position to aim on the horizontal axis
-     * @param {int} mY position to aim on the vertical axis
-     */
-    aim(mX, mY){
-        let mouse = createVector(mX, mY);
-        let headDirection = this.pos.copy().sub(mouse); // vector from tank pos to mouse
-        this.headAngle = Math.atan(headDirection.y / headDirection.x);
-        if (headDirection.x >= 0) {
-            this.headAngle += Math.PI; // Add it to handle the atan definition
-        }
-    }
-
-    /**
      * Having in mind the input, either it moves in the direction given (if oriented) or rotates to align to the angle.
      * @param {number} desiredAngle angle with the desired direction wanted to move to.
      */
@@ -184,6 +170,20 @@ class Tank{
     }
 
     /**
+     * Aim the head to the selected coordinates
+     * @param {int} mX position to aim on the horizontal axis
+     * @param {int} mY position to aim on the vertical axis
+     */
+     aim(mX, mY){
+        let mouse = createVector(mX, mY);
+        let headDirection = this.pos.copy().sub(mouse); // vector from tank pos to mouse
+        this.headAngle = Math.atan(headDirection.y / headDirection.x);
+        if (headDirection.x >= 0) {
+            this.headAngle += Math.PI; // Add it to handle the atan definition
+        }
+    }
+
+    /**
      * Attemps to shoot a bullet.
      * If the condition to shoot is not acomplish, this method does nothing
      */
@@ -194,6 +194,10 @@ class Tank{
             bullets.push(new this.bulletConstructor(this)); // Create the bullet
             this.shootCooldown = this.properties.shotDelay; // Reset the cooldown
         }
+    }
+
+    hability () {
+
     }
 
     /**
@@ -216,6 +220,12 @@ class TankPlayer extends Tank {
         this.properties = objectProperties.tank.player;
 
         this.initClass();
+    }
+
+    hability() {
+        this.bulletConstructor = FastBullet;
+        this.shoot();
+        this.bulletConstructor = NormalBullet;
     }
 
     /**
