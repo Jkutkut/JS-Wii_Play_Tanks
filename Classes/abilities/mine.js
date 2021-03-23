@@ -21,7 +21,7 @@ class MinePrototype {
         this.destroyed = false;
 
 
-        this.SATdata = new SAT.Circle(new SAT.Vector(this.pos.x, this.pos.y), this.properties.naturalSize);
+        this.SATdata = new SAT.Circle(new SAT.Vector(this.pos.x, this.pos.y), this.properties.naturalSize * 0.5);
     }
 
     /*  GETTERS AND SETTERS */
@@ -93,10 +93,8 @@ class MinePrototype {
 
     getSATdata() {
         if (this.phase != this.PHASES.TICKING && this.phase != this.PHASES.MAXSIZE) {
-            console.log("ups");
-            this.SATdata = new SAT.Circle(new SAT.Vector(this.pos.x, this.pos.y), this.size);
+            this.SATdata = new SAT.Circle(new SAT.Vector(this.pos.x, this.pos.y), this.size * 0.5);
         }
-        console.log("data");
         return this.SATdata;
     }
 }

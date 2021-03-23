@@ -34,6 +34,7 @@ class CollisionHandler {
     /*  BULLETS  */
     
     collidingBulletWall(bullet) {
+        // Bullet Wall bounce
         let response = new SAT.Response();
         for (let i = 0; i < this.walls.length; i++) {
             let wall = this.walls[i];
@@ -64,15 +65,32 @@ class CollisionHandler {
     }
 
     tankAniquilation(tanks, bullets) {
+        // Destroy tanks
         for (let i = 0; i < tanks.length; i++) {
-            let tank = tanks[i];
+            let currentTank = tanks[i];
             for (let j = 0; j < bullets.length; j++){
                 let bullet = bullets[j];
-                if (this.collide(tank, bullet)) {
+                if (this.collide(currentTank, bullet)) {
                     bullets.splice(j, 1);
                     tanks.splice(i--, 1);
                     break;
                 }
+            }
+
+            for (let mine of this.mines) {
+                if (mine.phase == mine.PHASES.TICKING) {
+                    continue;
+                }
+                
+                let collide = SAT.testPolygonCircle(
+                    currentTank.getSATdata(),
+                    mine.getSATdata()
+                );
+                if (collide) {
+                    // currentTank.destroy();
+                    tanks.splice(i--, 1);
+                }
+                    
             }
         }
     }
@@ -90,7 +108,10 @@ class CollisionHandler {
     mineEarlyTriggering() {
         for (let currentMine of this.mines) {
             for (let i = 0; i < this.bullets.length; i++) {
-                let collide = currentMine.pos.dist(bullets[i].pos) < currentMine.getSize() * 0.5;
+                let collide = SAT.testPolygonCircle(
+                    this.bullets[i].getSATdata(),
+                    currentMine.getSATdata()
+                );
                 if (collide) {
                     this.bullets[i].destroy();
                     this.bullets.splice(i, 1);
