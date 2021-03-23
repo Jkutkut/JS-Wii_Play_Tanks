@@ -29,6 +29,10 @@ class MinePrototype {
         return this.size;
     }
 
+    getPhase() {
+        return this.phase;
+    }
+
     show() {
         if (this.phase == this.PHASES.DESTROYED) { // if Object pending of disapearing
             return; // Do not show
@@ -50,7 +54,7 @@ class MinePrototype {
         switch(this.phase) {
             case this.PHASES.TICKING:
                 this.time--;
-                if (this.time == 0) {
+                if (this.time < 0) {
                     this.phase = this.PHASES.EXPANDING;
                 }
             break;
@@ -63,7 +67,7 @@ class MinePrototype {
             break;
             case this.PHASES.MAXSIZE:
                 this.time--;
-                if (this.time == 0) {
+                if (this.time < 0) {
                     this.phase = this.PHASES.REDUCTION;
                 }
 
@@ -76,6 +80,20 @@ class MinePrototype {
                 }
             break;
             // case this.PHASES.DESTROYED: do nothing
+        }
+    }
+
+    tankNear(tank) {
+        if (this.phase != this.PHASES.TICKING) {
+            return;
+        }
+        if (tank != this.parent) {
+            console.log("foreing here");
+            this.time -= 2;
+        }
+        else {
+            console.log("parent here")
+            this.time++;
         }
     }
 
@@ -96,6 +114,10 @@ class MinePrototype {
             this.SATdata = new SAT.Circle(new SAT.Vector(this.pos.x, this.pos.y), this.size * 0.5);
         }
         return this.SATdata;
+    }
+
+    getExplosionSATdata() {
+        return new SAT.Circle(new SAT.Vector(this.pos.x, this.pos.y), this.properties.maxSize * 0.5);
     }
 }
 

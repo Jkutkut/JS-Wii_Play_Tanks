@@ -77,20 +77,27 @@ class CollisionHandler {
                 }
             }
 
-            for (let mine of this.mines) {
-                if (mine.phase == mine.PHASES.TICKING) {
-                    continue;
+            let collide;
+            for (let currentMine of this.mines) {
+                if (currentMine.getPhase() == currentMine.PHASES.TICKING) {
+                    collide = SAT.testPolygonCircle(
+                        currentTank.getSATdata(),
+                        currentMine.getExplosionSATdata()
+                    );
+                    if (collide) {
+                        currentMine.tankNear(currentTank);
+                    }
                 }
-                
-                let collide = SAT.testPolygonCircle(
-                    currentTank.getSATdata(),
-                    mine.getSATdata()
-                );
-                if (collide) {
-                    // currentTank.destroy();
-                    tanks.splice(i--, 1);
-                }
-                    
+                else if (currentMine.getPhase() != currentMine.PHASES.DESTROYED) {
+                    collide = SAT.testPolygonCircle(
+                        currentTank.getSATdata(),
+                        currentMine.getSATdata()
+                    );
+                    if (collide) {
+                        // currentTank.destroy();
+                        tanks.splice(i--, 1);
+                    }
+                }   
             }
         }
     }
