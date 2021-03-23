@@ -218,6 +218,10 @@
                 "flameEnd": [214, 61, 0]
             }
         ],
+        "minePrototype": [
+            "normal",
+            "explosion"
+        ],
         "mine":{
             "normal": [221, 218, 175],
             "explosion": [223, 69, 22]
