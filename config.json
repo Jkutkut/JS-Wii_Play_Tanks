@@ -198,15 +198,13 @@
         "bullet": [
             {
                 "id": "normal",
-                "color": [255, 255, 255],
-                "flameStart": null,
-                "flameEnd": null
+                "color": [255, 255, 255]
             },
             {
                 "id": "fast",
                 "color": [255, 255, 255],
-                "flameStart": [0, 0, 0],
-                "flameEnd": [0, 0, 0]
+                "flameStart": [240, 197, 8],
+                "flameEnd": [214, 61, 0]
             }
 
         ]
