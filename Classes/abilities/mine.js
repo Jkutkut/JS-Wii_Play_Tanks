@@ -1,9 +1,5 @@
-class Mine {
-    constructor(parent){
-        this.parent = parent;
-        this.pos = parent.pos.copy(); // Position
-
-
+class MinePrototype {
+    constructor(parent, properties, colors){
         this.PHASES = {
             TICKING:   0,
             EXPANDING: 1,
@@ -11,20 +7,14 @@ class Mine {
             REDUCTION: 3,
             DESTROYED: 4
         }
+
+        this.parent = parent;
+        this.pos = parent.pos.copy(); // Position
+
         this.phase = 0;
 
-        this.properties = {
-            naturalSize: 15,
-            detonationTime: 300,
-
-            maxSize: 100,
-            deltaGrow: 4,
-            maxExplosionTime: 15
-        };
-        this.mineC = {
-            normal: 255,
-            explosion: 150
-        };
+        this.properties = properties;
+        this.mineC = colors;
 
         this.time = this.properties.detonationTime;
         this.size = this.properties.naturalSize;
@@ -83,5 +73,11 @@ class Mine {
 
     hasBeenDestroyed () {
         return this.phase == this.PHASES.DESTROYED;
+    }
+}
+
+class Mine extends MinePrototype {
+    constructor (parent) {
+        super(parent, objectProperties.mine.normal, COLORS.mine.mine);
     }
 }
