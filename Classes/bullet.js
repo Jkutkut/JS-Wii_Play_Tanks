@@ -91,6 +91,7 @@ class NormalBullet extends Bullet {
         this.bounces = 1 + 1;
     }
 }
+
 class FastBullet extends Bullet {
     constructor(parent) {
         super(parent);
@@ -101,5 +102,46 @@ class FastBullet extends Bullet {
         this.init();
 
         this.bounces = 3 + 1;
+
+        //Debug
+        this.direction.mult(0.05);
+        this.move();    
+        this.move();    
+        this.move();    
+
+    }
+
+    show() {
+        Bullet.prototype.show.call(this);
+        let wid2 = this.properties.len * 0.5;
+        let wid3 = this.properties.len / 3 / 2;
+        let wid10 = this.properties.len * 0.1;
+
+        push();
+            fill(this.bulletC.flameEnd);
+            translate(this.pos);
+            rotate(this.angle);
+            beginShape();
+                vertex(-wid2, -wid2 * 0.8);
+                vertex(-wid2,  wid2 * 0.8);
+                let t = Math.round(Math.random() * 3) + 3;
+
+                vertex(-wid2 * 3, wid2 * 1.2);
+                for (let i = 1; i < 2; i++) {
+                    vertex(-wid2 * 1.8, wid3 * (i+2));
+                    vertex(-wid2 * 2.8, wid3 * (i+1));
+                    vertex(-wid2 * 1.8, wid3 * (i));
+                }
+                vertex(-wid2 * 3, 0);
+                for (let i = 1; i < 2; i++) {
+                    vertex(-wid2 * 1.8, -wid3 * (i));
+                    vertex(-wid2 * 2.8, -wid3 * (i+1));
+                    vertex(-wid2 * 1.8, -wid3 * (i+2));
+                }
+                vertex(-wid2 * 3, -wid2 * 1.2);
+                vertex(-wid2, -wid2 * 0.8);
+            endShape();
+            fill(this.bulletC.flameEnd);
+        pop();
     }
 }

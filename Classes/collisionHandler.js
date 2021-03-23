@@ -33,7 +33,6 @@ class CollisionHandler {
             let wall = this.walls[i];
             
             if (this.collide(bullet, wall, response)) {
-                console.log(response);
                 bullet.bounce(response);
             }
             response.clear();
