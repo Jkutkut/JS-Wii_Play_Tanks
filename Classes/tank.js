@@ -216,8 +216,9 @@ class TankPlayer extends Tank {
         // this.bulletConstructor = FastBullet;
         // this.shoot();
         // this.bulletConstructor = NormalBullet;
-
-        mines.push(new Mine(this));
+        if (collisionHandler.canPlaceMineHere(this)) {
+            mines.push(new Mine(this));
+        }
     }
 
     /**
@@ -377,7 +378,6 @@ class Brown_tank extends TankEnemy {
         super(x, y, 0, COLORS.tank.brown_tank);
     }
 }
-
 
 class Teal_tank extends TankEnemy {
     constructor(x, y) {

@@ -1,9 +1,10 @@
 class CollisionHandler {
-    constructor (playerTank, tanks, walls, bullets) {
+    constructor (playerTank, tanks, walls, bullets, mines) {
         this.walls = walls;
         this.player = playerTank;
         this.tanks = tanks;
         this.bullets = bullets;
+        this.mines = mines;
         this.delta = 5.0001;
     }
 
@@ -24,9 +25,13 @@ class CollisionHandler {
         
         // bullets killing tanks
         collisionHandler.tankAniquilation(this.tanks, this.bullets);
+
+        // mines killing bullets
+        // mines killing tanks
     }
 
-
+    /*  BULLETS  */
+    
     collidingBulletWall(bullet) {
         let response = new SAT.Response();
         for (let i = 0; i < this.walls.length; i++) {
@@ -70,6 +75,17 @@ class CollisionHandler {
             }
         }
     }
+
+    /*  MINES */
+    canPlaceMineHere(tank) {
+        for (let mine of this.mines) {
+            if (mine.pos.dist(tank.pos) <= mine.properties.maxSize) {
+                return false;
+            }
+        }
+        return true;
+    }
+
 
     canGoHere(obj) {
         let response = new SAT.Response();

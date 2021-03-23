@@ -78,7 +78,7 @@ function setup() {
 
     loadLevel(1);
 
-    collisionHandler = new CollisionHandler(tank, AItanks, walls, bullets);
+    collisionHandler = new CollisionHandler(tank, AItanks, walls, bullets, mines);
 }
 
 function draw() {
