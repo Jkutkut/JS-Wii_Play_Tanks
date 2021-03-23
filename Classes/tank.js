@@ -395,8 +395,5 @@ class Teal_tank extends TankEnemy {
         this.properties = objectProperties.tank.enemy[2];
 
         this.initClass();
-
-        //Debug
-        this.properties.maxBullets = 1;
     }
 }

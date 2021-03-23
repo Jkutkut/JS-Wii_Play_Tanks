@@ -22,7 +22,7 @@ var fps = 30;
 var enti;
 
 function preload(){
-    let commit = "8792910f2fcc2e8f44a8a9b7fe1cbed0484b84c4";
+    let commit = "ad850ace29e8132293627dabf78c248980a72611";
     fetch("https://cdn.jsdelivr.net/gh/Jkutkut/JS-Wii_Play_tanks@" + commit + "/config.json")
     .then(response => response.json()).then(json => objectProperties = json);
 
@@ -62,7 +62,7 @@ function setup() {
     for (let bulletColorObj of objectProperties.colors.bullet) {
         COLORS["bullet"][bulletColorObj.id] = {};
         for (let part of objectProperties.colors.bulletPrototype) {
-            if (bulletColorObj[part] == null) {
+            if (bulletColorObj[part] == undefined) {
                 continue;
             }
             COLORS["bullet"][bulletColorObj.id][part] = color(...bulletColorObj[part]);
