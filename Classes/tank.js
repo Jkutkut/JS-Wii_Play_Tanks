@@ -206,6 +206,10 @@ class Tank{
     bulletDestroyed() {
         this.bullets--;
     }
+
+    abilityDestroyed() {
+
+    }
 }
 
 /**
@@ -223,9 +227,11 @@ class TankPlayer extends Tank {
     }
 
     hability() {
-        this.bulletConstructor = FastBullet;
-        this.shoot();
-        this.bulletConstructor = NormalBullet;
+        // this.bulletConstructor = FastBullet;
+        // this.shoot();
+        // this.bulletConstructor = NormalBullet;
+
+        mines.push(new Mine(this));
     }
 
     /**

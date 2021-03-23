@@ -7,6 +7,7 @@ var COLORS = {};
 var collisionHandler;
 
 var bullets = []; //bullets, to keep track of them
+var mines = []; //mines, to keep track of them
 var walls = [];
 
 //environment
@@ -23,6 +24,7 @@ var enti;
 
 function preload(){
     document.addEventListener('contextmenu', event => event.preventDefault());
+
     let commit = "ad850ace29e8132293627dabf78c248980a72611";
     fetch("https://cdn.jsdelivr.net/gh/Jkutkut/JS-Wii_Play_tanks@" + commit + "/config.json")
     .then(response => response.json()).then(json => objectProperties = json);
@@ -82,16 +84,18 @@ function setup() {
 }
 
 function draw() {
-    background(backgroundTexture);
-
-    // Draw walls
-    for(let i = 0; i < walls.length; i++) {
-        walls[i].show();
-    }
+    background(backgroundTexture);  
 
     // Bullets
     for(let i = 0; i < bullets.length; i++){
         bullets[i].move();
+    }
+    // Mines
+    for (let i = 0; i < mines.length; i++) {
+        mines[i].tick();
+        if (mines[i].destroyed) {
+            mines.splice(i--, 1);
+        }
     }
     tank.aim(mouseX, mouseY);
     
@@ -101,9 +105,17 @@ function draw() {
 
 
     // ++++ Drawing ++++
+    // Walls
+    for(let i = 0; i < walls.length; i++) {
+        walls[i].show();
+    }
     // Bullets
     for (let i = 0; i < bullets.length; i++) {
         bullets[i].show();
+    }
+    // Mines
+    for (let i = 0; i < mines.length; i++) {
+        mines[i].show();
     }
     // AItanks
     for (let i = 0; i < AItanks.length; i++) {
@@ -148,15 +160,8 @@ function draw() {
     pop()
 }
 
-function mouseClicked(event) {
-    console.log(event);
-    console.log()
-    if (event.button == 2) {
-        tank.hability();
-    }
-    else {
-        tank.shoot();
-    }
+function mouseClicked() {
+    tank.shoot();
 }
 
 function keyD(){
