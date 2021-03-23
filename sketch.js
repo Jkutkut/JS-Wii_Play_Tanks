@@ -25,7 +25,7 @@ var enti;
 function preload(){
     document.addEventListener('contextmenu', event => event.preventDefault());
 
-    let commit = "ad850ace29e8132293627dabf78c248980a72611";
+    let commit = "6b239e570f3beed4b26d013693d781a99054c6cf";
     fetch("https://cdn.jsdelivr.net/gh/Jkutkut/JS-Wii_Play_tanks@" + commit + "/config.json")
     .then(response => response.json()).then(json => objectProperties = json);
 
@@ -54,23 +54,48 @@ function setup() {
 
     // *******  var setup  *******
     // Update COLORS variable (see config.json to undestand the format)
-    COLORS["tank"] = {};
-    for (let tankColorObj of objectProperties.colors.tank) {
-        COLORS["tank"][tankColorObj.id] = {};
-        for (let part of objectProperties.colors.tankPrototype) {
-            COLORS["tank"][tankColorObj.id][part] = color(...tankColorObj[part]);
+    for (let category in objectProperties.colors) {
+        if (category.includes("rototype")) {
+            // If the current category is a prototype, 
+            // it only serves as info for the dev => skip
+            continue;
         }
-    }
-    COLORS["bullet"] = {};
-    for (let bulletColorObj of objectProperties.colors.bullet) {
-        COLORS["bullet"][bulletColorObj.id] = {};
-        for (let part of objectProperties.colors.bulletPrototype) {
-            if (bulletColorObj[part] == undefined) {
-                continue;
+        COLORS[category] = {};
+
+        console.log(objectProperties.colors[category])
+
+        for (let ObjectColorObj of objectProperties.colors[category]) {
+            COLORS[category][ObjectColorObj.id] = {};
+            
+            // console.log(objectProperties.colors[category + "Prototype"])
+            // console.log(ObjectColorObj);
+            for (let part of objectProperties.colors[category + "Prototype"]) {
+                if (ObjectColorObj[part] == undefined) {
+                    continue;
+                }
+                COLORS[category][ObjectColorObj.id][part] = color(...ObjectColorObj[part]);
             }
-            COLORS["bullet"][bulletColorObj.id][part] = color(...bulletColorObj[part]);
         }
     }
+
+
+    // COLORS["tank"] = {};
+    // for (let tankColorObj of objectProperties.colors.tank) {
+    //     COLORS["tank"][tankColorObj.id] = {};
+    //     for (let part of objectProperties.colors.tankPrototype) {
+    //         COLORS["tank"][tankColorObj.id][part] = color(...tankColorObj[part]);
+    //     }
+    // }
+    // COLORS["bullet"] = {};
+    // for (let bulletColorObj of objectProperties.colors.bullet) {
+    //     COLORS["bullet"][bulletColorObj.id] = {};
+    //     for (let part of objectProperties.colors.bulletPrototype) {
+    //         if (bulletColorObj[part] == undefined) {
+    //             continue;
+    //         }
+    //         COLORS["bullet"][bulletColorObj.id][part] = color(...bulletColorObj[part]);
+    //     }
+    // }
 
 
 
