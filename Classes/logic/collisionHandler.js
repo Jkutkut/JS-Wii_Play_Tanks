@@ -12,7 +12,7 @@ class CollisionHandler {
     handleCollisions() {
         // Bullets bouncing on walls
         for(let i = 0; i < bullets.length; i++){            
-            collisionHandler.collidingBulletWall(bullets[i]);
+            this.collidingBulletWall(bullets[i]);
             if (bullets[i].bounces == 0) { // If no remaing bounces
                 bullets[i].destroy(); // Do what needs to be done to end this object
                 bullets.splice(i--, 1);
@@ -21,12 +21,13 @@ class CollisionHandler {
         }
 
         // Bullets killing each other
-        collisionHandler.bulletAniquilation(this.bullets);
+        this.bulletAniquilation(this.bullets);
         
         // bullets killing tanks
-        collisionHandler.tankAniquilation(this.tanks, this.bullets);
+        this.tankAniquilation(this.tanks, this.bullets);
 
         // mines killing bullets
+        this.mineEarlyTriggering();
         // mines killing tanks
     }
 
@@ -84,6 +85,19 @@ class CollisionHandler {
             }
         }
         return true;
+    }
+
+    mineEarlyTriggering() {
+        for (let currentMine of this.mines) {
+            for (let i = 0; i < this.bullets.length; i++) {
+                let collide = currentMine.pos.dist(bullets[i].pos) < currentMine.getSize() * 0.5;
+                if (collide) {
+                    this.bullets[i].destroy();
+                    this.bullets.splice(i, 1);
+                    currentMine.trigger();
+                }
+            }
+        }
     }
 
 
