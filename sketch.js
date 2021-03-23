@@ -61,14 +61,8 @@ function setup() {
             continue;
         }
         COLORS[category] = {};
-
-        console.log(objectProperties.colors[category])
-
         for (let ObjectColorObj of objectProperties.colors[category]) {
             COLORS[category][ObjectColorObj.id] = {};
-            
-            // console.log(objectProperties.colors[category + "Prototype"])
-            // console.log(ObjectColorObj);
             for (let part of objectProperties.colors[category + "Prototype"]) {
                 if (ObjectColorObj[part] == undefined) {
                     continue;
@@ -77,27 +71,6 @@ function setup() {
             }
         }
     }
-
-
-    // COLORS["tank"] = {};
-    // for (let tankColorObj of objectProperties.colors.tank) {
-    //     COLORS["tank"][tankColorObj.id] = {};
-    //     for (let part of objectProperties.colors.tankPrototype) {
-    //         COLORS["tank"][tankColorObj.id][part] = color(...tankColorObj[part]);
-    //     }
-    // }
-    // COLORS["bullet"] = {};
-    // for (let bulletColorObj of objectProperties.colors.bullet) {
-    //     COLORS["bullet"][bulletColorObj.id] = {};
-    //     for (let part of objectProperties.colors.bulletPrototype) {
-    //         if (bulletColorObj[part] == undefined) {
-    //             continue;
-    //         }
-    //         COLORS["bullet"][bulletColorObj.id][part] = color(...bulletColorObj[part]);
-    //     }
-    // }
-
-
 
 
     //box
