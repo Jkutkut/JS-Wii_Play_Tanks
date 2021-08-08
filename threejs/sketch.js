@@ -7,32 +7,30 @@ const renderer = new THREE.WebGLRenderer({canvas, antialias: true});
 const cameraP = {fov: 90, aspect: 2, near: 0.1, far: 30};
 const camera = new THREE.PerspectiveCamera(cameraP.fov, cameraP.aspect, cameraP.near, cameraP.far);
 
-camera.position.z = 1
+camera.position.z = 15;
 
 const scene = new THREE.Scene();
 
 
-// const geometry = new THREE.BoxGeometry(10, 10, 10);
-
-// const material = new THREE.MeshBasicMaterial({color: 0x44aa88});  // greenish blue
-
-// const cube = new THREE.Mesh(geometry, material);
-// scene.add(cube);
-
-
+// Load designs
 const loader = new GLTFLoader();
-
+var tank;
 loader.load(
     '../Resources/Blender/tank.glb',
     
     function ( gltf ) {
-        const material = new THREE.MeshBasicMaterial({color: 0x44aa88});  // greenish blue
+        const material = new THREE.MeshBasicMaterial({color: 0x03d3fc});
 
-        scene.add( gltf.scene );
+        tank = gltf.scene.children[0];
+        tank.material = material; // Change color of the tank
+
+        scene.add( tank );
         console.log("Tank loaded");
+
+        requestAnimationFrame(animate);
     },
     function ( xhr ) { // called while loading is progressing
-        console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
+        console.log( 'Loading tank: ' + parseInt( xhr.loaded / xhr.total * 100 ) + '%' );
     },
     function ( error ) { // error
         console.error( error );
@@ -41,21 +39,16 @@ loader.load(
 
 
 function animate(time) {
-    // time *= 0.001;  // seconds
-    // time *= 0.01;  // seconds
+    time *= 0.001;  // seconds
   
-    // cube.rotation.x = Math.cos(time * 0.5);
-    // cube.rotation.y = time * 0.5;
-    // cube.rotation.y = time * 1;
-
-    camera.position.z += time;
-    // console.log(camera.position.z)
+    tank.rotation.x = Math.cos(time * 0.5);
+    tank.rotation.y = Math.cos(time * 0.5);
   
     renderer.render(scene, camera);
     requestAnimationFrame(animate);
 }
   
-requestAnimationFrame(animate);
+
 
 // Change canvas size based on window
 $(window).resize(resizeTextSize); // When screen size change, adjust text size
