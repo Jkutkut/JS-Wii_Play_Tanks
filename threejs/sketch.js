@@ -27,7 +27,7 @@ function init() {
     // Add elements
 
     // light
-    
+
     const light = new THREE.PointLight( 0xffffff, 1.0, 100, 0.5 );
     const light2 = new THREE.PointLight( 0xffffff, 1.0, 100, 0.5 );
     light.position.set( 10, 10, 10 );
@@ -46,17 +46,17 @@ function init() {
         
         function ( gltf ) {
     
-            let head = gltf.scene.children[3];
-            let top = gltf.scene.children[2];
-            let body = gltf.scene.children[1];
-            let tires = gltf.scene.children[0];
+            let head = gltf.scene.children[0];
+            let gunTip = gltf.scene.children[1];
+            let body = gltf.scene.children[2];
+            let tires = gltf.scene.children[3];
     
-            head.material.color.r = 2; // Change color of the tank
-            head.material.color.b = 2; // Change color of the tank
-            head.material.color.g = 2; // Change color of the tank
+            head.material.color.r = 1; // Change color of the tank
+            head.material.color.b = 1; // Change color of the tank
+            head.material.color.g = 1; // Change color of the tank
 
             scene.add( head );
-            scene.add( top );
+            scene.add( gunTip );
             scene.add( body );
             scene.add( tires );
 
