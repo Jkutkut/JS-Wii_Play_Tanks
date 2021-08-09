@@ -1,10 +1,9 @@
 import * as THREE from 'https://threejsfundamentals.org/threejs/resources/threejs/r127/build/three.module.js';
-import {OrbitControls} from 'https://threejsfundamentals.org/threejs/resources/threejs/r127/examples/jsm/controls/OrbitControls.js';
 import {GLTFLoader} from 'https://threejsfundamentals.org/threejs/resources/threejs/r127/examples/jsm/loaders/GLTFLoader.js';
 
 
 var scene, renderer, camera;
-var controls, stats;
+var stats;
 
 init();
 animate();
@@ -18,25 +17,26 @@ function init() {
     scene = new THREE.Scene();
 
     camera = new THREE.PerspectiveCamera (45, 1, 1, 10000);
-    camera.position.y = 16;
-    camera.position.z = 40;
-    camera.lookAt (new THREE.Vector3(0,0,0));
+    
+    camera.position.x = 0;
+    camera.position.y = 300;
+    camera.position.z = 125;
 
-    controls = new OrbitControls (camera, renderer.domElement);
+    camera.lookAt (new THREE.Vector3(0,0,0));
     
     // Add elements
 
     // light
 
-    const light = new THREE.PointLight( 0xffffff, 1.0, 100, 0.5 );
-    const light2 = new THREE.PointLight( 0xffffff, 1.0, 100, 0.5 );
-    light.position.set( 10, 10, 10 );
-    light2.position.set( -10, 10, -10 );
-    scene.add( light );
+    const light1 = new THREE.PointLight( 0xffffff, 1.2, 100, 1 );
+    const light2 = new THREE.PointLight( 0xffffff, 1.2, 100, 1 );
+    light1.position.set(  20,  20,  20 );
+    light2.position.set( -20,  20, -20 );
+    scene.add( light1 );
     scene.add( light2 );
 
     // grid
-    var gridXZ = new THREE.GridHelper(100, 20);
+    var gridXZ = new THREE.GridHelper(250, 20);
     scene.add(gridXZ);
 
     // load tank
@@ -86,8 +86,7 @@ function init() {
 function animate() {
     stats.begin();
 
-    controls.update();
-    requestAnimationFrame ( animate );  
+    requestAnimationFrame ( animate );
     
     stats.end();
 
