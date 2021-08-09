@@ -2,82 +2,19 @@
  * Class that defines the basic behaviour of Tanks
  */
 class Tank{
-    constructor(x, y, properties, colors){
-        this.pos = createVector(x, y); // Position of the center of the tank
-        this.bodyD = createVector(1, 0); // Direction of the head
-        this.bodyAngle = 0; // angle of the tank body respect Vector(1, 0)
-        this.headAngle = 0; // angle of the tank head
-
-        this.tankSize = objectProperties.tank.dimensions; // Here all the dimensions of the tank is stored
-        this.properties = properties; // Properties of the tank (velocity, shootDelay, maxbullets...)
-        this.tankColor = colors; // Colors of the tank
-
-        this.bulletConstructor;
-        this.shootCooldown = 0; // time remaining to be able to shoot again
-        this.bullets = 0; // amount of bullets shot currently on screen
-
-        this.size = { // Basic size of the tank's body.
-            w: this.tankSize.base.width,
-            h: this.tankSize.base.height + this.tankSize.tires.outer.width
-        };
-
-        this.bulletConstructor = (this.properties.bulletType == "NORMAL")? NormalBullet : FastBullet;
+    static MESH = {
+        head: null,
+        body: null
     }
 
-    /**
-     * Represents the tank on the screen.
-     * Note that the shotDelay is based on the amount of times this method is executed.
-     */
-    show(){
-        this.shootCooldown--; // Reduce the cooldown
-
-        stroke(0); //black border
-        strokeWeight(1); // border size
-
-        push(); // All tranksformations end on the pop at the same level.
-            translate(this.pos); // Translate to the tankPos
-            fill(this.tankColor.body); // Fill with the tankBody color
-
-            //  ***  body  ***  //
-            push(); // Create body
-                rotate(this.bodyAngle); // Rotate the body
-                rect(...shape("box", this.tankSize.base.width, this.tankSize.base.height)); // Base
-
-                //  ***  tires  ***  //
-                for (let i = -1; i < 2; i += 2) { // For each tire
-                    push(); // Show the tire
-                        translate(0, i * (this.tankSize.base.height / 2 + 1)); 
-                        fill(this.tankColor.tireInner);
-                        rect(...shape("box", this.tankSize.tires.inner.len, this.tankSize.tires.inner.width));
-                        translate(0, -i);
-                        fill(this.tankColor.tireOuter);
-                        rect(...shape("box", this.tankSize.tires.outer.len, this.tankSize.tires.outer.width));
-                    pop();
-                }
-            pop();
-
-            //  ***  head  ***  //
-            push();
-                rotate(this.headAngle); // angle of the head
-                // head
-                rect(...shape("box", this.tankSize.head.width)); // Connector gun-body
-                
-                translate((this.tankSize.head.width + this.tankSize.head.gun.len) / 2, 0); // Go to the position of the tip of the gun
-                // gun cylinder
-                fill(this.tankColor.gun);
-                rect(...shape("box", this.tankSize.head.gun.len, this.tankSize.head.gun.width));
-                
-                translate(this.tankSize.head.gun.len * 0.5, 0);
-                //tip
-                fill(this.tankColor.gunTip);
-                rect(...shape("box", this.tankSize.head.gunTip.len, this.tankSize.head.gunTip.width));
-            pop();
-        pop();
+    constructor(x, y, properties, colors){
+        
     }
 
     /**
      * Get's the shape of the body tank in SAT format.
      * @returns SAT Polygon object
+     * ! DEPRECATED
      */
     getSATdata() {
         let size2 = { // half of the size
@@ -100,6 +37,7 @@ class Tank{
     /**
      * Having in mind the input, either it moves in the direction given (if oriented) or rotates to align to the angle.
      * @param {number} desiredAngle angle with the desired direction wanted to move to.
+     * ! DEPRECATED
      */
     move(desiredAngle) { 
         let alpha = desiredAngle * Math.PI - this.bodyAngle; //angle between when the body aims and the desired direction
@@ -136,6 +74,7 @@ class Tank{
     /**
      * Moves the tank the input increment vector
      * @param {Vector} deltaD P5 Vector with the increment of the position
+     * ! DEPRECATED
      */
     advance(deltaD) {
         this.pos.add(deltaD);
@@ -148,6 +87,7 @@ class Tank{
     /**
      * Teleports the tank to the new position
      * @param {Vector} newPos P5 Vector with the position
+     * ! DEPRECATED
      */
     tp(newPos) {
         this.pos = newPos.clone();
@@ -156,6 +96,7 @@ class Tank{
     /**
      * Moves the tank the input vector from the current position
      * @param {Vector} deltaV Increment vector
+     * ! DEPRECATED
      */
     tpRelative(deltaV) {
         this.pos.add(deltaV);
@@ -165,6 +106,7 @@ class Tank{
      * Aim the head to the selected coordinates
      * @param {int} mX position to aim on the horizontal axis
      * @param {int} mY position to aim on the vertical axis
+     * ! DEPRECATED
      */
      aim(mX, mY){
         let mouse = createVector(mX, mY);
@@ -178,6 +120,7 @@ class Tank{
     /**
      * Attemps to shoot a bullet.
      * If the condition to shoot is not acomplish, this method does nothing
+     * ! DEPRECATED
      */
     shoot(){
         // If the cooldown has ended and the maximum bullets is not reached
@@ -194,6 +137,7 @@ class Tank{
 
     /**
      * If bullet is destroyed, this method is executed to notify the tank
+     * ! DEPRECATED
      */
     bulletDestroyed() {
         this.bullets--;
@@ -206,6 +150,7 @@ class Tank{
 
 /**
  * Tank for the player, with logic to control it usign the user's input.
+ * ! DEPRECATED
  */
 class TankPlayer extends Tank {
     constructor (x, y) {
@@ -278,6 +223,7 @@ class TankPlayer extends Tank {
 
 /**
  * This class extends the tank class to generalize the AItank class. Following classes will be based on this logic
+ * ! DEPRECATED
  */
 class TankEnemy extends Tank{
     constructor(x, y, enemyIndex, colors) {
