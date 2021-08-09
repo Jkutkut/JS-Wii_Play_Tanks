@@ -4,16 +4,18 @@ const loader = new GLTFLoader();
 loader.load(
     '../../Resources/Blender/tank.glb',
     
-    function ( gltf ) {
+    function ( gltf ) { // Loaded correctly
+        // Store them on the Tank class
 
-        TANK_MESH.head = gltf.scene.children[0];
+        Tank.MESH.head = gltf.scene.children[0];
         let gunTip = gltf.scene.children[1];
-        TANK_MESH.body = gltf.scene.children[2];
+
+        Tank.MESH.body = gltf.scene.children[2];
         let tires = gltf.scene.children[3];
 
         // Store the gunTip and the tires as children of the head and the body
-        TANK_MESH.head.children.push(gunTip);
-        TANK_MESH.body.children.push(tires);
+        Tank.MESH.head.children.push(gunTip);
+        Tank.MESH.body.children.push(tires);
 
         console.log("Tank loaded");
     },
