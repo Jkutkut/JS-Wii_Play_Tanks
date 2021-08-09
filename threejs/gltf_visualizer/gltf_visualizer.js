@@ -42,7 +42,7 @@ function init() {
     // load tank
     const loader = new GLTFLoader();
     loader.load(
-        '../Resources/Blender/tank.glb',
+        '../../Resources/Blender/tank.glb',
         
         function ( gltf ) {
     
