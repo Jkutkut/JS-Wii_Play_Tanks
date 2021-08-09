@@ -1,58 +1,75 @@
 import * as THREE from 'https://threejsfundamentals.org/threejs/resources/threejs/r127/build/three.module.js';
-import { GLTFLoader } from 'https://threejsfundamentals.org/threejs/resources/threejs/r127/examples/jsm/loaders/GLTFLoader.js';
-
-const canvas = document.querySelector('#canvas');
-const renderer = new THREE.WebGLRenderer({canvas, antialias: true});
-
-const cameraP = {fov: 90, aspect: 2, near: 0.1, far: 30};
-const camera = new THREE.PerspectiveCamera(cameraP.fov, cameraP.aspect, cameraP.near, cameraP.far);
-
-camera.position.z = 15;
-
-const scene = new THREE.Scene();
+import {OrbitControls} from 'https://threejsfundamentals.org/threejs/resources/threejs/r127/examples/jsm/controls/OrbitControls.js';
+import {GLTFLoader} from 'https://threejsfundamentals.org/threejs/resources/threejs/r127/examples/jsm/loaders/GLTFLoader.js';
 
 
-// Load designs
-const loader = new GLTFLoader();
-var tank;
-loader.load(
-    '../Resources/Blender/tank.glb',
+var scene, renderer, camera;
+var controls;
+
+init();
+animate();
+
+function init() {
+    const canvas = document.querySelector('#canvas');
+    renderer = new THREE.WebGLRenderer( {canvas, antialias:true} );
+
+    document.body.appendChild (renderer.domElement);
+
+    scene = new THREE.Scene();
+
+    camera = new THREE.PerspectiveCamera (45, 1, 1, 10000);
+    camera.position.y = 16;
+    camera.position.z = 40;
+    camera.lookAt (new THREE.Vector3(0,0,0));
+
+    controls = new OrbitControls (camera, renderer.domElement);
     
-    function ( gltf ) {
-        const material = new THREE.MeshBasicMaterial({color: 0x03d3fc});
+    var gridXZ = new THREE.GridHelper(100, 20);
+    scene.add(gridXZ);
 
-        tank = gltf.scene.children[0];
-        tank.material = material; // Change color of the tank
+    // load tank
+    const loader = new GLTFLoader();
+    loader.load(
+        '../Resources/Blender/tank.glb',
+        
+        function ( gltf ) {
+            const material = new THREE.MeshBasicMaterial({color: 0x03d3fc});
+    
+            let head = gltf.scene.children[0];
+            let body = gltf.scene.children[2];
+            let tires = gltf.scene.children[1];
+    
+            head.material = material; // Change color of the tank
+            body.material = material; // Change color of the tank
+    
+            scene.add( head );
+            scene.add( body );
+            scene.add( tires );
+            console.log("Tank loaded");
+    
+            requestAnimationFrame(animate);
+        },
+        function ( xhr ) { // called while loading is progressing
+            console.log( 'Loading tank: ' + parseInt( xhr.loaded / xhr.total * 100 ) + '%' );
+        },
+        function ( error ) { // error
+            console.error( error );
+        } 
+    );
 
-        scene.add( tank );
-        console.log("Tank loaded");
-
-        requestAnimationFrame(animate);
-    },
-    function ( xhr ) { // called while loading is progressing
-        console.log( 'Loading tank: ' + parseInt( xhr.loaded / xhr.total * 100 ) + '%' );
-    },
-    function ( error ) { // error
-        console.error( error );
-    } 
-);
-
-
-function animate(time) {
-    time *= 0.001;  // seconds
-  
-    tank.rotation.x = Math.cos(time * 0.5);
-    tank.rotation.y = Math.cos(time * 0.5);
-  
-    renderer.render(scene, camera);
-    requestAnimationFrame(animate);
+    // Change canvas size based on window
+    $(window).resize(resizeTextSize); // When screen size change, adjust text size
+    resizeTextSize();
 }
-  
+
+function animate() {
+    controls.update();
+    requestAnimationFrame ( animate );  
+    renderer.render (scene, camera);
+}
 
 
-// Change canvas size based on window
-$(window).resize(resizeTextSize); // When screen size change, adjust text size
-resizeTextSize();
+
 
 function resizeTextSize() {
     const canvas = renderer.domElement;
