@@ -4,7 +4,7 @@ import {GLTFLoader} from 'https://threejsfundamentals.org/threejs/resources/thre
 
 
 var scene, renderer, camera;
-var controls;
+var controls, stats;
 
 init();
 animate();
@@ -24,6 +24,18 @@ function init() {
 
     controls = new OrbitControls (camera, renderer.domElement);
     
+    // Add elements
+
+    // light
+    
+    const light = new THREE.PointLight( 0xffffff, 1.0, 100, 0.5 );
+    const light2 = new THREE.PointLight( 0xffffff, 1.0, 100, 0.5 );
+    light.position.set( 10, 10, 10 );
+    light2.position.set( -10, 10, -10 );
+    scene.add( light );
+    scene.add( light2 );
+
+    // grid
     var gridXZ = new THREE.GridHelper(100, 20);
     scene.add(gridXZ);
 
@@ -33,18 +45,21 @@ function init() {
         '../Resources/Blender/tank.glb',
         
         function ( gltf ) {
-            const material = new THREE.MeshBasicMaterial({color: 0x03d3fc});
     
-            let head = gltf.scene.children[0];
-            let body = gltf.scene.children[2];
-            let tires = gltf.scene.children[1];
+            let head = gltf.scene.children[3];
+            let top = gltf.scene.children[2];
+            let body = gltf.scene.children[1];
+            let tires = gltf.scene.children[0];
     
-            head.material = material; // Change color of the tank
-            body.material = material; // Change color of the tank
-    
+            head.material.color.r = 2; // Change color of the tank
+            head.material.color.b = 2; // Change color of the tank
+            head.material.color.g = 2; // Change color of the tank
+
             scene.add( head );
+            scene.add( top );
             scene.add( body );
             scene.add( tires );
+
             console.log("Tank loaded");
     
             requestAnimationFrame(animate);
@@ -57,14 +72,25 @@ function init() {
         } 
     );
 
+
+    // FPS counter
+    stats = new Stats();
+    stats.showPanel( 0 ); // 0: fps, 1: ms, 2: mb, 3+: custom
+    document.body.appendChild( stats.dom );
+
     // Change canvas size based on window
     $(window).resize(resizeTextSize); // When screen size change, adjust text size
     resizeTextSize();
 }
 
 function animate() {
+    stats.begin();
+
     controls.update();
     requestAnimationFrame ( animate );  
+    
+    stats.end();
+
     renderer.render (scene, camera);
 }
 
